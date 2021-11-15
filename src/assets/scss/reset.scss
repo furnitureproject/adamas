@@ -1,0 +1,56 @@
+@charset 'utf-8';
+// noto sans kr
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+// Nanum Gothic
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+body, h1, h2, h3, h4, th, td, input, select, textarea, button, a, li {
+  font-family: 'Noto Sans KR', 'Nanum Gothic', Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: #666;
+  font-size: 15px;
+}
+input {
+  vertical-align: middle;
+}
+ul, ol, li {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+  // 아직 클릭 안했던 a 태그
+  &:link {
+    color: #666;
+  }
+  // 이미 클릭했던 a 태그
+  &:visited {
+    color: #666;
+  }
+  // router 주소가 포함되어 있는경우( == )
+  &.router-link-active {
+    color: black;
+  }
+  // router 주소가 정확하게 일치하는 경우( === )
+  &.router-link-exact-active {
+    color: #42b983;
+  }
+}
+// 이미지 딱맞게 넣기
+// img{
+//   height: 99999px;
+//   object-fit:contain;
+//   max-height: 100%;
+//   max-width: 100%;    
+//   display: block;
+//   // margin: auto auto;
+// }
+#app {
+    // font-family: 'Noto Sans KR', 'Nanum Gothic', Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
