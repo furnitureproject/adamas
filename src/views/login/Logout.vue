@@ -4,6 +4,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   created() {
     this.logout();
@@ -13,10 +15,12 @@ export default {
     };
   },
   methods: {
-    async logout() {
-      const token = await sessionStorage.getItem('token');
+    ...mapActions(['changeisLoginAct']),
+    logout() {
+      const token = sessionStorage.getItem('token');
       if (token !== null) {
-        await sessionStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        this.changeisLoginAct(false);
         this.$router.push('/');
       }
     },

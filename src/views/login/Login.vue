@@ -10,25 +10,27 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import axios from 'axios';
 import CheckButton from '@/components/CheckButton.vue';
 
 export default {
   computed: {
-    ...mapState(['logincheck']),
+    ...mapState(['logincheck', 'isLogin']),
   },
   data() {
     return {
       userId: null,
       userPw: null,
       token: null,
+      role: null,
     };
   },
   components: {
     CheckButton,
   },
   methods: {
+    ...mapActions(['changeisLoginAct']),
     // 빨강색일때 유저 로그인
     async userlogin() {
       // 테스트 할거면 url 바꿔서 하면됨
@@ -45,6 +47,7 @@ export default {
         if (response.data.status === 200) {
           this.token = response.data.token;
           sessionStorage.setItem('token', this.token);
+          this.changeisLoginAct(true);
           this.$router.push('/');
         } else if (response.data.status === 'invalid-password') {
           alert('아이디와 비밀번호가 일치하지 않습니다.');

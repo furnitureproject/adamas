@@ -17,10 +17,10 @@
         <!-- <li><a href="#">Contact</a></li>
         <li><a href="#">Help</a></li> -->
         <li><router-link to='/cart'>Cart<span>장바구니</span> </router-link></li>
-        <li v-if="!logincontrol"><router-link to='/login'>Login</router-link></li>
-        <li v-if="logincontrol"><router-link to='/logout'>Logout</router-link></li>
-        <li v-if="!logincontrol"><router-link to='/join'>Join</router-link></li>
-        <li v-if="logincontrol"><router-link to='/user/mypage'>Mypage</router-link></li>
+        <li v-if="!isLogin"><router-link to='/login'>Login</router-link></li>
+        <li v-if="isLogin"><router-link to='/logout'>Logout</router-link></li>
+        <li v-if="!isLogin"><router-link to='/join'>Join</router-link></li>
+        <li v-if="isLogin"><router-link to='/user/mypage'>Mypage</router-link></li>
         <!-- <li><a href="#">Sitemap</a></li> -->
       </ul>
     </div>
@@ -35,11 +35,12 @@ export default {
     this.logincontrolfunc();
   },
   computed: {
-    ...mapState(['logincheck']),
+    ...mapState(['logincheck', 'isLogin']),
   },
   data() {
     return {
       logincontrol: false,
+      token: sessionStorage.getItem('token'),
     };
   },
   methods: {

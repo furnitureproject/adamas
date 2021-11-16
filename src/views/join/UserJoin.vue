@@ -35,6 +35,9 @@
         <input type='text' class="joinbox" id="emailinput" v-model="userEmail1">
         @
         <input type='text' class="joinbox" id="emailinput2" v-model="userEmail2">
+        <select v-model="eoption" @click="econtrol()">
+          <option v-for="(item, idx) in eoptionss" :key="idx" :value='idx'>{{item[idx]}}</option>
+        </select>
       </div>
       <!-- <select v-model="eoption" @click="econtrol()">
           <option :value='0'>직접입력</option>
@@ -44,9 +47,6 @@
           <option :value='4'>nate.com</option>
           <option :value='5'>daum.net</option>
         </select> -->
-        <select v-model="eoption" @click="econtrol()">
-          <option v-for="(item, idx) in eoptionss" :key="idx" :value='idx'>{{item[idx]}}</option>
-        </select>
       <button class="joinbtn" @click="goJoin">회원가입</button>
     </div>
   </div>
@@ -195,5 +195,11 @@ export default {
     padding: 10px 4px;
     border: none;
     border-bottom: 1px solid #444;
+  }
+  #emailinput {
+    width: 170px;
+  }
+  #emailinput2 {
+    width: 310px;
   }
 </style>

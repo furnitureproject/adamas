@@ -48,8 +48,10 @@
             </div>
           </div>
         <div class="buttonBox">
-          <button class="fillBtn">장바구니 담기</button>
-          <button class="fillBtn orderBtn">구매하기</button>
+          <div class="buttonWrap">
+            <button class="fillBtn">장바구니 담기</button>
+            <button class="fillBtn orderBtn">구매하기</button>
+          </div>
         </div>
       </div>
     </div>
@@ -57,7 +59,7 @@
     <div class="descCon">
       <!-- 설명 nav 칸 -->
       <div class="descNav">
-        <div>
+        <div class="navWrap">
           <ul>
             <li>상세정보</li>
             <li>상품후기</li>

@@ -1,5 +1,50 @@
 <template>
   <div class="inner">
+
+
+      <div class="orderBox">
+      <div class="orderBoxInner">
+        <div class='orderTitleCon'>
+          <div class='orderTitle'>
+            <h2>상품 등록</h2>
+            <input type='button' class='deliveryBtn' value="배송지 목록">
+          </div>
+        </div>
+        <div class='deliveryBox'>
+          <div class='fieldBox'>
+            <div class="field">
+              <input type="text" class="fieldInput" placeholder="상품 대표명칭">
+            </div>
+          </div>
+          <div class='deAddInput'>
+            <div class="field">
+              <!-- <button class="btnAddressSearch">주소찾기</button> -->
+              <input type="text" class="codeAddress" placeholder="우편번호">
+            </div>
+            <div class="field">
+              <input type="text" class="normalAddress" placeholder="기본주소">
+            </div>
+            <div class="field">
+              <input type="text" class="detailAddress" placeholder="상세주소">
+            </div>
+          </div>
+          <div class="dePhoneInput">
+            <div class="field">
+              <input type="text" class="firstnum" placeholder="010">
+              <input type="text" class="secondnum" placeholder="핸드폰 앞자리">
+              <input type="text" class="thidnum" placeholder="핸드폰 뒷자리">
+            </div>
+          </div>
+          <div>
+            <div class="field">
+              <input type="text" class="select" placeholder="요구사항">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <div>
       <div class='TitleCon'>
         <div class="Title">
@@ -14,7 +59,7 @@
         <label for="productContent">
           <input type="checkbox" v-model="contentOnOff">상품 내용(텍스트)
         </label>
-        <textarea rows="10" cols="100" id="productContent" v-model="productContent"
+        <textarea rows="10" cols="100" id="productContent" v-model="productDesc"
           v-if="contentOnOff"></textarea>
       </div>
       <div class="registbox">
@@ -55,55 +100,49 @@
       <div class="cateWrap">
         <div class='catebox cateboxtier1'>
           <p>카테고리 대분류</p>
-          <select size="15" v-model="tier1" @click="testOnClick">
-            <option>거실</option>
-            <option>주방</option>
-            <option>큰방</option>
-            <option>화장실</option>
-            <option>샤워룸</option>
-            <option>서재</option>
+          <select size="15" v-model="tier1" @click="tierOneOnClick">
+            <option value="100000">국내</option>
+            <option value="200000">해외</option>
           </select>
         </div>
         <div class='catebox cateboxtier2'>
           <p>카테고리 중분류</p>
-          <select size="15" v-model="tier2" @click="testOnClick">
-            <option>침대</option>
-            <option>의자</option>
-            <option>책상</option>
-            <option>게이밍</option>
-            <option>장롱</option>
+          <select size="15" v-model="tier2" @click="tiertwoOnClick">
+            <option v-for="(ct2, idx) in tier2list" :key="idx" :value="ct2.categoryCode">{{ct2.categoryName}}</option>
           </select>
         </div>
         <div class='catebox cateboxtier3'>
           <p>카테고리 소분류</p>
-          <select size="15" v-model="tier3" @click="testOnClick">
-            <option>책상</option>
-            <option>의자</option>
-            <option>다리</option>
-            <option>쇼파</option>
-            <option>식탁</option>
-            <option>자동차</option>
+          <select size="15" v-model="tier3" @click="tierthreeOnClick">
+            <option v-for="(ct3, idx) in tier3list" :key="idx" :value="ct3.categoryCode">{{ct3.categoryName}}</option>
           </select>
         </div>
       </div>
     </div>
-    <button>제품 등록</button>
+    <button @click="setProduct">제품 등록</button>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
+      productCode: 1,
+      token: sessionStorage.getItem('token'),
       contentOnOff: false,
       productTitle: '',
-      productContent: '',
+      productDesc: '',
       optionName: '',
       optionQuantity: 0,
       optionPrice: 0,
+      // 카테고리용 티어
       tier1: '',
       tier2: '',
-      tier3: '',
+      tier3: '', //tier3 은 담아서 보내줘야함.
+      tier2list: [],
+      tier3list: [],
       // 대표이미지
       repimg: null,
       // 설명 이미지
@@ -111,11 +150,26 @@ export default {
     };
   },
   methods: {
-    testOnClick() {
+    // 카테고리 선택
+    async tierOneOnClick() {
       console.log(this.tier1);
-      console.log(this.tier2);
+      const url = `/ROOT/category/list_category?categoryParent=${this.tier1}`;
+      const headers = { 'Content-Type': 'application/json' };
+      const res = await axios.get(url, { headers });
+      this.tier2list = res.data.list;
+      console.log(this.tier2list);
+    },
+    async tiertwoOnClick() {
+      const url = `/ROOT/category/list_category?categoryParent=${this.tier2}`;
+      const headers = { 'Content-Type': 'application/json' };
+      const res = await axios.get(url, { headers });
+      this.tier3list = res.data.list;
+      console.log(this.tier3list);
+    },
+    tierthreeOnClick() {
       console.log(this.tier3);
     },
+    // 이미지 첨부시 이렇게 해서 change씀
     handlerFile(e) {
       const file = e.target.files[0];
       this.repimg = file;
@@ -126,16 +180,20 @@ export default {
       this.descimg = files;
       console.log(this.descimg);
     },
+    // 제품등록
+    // 방식은 왼쪽엔 제품기본정보 등록하는거 놔두고 카테고리까지 골라지면 오른쪽에 옵션 등록이 활성화되면서 옵션까지 마치고나면 한번에 등록하도록 할것.
+    // 따로 따로 해버리면 상품만 등록하고 취소해버리면 옵션이 없는 상품이 DB에 올라가버림
     async setProduct() {
-      const url = `/ROOT/product/insert?categoryCode=${this.categoryCode}`;
-      // const url = '/ROOT/test/eee';
+      const url = `/ROOT/product/insert?categoryCode=${this.tier3}`;
       const headers = { 'Content-Type': 'multipart/form-data', token: this.token };
       console.log(this.token);
       const body = new FormData();
+      body.append('productCode', this.productCode);
       body.append('productTitle', this.productTitle);
-      body.append('productDesc', this.productContent);
-      // body.append('categoryCode', this.categoryCode);
-      body.append('file', this.productImg);
+      if (this.productDesc !== '') {
+        body.append('productDesc', this.productDesc);
+      }
+      body.append('file', this.repimg);
       console.log(body);
       const res = await axios.post(url, body, { headers });
       console.log(res);

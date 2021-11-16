@@ -11,7 +11,19 @@ export default createStore({
       userPhone: null,
       userEmail: null,
     },
-    token: null,
+    sellerJoinBody: {
+      sellerId: null,
+      sellerPw: null,
+      sellerName: null,
+      sellerBirth: null,
+      sellerPhone: null,
+      sellerEmail: null,
+      businessName: null,
+      businessCode: null,
+      storeName: null,
+      storePhone: null,
+    },
+    isLogin: false, //로그인 할때 씀
   },
   mutations: {
     changeLoginMut: (state, payload) => {
@@ -27,9 +39,22 @@ export default createStore({
       state.userJoinBody.userPhone = payload.userPhone;
       state.userJoinBody.userEmail = payload.userEmail;
     },
-    changeTokenState: (state, payload) => {
-      state.token = payload;
+    changeSellerJoin: (state, payload) => {
+      state.sellerJoinBody.sellerId = payload.sellerId
+      state.sellerJoinBody.sellerPw = payload.sellerPw
+      state.sellerJoinBody.sellerName = payload.sellerName
+      state.sellerJoinBody.sellerBirth = payload.sellerBirth
+      state.sellerJoinBody.sellerPhone = payload.sellerPhone
+      state.sellerJoinBody.sellerEmail = payload.sellerEmail
+      state.sellerJoinBody.businessName = payload.businessName
+      state.sellerJoinBody.businessCode = payload.businessCode
+      state.sellerJoinBody.storeName = payload.storeName
+      state.sellerJoinBody.storePhone = payload.storePhone
     },
+    // 로그인 유무
+    changeisLoginState: (state, payload) => {
+      state.isLogin = payload;
+    }
   },
   getters: {
   },
@@ -40,9 +65,12 @@ export default createStore({
     changeUserJoinAct: ({ commit }, payload) => {
       commit('changeUserJoin', payload);
     },
-    changeTokenStateAct: ({ commit }, payload) => {
-      commit('changeTokenState', payload);
+    changeSellerJoinAct: ({ commit }, payload) => {
+      commit('changeSellerJoin', payload);
     },
+    changeisLoginAct: ({ commit }, payload) => {
+      commit('changeisLoginState', payload);
+    }
   },
   modules: {
   },

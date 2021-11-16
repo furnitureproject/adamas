@@ -6,35 +6,35 @@
       <div class='inputdiv'>
         <label for="idinput">ID</label>
         <input type='text' class="joinbox" id="idinput"
-          v-model="userbody.userId" @input="checkId($event)">
-        <div v-if="userIdcheck">아이디가 중복됩니다.</div>
+          v-model="sellerbody.sellerId" @input="checkId($event)">
+        <div v-if="sellerIdcheck">아이디가 중복됩니다.</div>
       </div>
       <div class='inputdiv'>
         <label for="pwinput">비밀번호</label>
-        <input type='password' class="joinbox" id="pwinput" v-model="userbody.userPw">
+        <input type='password' class="joinbox" id="pwinput" v-model="sellerbody.sellerPw">
       </div>
       <div class='inputdiv'>
         <label for="pw2input">비밀번호 확인</label>
-        <input type='password' class="joinbox" id="pw2input" v-model="userPw2">
-        <div v-if="userPw2check">비밀번호가 일치하지 않습니다</div>
+        <input type='password' class="joinbox" id="pw2input" v-model="sellerPw2">
+        <div v-if="sellerPw2check">비밀번호가 일치하지 않습니다</div>
       </div>
       <div class='inputdiv'>
         <label for="nameinput">이름</label>
-        <input type='text' class="joinbox" id="nameinput" v-model="userbody.userName">
+        <input type='text' class="joinbox" id="nameinput" v-model="sellerbody.sellerName">
       </div>
       <div class='inputdiv'>
         <label for="birthinput">생년월일</label>
-        <input type='text' class="joinbox" id="birthinput" v-model="userbody.userBirth">
+        <input type='text' class="joinbox" id="birthinput" v-model="sellerbody.sellerBirth">
       </div>
       <div class='inputdiv'>
         <label for="phoneinput">전화번호</label>
-        <input type='text' class="joinbox" id="phoneinput" v-model="userbody.userPhone">
+        <input type='text' class="joinbox" id="phoneinput" v-model="sellerbody.sellerPhone">
       </div>
       <div class='inputdiv'>
         <label for="emailinput">E-mail</label>
-        <input type='text' class="joinbox" id="emailinput" v-model="userEmail1">
+        <input type='text' class="joinbox" id="emailinput" v-model="sellerEmail1">
         @
-        <input type='text' class="joinbox" id="emailinput2" v-model="userEmail2">
+        <input type='text' class="joinbox" id="emailinput2" v-model="sellerEmail2">
         <select v-model="eoption" @click="econtrol()">
           <option v-for="(item, idx) in eoptionss" :key="idx" :value='idx'>{{item[idx]}}</option>
         </select>
@@ -49,19 +49,19 @@
         </select> -->
       <div class='inputdiv'>
         <label for="bName">상호명</label>
-        <input type='text' class="joinbox" id="bName" v-model="userbody.userName">
+        <input type='text' class="joinbox" id="bName" v-model="sellerbody.businessName">
       </div>
       <div class='inputdiv'>
         <label for="bCode">사업자 번호</label>
-        <input type='text' class="joinbox" id="bCode" v-model="userbody.userName">
+        <input type='number' class="joinbox" id="bCode" v-model="sellerbody.businessCode">
       </div>
       <div class='inputdiv'>
         <label for="sName">스토어명</label>
-        <input type='text' class="joinbox" id="sName" v-model="userbody.userName">
+        <input type='text' class="joinbox" id="sName" v-model="sellerbody.storeName">
       </div>
       <div class='inputdiv'>
         <label for="sPhone">스토어 대표전화</label>
-        <input type='text' class="joinbox" id="sPhone" v-model="userbody.userName">
+        <input type='text' class="joinbox" id="sPhone" v-model="sellerbody.storePhone">
       </div>
       <button class="joinbtn" @click="goJoin">회원가입</button>
     </div>
@@ -74,64 +74,68 @@ import axios from 'axios';
 
 export default {
   computed: {
-    ...mapState(['userJoinBody']),
+    ...mapState(['sellerJoinBody']),
 
   },
   watch: {
-    async userPw2(val) {
+    async sellerPw2(val) {
       console.log(val);
       const url = '/ROOT/test/userpw';
       const headers = { 'Content-Type': 'application/json' };
-      const body = { userPw: this.userbody.userPw, userPw2: this.userPw2 };
+      const body = { userPw: this.sellerbody.sellerPw, userPw2: this.sellerPw2 };
       const response = await axios.post(url, body, { headers });
       console.log(response);
       if (response.data.status === 401) {
-        this.userPw2check = true;
-        console.log(this.userPw2check);
+        this.sellerPw2check = true;
+        console.log(this.sellerPw2check);
       } else {
-        this.userPw2check = false;
-        console.log(this.userPw2check);
+        this.sellerPw2check = false;
+        console.log(this.sellerPw2check);
       }
     },
-    // async userId(val) {
+    // async sellerId(val) {
     //   console.log(val);
-    //   const url = '/ROOT/test/userid';
+    //   const url = '/ROOT/test/sellerid';
     //   const headers = { 'Content-Type': 'application/json' };
-    //   const body = { userId: this.userbody.userId };
+    //   const body = { sellerId: this.sellerbody.sellerId };
     //   const res = await axios.post(url, body, { headers });
     //   console.log(res);
     // },
   },
   data() {
     return {
-      userbody: {
-        userId: null,
-        userPw: null,
-        userName: null,
-        userBirth: null,
-        userPhone: null,
-        userEmail: null,
+      sellerbody: {
+        sellerId: null,
+        sellerPw: null,
+        sellerName: null,
+        sellerBirth: null,
+        sellerPhone: null,
+        sellerEmail: null,
+        businessName: null,
+        businessCode: null,
+        storeName: null,
+        storePhone: null,
       },
-      userEmail1: '',
-      userPw2: '',
-      userEmail2: '',
+      sellerEmail1: '',
+      sellerPw2: '',
+      sellerEmail2: '',
       eoption: 0,
       eoptionss: [{ 0: '직접입력' }, { 1: 'naver.com' }, { 2: 'gmail.com' }, { 3: 'hanmail.net' }, { 4: 'nate.com' }, { 5: 'daum.net' }],
-      userPw2check: false,
-      userIdcheck: false,
+      sellerPw2check: false,
+      sellerIdcheck: false,
     };
   },
   methods: {
-    ...mapActions(['changeUserJoinAct']),
+    ...mapActions(['changeSellerJoinAct']),
     async goJoin() {
-      const url = '/ROOT/user/join';
+      const url = '/ROOT/seller/insert';
       const headers = { 'Content-Type': 'application/json' };
-      this.userbody.userEmail = `${this.userEmail1}@${this.userEmail2}`;
-      await this.changeUserJoinAct(this.userbody);
-      // console.log(this.userId);
-      // console.log(this.userbody);
-      // console.log(this.userJoinBody);
-      const response = await axios.post(url, this.userJoinBody, { headers })
+      this.sellerbody.sellerEmail = `${this.sellerEmail1}@${this.sellerEmail2}`;
+      await this.changeSellerJoinAct(this.sellerbody);
+      // console.log(this.sellerId);
+      // console.log(this.sellerbody);
+      // console.log(this.sellerJoinBody);
+      const response = await axios.post(url, this.sellerJoinBody, { headers })
         .catch((error) => {
           console.log(error);
         });
@@ -143,36 +147,36 @@ export default {
     econtrol() {
       console.log(this.eoption);
       // if (this.eoption === '0') {
-      //   this.userEmail2 = '';
+      //   this.sellerEmail2 = '';
       // } else if (this.eoption === '1') {
-      //   this.userEmail2 = 'naver.com';
+      //   this.sellerEmail2 = 'naver.com';
       // } else if (this.eoption === '2') {
-      //   this.userEmail2 = 'gmail.com';
+      //   this.sellerEmail2 = 'gmail.com';
       // } else if (this.eoption === '3') {
-      //   this.userEmail2 = 'hanmail.net';
+      //   this.sellerEmail2 = 'hanmail.net';
       // } else if (this.eoption === '4') {
-      //   this.userEmail2 = 'nate.com';
+      //   this.sellerEmail2 = 'nate.com';
       // } else if (this.eoption === '5') {
-      //   this.userEmail2 = 'daum.net';
+      //   this.sellerEmail2 = 'daum.net';
       // }
       if (this.eoption === 0) {
-        this.userEmail2 = '';
+        this.sellerEmail2 = '';
       } else {
         console.log(this.eoptionss[this.eoption]);
-        this.userEmail2 = this.eoptionss[this.eoption][this.eoption];
+        this.sellerEmail2 = this.eoptionss[this.eoption][this.eoption];
       }
     },
     async checkId(event) {
       console.log(event.target.value);
       const url = '/ROOT/test/userid';
       const headers = { 'Content-Type': 'application/json' };
-      const body = { userId: this.userbody.userId };
+      const body = { userId: this.sellerbody.sellerId };
       const res = await axios.post(url, body, { headers });
       console.log(res);
       if (res.data.status === 401) {
-        this.userIdcheck = true;
+        this.sellerIdcheck = true;
       } else {
-        this.userIdcheck = false;
+        this.sellerIdcheck = false;
       }
     },
   },
@@ -211,5 +215,11 @@ export default {
       cursor: pointer;
     }
     background: turquoise;
+  }
+  #emailinput {
+    width: 170px;
+  }
+  #emailinput2 {
+    width: 310px;
   }
 </style>

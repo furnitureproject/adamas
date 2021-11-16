@@ -81,3 +81,89 @@ label {
   // color: #fff;
   cursor: pointer;
 }
+
+
+
+
+
+.orderBox {
+  // width: 1200px;
+  margin-bottom: 45px;
+  // margin: 0 auto;
+  // position: relative;
+}
+.orderTitleCon {
+  // background: #eee;
+  padding: 26px 0px 16px 0px;
+  border-bottom: 1px solid #777;
+}
+.orderTitle {
+  height: 40px;
+  h2 {
+    float: left;
+    font-size: 18px;
+    color: #999;
+    line-height: 40px;
+  }
+  .deliveryBtn {
+    margin-left: 25px;
+    display: inline-block;
+    padding: 9px 11px 8px;
+    border: 1px solid #ccc;
+    background: #fff;
+    vertical-align: middle;
+    line-height: 1.4;
+    font-size: 15px;
+    color: #111;
+    text-align: center;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+}
+.field {
+  margin-bottom: 15px;
+  input[type='text'] {
+    display: block;
+    float: left;
+    width: 608px;
+    height: 46px;
+    padding: 13px 16px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 20px;
+    color: #111;
+    letter-spacing: 0;
+    &::placeholder {
+      color: #999;
+    }
+  }
+  &:after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+.deliveryBox {
+  position: relative;
+  margin-top: 20px;
+}
+.deAddInput {
+  .field{
+    .codeAddress { 
+      width: 218px;
+    }
+  }
+}
+.dePhoneInput {
+  .field {
+    input {
+      width: 234px;
+      margin-left: 15px;
+    }
+    .firstnum {
+      width: 110px;
+      margin: 0;
+    }
+  }
+}
