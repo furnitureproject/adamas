@@ -1,0 +1,143 @@
+.TitleCon {
+// background: #eee;
+padding: 26px 0px 16px 0px;
+border-bottom: 1px solid #999;
+margin-bottom: 15px;
+}
+.Title {
+  height: 40px;
+  h2 {
+      float: left;
+      font-size: 20px;
+      line-height: 40px;
+  }
+}
+
+// nav + productlist
+.listwrap {
+  width: 100%;
+  margin: 0 auto;
+  &::after {
+    display: block;
+    content: '';
+    clear: both;
+  }
+}
+.navbar {
+  float: left;
+  padding: 0px 15px;
+  .navcontent {
+    ul {
+      li {
+        margin-bottom: 15px;
+        a{
+          font-size: 13px;
+          &.router-link-active {
+            color: #666;
+            border-bottom: 1px solid #666;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 상품 리스트
+.tablelist {
+  float: left;
+  .image_table {
+    width:1200px;
+    margin:0 auto;
+    ul {
+      font-size:0;
+      // text-align:center;
+      li {
+        text-align:center;
+        font-size:12px;
+        display:inline-block;
+        vertical-align:top;
+        width:310px;
+        margin-right: 30px;
+        a {
+        display:block;
+        width:auto;
+        // background:#f5f5f5;
+        margin:5px;
+        /* 이미지를 담은 박스 스타일 : 이 영역보다 크면 가리워지는 코드 overflow:hidden; absolute의 기준을 잡기 위해 position:relative를 적용*/
+        .screen {
+          overflow:hidden;
+          font-size:0;
+          // height:300px;} 
+          height:310px;} 
+          img {
+            width:100%;
+            height: 100%;
+            transition:transform 1s;
+          }
+        }
+        .textField{
+          margin-top: 10px;
+          /* 제목 스타일 */
+          h3 {
+            font-size:16px;
+            color:#000;
+          }
+          /* 내용 스타일 */
+          p {
+            padding:12px;
+            color:#666;
+          }
+        }
+        &:hover {
+          /* 이미지 크기 비율 조절. 1보다 작으면 작아짐 */
+          img {
+            transform:scale(1.2);
+          }
+        }
+      }
+    }
+  }
+}
+
+// 페이지 네이션
+.pagebox {
+  width: 1200px;
+  position: relative;
+  .pagenation {
+    width: 800px;
+    margin: 0 auto;
+    position: relative;
+    left: -10%;
+    ul {
+      position: absolute;
+      display: block;
+      width: 600px;
+      left: 50%;
+      right: 50%;
+      li {
+        float: left;
+        margin-right: 10px;
+        // border: 1px solid #000;
+        // border-radius: 2px;
+        padding: 5px 10px;
+        a{
+          font-size: 13px;
+          &.router-link-active {
+            color: #666;
+            border-bottom: 1px solid #666;
+          }
+        }
+      }
+      &::after {
+        display: block;
+        content: '';
+        clear: both;
+      }
+    }
+    &::after {
+      display: block;
+      content: '';
+      clear: both;
+    }
+  }
+}

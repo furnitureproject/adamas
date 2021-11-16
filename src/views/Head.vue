@@ -16,7 +16,7 @@
       <ul class="util">
         <!-- <li><a href="#">Contact</a></li>
         <li><a href="#">Help</a></li> -->
-        <li><router-link to='/cart'>Cart</router-link></li>
+        <li><router-link to='/cart'>Cart<span>장바구니</span> </router-link></li>
         <li v-if="!logincontrol"><router-link to='/login'>Login</router-link></li>
         <li v-if="logincontrol"><router-link to='/logout'>Logout</router-link></li>
         <li v-if="!logincontrol"><router-link to='/join'>Join</router-link></li>
@@ -61,8 +61,10 @@ header {
   width: 100%;
   border-bottom: 1px solid #ddd;
   position: relative;
-  top: 0;
-  z-index: 102;
+  // position: fixed;
+  top: 1000;
+  z-index: 2000;
+  background: transparent;
   // background: #555;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 6%), 0 2px 12px 0 rgb(0 0 0 / 3%);
 }
@@ -78,7 +80,8 @@ header {
 		a{
 			/* 폰트 축약형 */
 			/* font-weight: bold; font-size: 24px; line-height: 1; font-family: "arial";  */
-			font: bold 24px/1 "arial";
+			// font: bold 24px/1 "arial";
+			font: bold 24px/1 'Noto Sans KR';
 			color: #444;
 		}
 	}
@@ -90,22 +93,21 @@ header {
 	left: 0px;
     li{
         float: left;
-        
         a{
-            /* inline 요소인 a태그는 block 을 설정하여 크기 조절 가능 */
-            display: block;
-            font: bold 15px/1 "arial";
-            // color: #555;
-            color: black;
-            /* 클릭 영역 확보를 위해 블록화 한 뒤에 패딩을 설정 */
-            padding: 20px 40px;
-            transition: all 0.5s;
+          /* inline 요소인 a태그는 block 을 설정하여 크기 조절 가능 */
+          display: block;
+          font: bold 15px/1;
+          // color: #555;
+          color: black;
+          /* 클릭 영역 확보를 위해 블록화 한 뒤에 패딩을 설정 */
+          padding: 20px 40px;
+          transition: all 0.5s;
         }
         a:hover{
-            // background: #555;
-            background: black;
-            border-radius: 2px;
-            color: #fff;
+          // background: #555;
+          background: black;
+          border-radius: 2px;
+          color: #fff;
         }
     }
 }
@@ -118,12 +120,12 @@ header {
       float: left;
       a {
         display: block;
-        font: 12px/1 "arial";
+        font: 12px/1 "Noto Sans KR";
         color: #999;
         padding: 0px 10px;
       }
       &:hover {
-        border-bottom: 1px solid #666;
+        // border-bottom: 1px solid #666;
         transition: ease-out 1s;
       }
     }

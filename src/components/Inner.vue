@@ -10,7 +10,7 @@ export default {
 
 <style lang='scss' scoped>
 .inner {
-  width: 1340px;
+  width: 1380px;
   margin: 0 auto;
 }
 </style>

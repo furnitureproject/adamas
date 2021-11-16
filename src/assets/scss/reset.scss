@@ -13,7 +13,7 @@ body, h1, h2, h3, h4, th, td, input, select, textarea, button, a, li {
   line-height: 1.5;
   letter-spacing: 0;
   color: #666;
-  font-size: 15px;
+  font-size: 14px;
 }
 input {
   vertical-align: middle;
@@ -37,7 +37,7 @@ a {
   }
   // router 주소가 정확하게 일치하는 경우( === )
   &.router-link-exact-active {
-    color: #42b983;
+    // color: #42b983;
   }
 }
 // 이미지 딱맞게 넣기

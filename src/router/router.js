@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import ProductRegist from '../views/product/ProductRegist.vue'
 import ProductInfo from '../views/product/ProductInfo.vue'
+import ProductList from '../views/product/ProductList.vue'
 import Cart from '../views/order/Cart.vue'
 import Order from '../views/order/Order.vue'
 import UserMypage from '../views/mypage/UserMypage.vue'
@@ -23,6 +24,7 @@ const routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/product/regist', name: 'ProductRegist', component: ProductRegist },
   { path: '/product/info', name: 'ProductInfo', component: ProductInfo },
+  { path: '/product/list', name: 'ProductList', component: ProductList },
   { path: '/cart', name: 'Cart', component: Cart },
   { path: '/order', name: 'Order', component: Order },
   { // 라우터 뷰 안에 라우터 뷰 쓸려면 이렇게 차일드 쓸것

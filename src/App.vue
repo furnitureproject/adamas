@@ -19,7 +19,7 @@ export default {
 @import '@/assets/scss/reset.scss';
 
 .inner{
-	width: 1380px;
+	width: 1340px;
   // min-height: 1000px;
 	margin: 0px auto;
   margin-bottom: 50px;
