@@ -3,14 +3,15 @@
     <div class='inner'>
       <ul class="gnb">
         <li><router-link to='/'>Home</router-link></li>
-        <li><a href="#">거실가구</a></li>
-        <li><a href="#">침실가구</a></li>
-        <li><a href="#">주방가구</a></li>
-        <li><a href="#">욕실가구</a></li>
-        <li><a href="#">수납/생활</a></li>
-        <li><a href="#">키즈가구</a></li>
-        <li><a href="#">서재/학생방</a></li>
-        <li><a href="#">브랜드관</a></li>
+        <!-- <li :value="tab1" @click="golist(tab1)">거실가구</li>
+        <li :value="tab1" @click="golist(tab1)">침실가구</li>
+        <li :value="tab1" @click="golist(tab1)">주방가구</li>
+        <li :value="tab1" @click="golist(tab1)">욕실가구</li>
+        <li :value="tab1" @click="golist(tab1)">수납/생활</li>
+        <li :value="tab1" @click="golist(tab1)">키즈가구</li>
+        <li :value="tab1" @click="golist(tab1)">서재/학생방</li>
+        <li :value="tab1" @click="golist(tab1)">브랜드관</li> -->
+        <li v-for="(i, idx) in list" :key="idx" @click="golist(i.categoryCode)">{{i.categoryName}}</li>
         <!-- <li><a href="#">이벤트</a></li> -->
       </ul>
       <ul class="util">
@@ -28,11 +29,13 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapState } from 'vuex';
 
 export default {
   created() {
     this.logincontrolfunc();
+    this.getCate();
   },
   computed: {
     ...mapState(['logincheck', 'isLogin']),
@@ -41,6 +44,16 @@ export default {
     return {
       logincontrol: false,
       token: sessionStorage.getItem('token'),
+      tab1: 1,
+      tab2: 2,
+      tab3: 3,
+      tab4: 4,
+      tab5: 5,
+      tab6: 6,
+      tab7: 7,
+      tab8: 8,
+      tab9: 9,
+      list: [],
     };
   },
   methods: {
@@ -53,6 +66,17 @@ export default {
         this.logincontrol = false;
       }
     },
+    async golist(val) {
+      console.log(val);
+      this.$router.push(`/pruduct/list?sort=1&categoryParent=${val}&page=1`);
+    },
+    async getCate() {
+      const url = '/ROOT/category/list_category2';
+      const headers = { 'Content-Type': 'application/json' };
+      const res = await axios.get(url, { headers });
+      console.log(res);
+      this.list = res.data.list;
+    }
   },
 };
 </script>
@@ -94,7 +118,23 @@ header {
 	left: 0px;
     li{
         float: left;
-        a{
+        // a{
+        //   /* inline 요소인 a태그는 block 을 설정하여 크기 조절 가능 */
+        //   display: block;
+        //   font: bold 15px/1;
+        //   // color: #555;
+        //   color: black;
+        //   /* 클릭 영역 확보를 위해 블록화 한 뒤에 패딩을 설정 */
+        //   padding: 20px 40px;
+        //   transition: all 0.5s;
+        // }
+        // a:hover{
+        //   // background: #555;
+        //   background: black;
+        //   border-radius: 2px;
+        //   color: #fff;
+        // }
+        
           /* inline 요소인 a태그는 block 을 설정하여 크기 조절 가능 */
           display: block;
           font: bold 15px/1;
@@ -103,12 +143,12 @@ header {
           /* 클릭 영역 확보를 위해 블록화 한 뒤에 패딩을 설정 */
           padding: 20px 40px;
           transition: all 0.5s;
-        }
-        a:hover{
+        &:hover{
           // background: #555;
           background: black;
           border-radius: 2px;
           color: #fff;
+          cursor: pointer;
         }
     }
 }

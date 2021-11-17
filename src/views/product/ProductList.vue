@@ -23,125 +23,30 @@
       <div class="tablelist">
         <div class="image_table">
           <ul>
-            <li>
-              <router-link to='/'>
+            <li v-for="(i, idx) in list" :key="idx" @click="goProductinfo(i.productCode)">
+              <!-- <router-link to='/'> -->
+              <div class="contentBox">
                 <div class="screen">
-                  <img src="@/assets/img/room1.jpg">
+                  <img src="@/assets/img/MATCHSPEL.png">
+                  <!-- <img :src= i.image> -->
                 </div>
                 <div class="textField">
-                  <h3>제목이 들어갈 부분</h3>
-                  <p>내용이 들어갈 부분</p>
+                  <h3>{{i.productTitle}}</h3>
+                  <!-- <h3>asdsadsadsadddddddddddsadasdasdasdsadas</h3> -->
+                  <div>
+                    <span>10%</span>
+                    <p>{{i.optionPrice}}~</p>
+                  </div>
                 </div>
-              </router-link>
+              <!-- </router-link> -->
+              </div>
             </li>
-            <li>
-              <router-link to='/'>
-                <div class="screen">
-                  <img src="@/assets/img/desk1.jpg">
-                </div>
-                <div class="textField">
-                  <h3>WORKSTATION DESK</h3>
-                  <p>215,000 원</p>
-                </div>
-              </router-link>
-            </li>
-            <li>
-              <router-link to='/'>
-                <div class="screen">
-                  <img src="@/assets/img/desk1.jpg">
-                </div>
-                <div class="textField">
-                  <h3>WORKSTATION DESK</h3>
-                  <p>215,000 원</p>
-                </div>
-              </router-link>
-            </li>
-            <li>
-              <router-link to='/'>
-                <div class="screen">
-                  <img src="@/assets/img/desk1.jpg">
-                </div>
-                <div class="textField">
-                  <h3>WORKSTATION DESK</h3>
-                  <p>215,000 원</p>
-                </div>
-              </router-link>
-            </li>
-            <li>
-              <router-link to='/'>
-                <div class="screen">
-                  <img src="@/assets/img/desk1.jpg">
-                </div>
-                <div class="textField">
-                  <h3>WORKSTATION DESK</h3>
-                  <p>215,000 원</p>
-                </div>
-              </router-link>
-            </li>
-            <li>
-              <router-link to='/'>
-                <div class="screen">
-                  <img src="@/assets/img/desk1.jpg">
-                </div>
-                <div class="textField">
-                  <h3>WORKSTATION DESK</h3>
-                  <p>215,000 원</p>
-                </div>
-              </router-link>
-            </li>
-            <li>
-              <router-link to='/'>
-                <div class="screen">
-                  <img src="@/assets/img/desk1.jpg">
-                </div>
-                <div class="textField">
-                  <h3>WORKSTATION DESK</h3>
-                  <p>215,000 원</p>
-                </div>
-              </router-link>
-            </li>
-            <li>
-              <router-link to='/'>
-                <div class="screen">
-                  <img src="@/assets/img/desk1.jpg">
-                </div>
-                <div class="textField">
-                  <h3>WORKSTATION DESK</h3>
-                  <p>215,000 원</p>
-                </div>
-              </router-link>
-            </li>
-            <li>
-              <router-link to='/'>
-                <div class="screen">
-                  <img src="@/assets/img/desk1.jpg">
-                </div>
-                <div class="textField">
-                  <h3>WORKSTATION DESK</h3>
-                  <p>215,000 원</p>
-                </div>
-              </router-link>
-            </li>
-
           </ul>
         </div>
         <div class="pagebox">
             <div class="pagenation">
               <ul>
-                <li><router-link to="/product/list">1</router-link></li>
-                <li><router-link to="/product/list">2</router-link></li>
-                <li><router-link to="/product/list">3</router-link></li>
-                <li><router-link to="/product/list">4</router-link></li>
-                <li><router-link to="/product/list">4</router-link></li>
-                <li><router-link to="/product/list">4</router-link></li>
-                <li><router-link to="/product/list">4</router-link></li>
-                <li><router-link to="/product/list">4</router-link></li>
-                <li><router-link to="/product/list">4</router-link></li>
-                <li><router-link to="/product/list">4</router-link></li>
-                <li><router-link to="/product/list">4</router-link></li>
-                <li><router-link to="/product/list">4</router-link></li>
-                <li><router-link to="/product/list">4</router-link></li>
-                <li><router-link to="/product/list">4</router-link></li>
+                <li v-for="(i, idx) in allpage" :key="i"><router-link to="/product/list">{{idx+1}}</router-link></li>
               </ul>
             </div>
           </div>
@@ -152,8 +57,48 @@
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+  created() {
+    this.getListByCate();
+  },
+  data() {
+    return {
+      // 리스트 불러오기 용 변수
+      categoryParent: 201000,
+      sort: 1,
+      // 받아온 리스트
+      list: [],
+      // 리스트에서 받아야하는 변수
+      CategoryCode: 0,
+      optionPrice: 0,
+      productCode: 0,
+      productTitle: '',
+      allpage: 0, //전체페이지 개수
+      page: 1, //현재 페이지 변경을 위한
+      // nav 버튼으로 온경우
+      navcategoryParent: this.$route.query.categoryParent
+    }
+  },
+  methods: {
+    async getListByCate() {
+      // const url = `/ROOT/product/select_list2?sort=${this.sort}&categoryParent=${this.categoryParent}&page=1`;
+      console.log(this.navcategoryParent);
+      const url = `/ROOT/product/select_list2?sort=${this.sort}&categoryParent=${this.navcategoryParent}&page=1`;
+      const headers = {'Content-Type': 'application/json'};
+      const res = await axios.get(url, {headers});
+      console.log(res);
+      // console.log(res.data.list);
+      this.list = res.data.list;
+      this.allpage = res.data.cnt;
+      // console.log(this.list);
+    },
+    async goProductinfo(val) {
+      console.log(val);
+      this.$router.push(`/product/info?productCode=${val}`);
+    },
+  },
 };
 </script>
 

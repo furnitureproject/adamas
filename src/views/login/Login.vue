@@ -65,6 +65,7 @@ export default {
         if (response.data.status === 200) {
           this.token = response.data.token;
           sessionStorage.setItem('token', this.token);
+          this.changeisLoginAct(true);
           this.$router.push('/');
         } else if (response.data.status === 'invalid-password') {
           alert('아이디와 비밀번호가 일치하지 않습니다.');

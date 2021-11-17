@@ -7,25 +7,22 @@
     </div>
 
       <div>
-        <h1>WORKSTATION DESK</h1>
+        <!-- <h1>WORKSTATION DESK</h1> -->
+        <h1>{{product.productTitle}}</h1>
       </div>
 
     <div class="topCon">
       <div class="imgBox">
-        <img src="@/assets/img/desk1.jpg" width="500" height="500">
+        <!-- <img src="@/assets/img/desk1.jpg" width="500" height="500"> -->
+        <img :src= thumimage width="500" height="500">
       </div>
 
       <div class="topMenu">
           <div class="optionBox">
             <h1>옵션</h1>
             <select id="optionselect" size="15">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
+              <!-- <option>1</option> -->
+              <option v-for="i in optionlist" :key="i">{{i.optionName}}</option>
             </select>
           </div>
           <div class="paymentBox">
@@ -71,7 +68,8 @@
       <!-- 설명 이미지 칸 -->
       <div>
         <div class="descimgbox">
-          <img src='@/assets/img/11st1.jpg'>
+          <!-- <img src='@/assets/img/11st1.jpg'> -->
+          <img :src=i v-for="(i, idx) in deslist" :key="idx">
         </div>
       </div>
       <!-- 상품후기 칸 -->
@@ -156,8 +154,73 @@
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+  created() {
+    this.testgetproductinfo();
+  },
+  data() {
+    return {
+      // productinfo 테스트용 변수
+      productCode: this.$route.query.productCode,
+      // 받은것
+      // 상품정보
+      product: {},
+      // 설명이미지
+      deslist: [],
+      // 썸네일이미지
+      thumimage: '',
+      // 다른 썸네일 이미지
+      subimage: [],
+      // 옵션 리스트
+      optionlist: [],
+    };
+  },
+  methods: {
+    async testgetproductinfo() {
+      // 상품 정보
+      const url = `/ROOT/product/select_one?productCode=${this.productCode}`;
+      // 상품 설명 이미지
+      const url1 = `/ROOT/product/select_desimglist?productCode=${this.productCode}`;
+      // 상품 대표 이미지
+      const url2 = `/ROOT/product//select_Thumimage?productCode=${this.productCode}`;
+      // 상품 서브 이미지
+      const url3 = `/ROOT/product/select_subimglist?productCode=${this.productCode}`;
+      // 상품 옵션
+      const url4 = `/ROOT/productoption/select_list?productCode=${this.productCode}`;
+      const headers = { 'Content-Type': 'application/json' };
+      try {
+        const res = await axios.get(url, {headers});
+        // category_categoryCode: 201001 
+        // productCode: 202111090005 productDesc: "헹거2" 
+        // productHit: 0 productTitle: "헹거2"
+        this.product = res.data.product; 
+        const res1 = await axios.get(url1, {headers});
+        this.deslist = res1.data.list1;
+        const res2 = await axios.get(url2, {headers});
+        this.thumimage = res2.data.image;
+        const res3 = await axios.get(url3, {headers});
+        this.subimage = res3.data.list1;
+        const res4 = await axios.get(url4, {headers});
+        this.optionlist = res4.data.list;
+
+        // console.log(res);
+        // console.log(res1);
+        // console.log(res2);
+        // console.log(res3);
+        // console.log(res4);
+        // console.log(this.product);
+        // console.log(this.deslist);
+        // console.log(this.thumimage);
+        // console.log(this.subimage);
+        console.log(this.optionlist);
+      }
+      catch(err) {
+        console.log(err);
+      }
+    }
+  },
 };
 </script>
 
