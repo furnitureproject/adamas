@@ -58,15 +58,33 @@
 
 <script>
 import axios from 'axios';
+import { mapState } from 'vuex';
 
 export default {
+  name: 'ProductList',
   created() {
+    console.log('created');
     this.getListByCate();
+  },
+  watch: {
+    '$route' (to, from) {
+      console.log('-----------from-------------------');
+      console.log(from);
+      console.log('-----------to-------------------');
+      console.log(to);
+      this.getListByCate();
+    },
+    categoryParent(){
+      this.getListByCate();
+    }
+  },
+  computed: {
+    ...mapState(['categoryParent'])
   },
   data() {
     return {
       // 리스트 불러오기 용 변수
-      categoryParent: 201000,
+      // categoryParent: 201000,
       sort: 1,
       // 받아온 리스트
       list: [],
@@ -78,14 +96,16 @@ export default {
       allpage: 0, //전체페이지 개수
       page: 1, //현재 페이지 변경을 위한
       // nav 버튼으로 온경우
-      navcategoryParent: this.$route.query.categoryParent
+      // navcategoryParent: this.$route.query.categoryParent,
+      
     }
   },
   methods: {
     async getListByCate() {
       // const url = `/ROOT/product/select_list2?sort=${this.sort}&categoryParent=${this.categoryParent}&page=1`;
-      console.log(this.navcategoryParent);
-      const url = `/ROOT/product/select_list2?sort=${this.sort}&categoryParent=${this.navcategoryParent}&page=1`;
+      // console.log(this.$route.query.categoryParent);
+      // const url = `/ROOT/product/select_list2?sort=${this.sort}&categoryParent=${this.navcategoryParent}&page=1`;
+      const url = `/ROOT/product/select_list2?sort=${this.sort}&categoryParent=${this.categoryParent}&page=1`;
       const headers = {'Content-Type': 'application/json'};
       const res = await axios.get(url, {headers});
       console.log(res);

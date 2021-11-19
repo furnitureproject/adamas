@@ -19,11 +19,33 @@
 
       <div class="topMenu">
           <div class="optionBox">
-            <h1>옵션</h1>
-            <select id="optionselect" size="15">
-              <!-- <option>1</option> -->
+            <!-- <h1>옵션</h1> -->
+            <!-- <select id="optionselect" size="15">
               <option v-for="i in optionlist" :key="i">{{i.optionName}}</option>
-            </select>
+            </select> -->
+
+            <!-- 옵션 선택 -->
+            <div>
+              <!-- 옵션 선택 드롭박스 -->
+              <div>옵션</div>
+              <!-- 드롭박스 클릭후 나올 창 -->
+              <div>
+                <div v-for="i in optionlist" :key="i" @click="funClone(i)">
+                  <div>{{i.optionName}}</div>
+                  <div>{{i.optionPrice}}원</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 선택한 옵션 표시 -->
+            <div>
+              <div v-for="s in selOptionlist" :key="s">
+                <div>{{s.optionName}}</div>
+                <div>{{s.optionPrice}}</div>
+                <!-- <div><input type="number" id="ss" v-model="cartcnt"></div> -->
+                <div><input type="number" id="ss" v-model="s.cartOptionCount"></div>
+              </div>
+            </div>
           </div>
           <div class="paymentBox">
             <h1>결제 및 카트</h1>
@@ -46,7 +68,7 @@
           </div>
         <div class="buttonBox">
           <div class="buttonWrap">
-            <button class="fillBtn">장바구니 담기</button>
+            <button class="fillBtn" @click="commitCnt">장바구니 담기</button>
             <button class="fillBtn orderBtn">구매하기</button>
           </div>
         </div>
@@ -162,6 +184,7 @@ export default {
   },
   data() {
     return {
+      // 나중에 vuex에 넣고 query말고 action으로 변경할것.
       // productinfo 테스트용 변수
       productCode: this.$route.query.productCode,
       // 받은것
@@ -175,6 +198,12 @@ export default {
       subimage: [],
       // 옵션 리스트
       optionlist: [],
+      // 선택한 옵션 총 개수(추가하면 +1, 빼면 -1 로 구분하자)
+      selOptionCnt: 0,
+      // 선택한 옵션 리스트
+      selOptionlist: [],
+      // 카트에 담기는 수량
+      cartcnt: 1,
     };
   },
   methods: {
@@ -219,7 +248,33 @@ export default {
       catch(err) {
         console.log(err);
       }
+    },
+    // 클릭했을때 함수
+    funClone(val) {
+      // val 는 클릭한 옵션의 Option 데이터(백엔드에서 받은것)
+      // const org = {productoptionCode: val.optionCode, optionName: val.optionName, optionPrice: val.optionPrice, cartOptionCount: 1};
+      const org = {productOption:{optionCode: val.optionCode}, optionName: val.optionName, optionPrice: val.optionPrice, cartOptionCount: 1};
+      // console.log(org);
+      this.makeCard(org);
+    },
+    // 선택한 옵션을 선택옵션리스트에 추가해주는 함수
+    makeCard(val) {
+      this.selOptionlist.push(val);
+      // console.log(this.selOptionlist);
+    },
+    // 장바구니 담기
+    async commitCnt() {
+      console.log(this.selOptionlist);
+      const url = '/ROOT/cart';
+      const url1 = '/ROOT/order';
+      const headers = {'Content-Type': 'application/json', token: sessionStorage.getItem('token')};
+      const body = this.selOptionlist;
+      const res = await axios.post(url, body, {headers});
+      const res1 = await axios.post(url1, body, {headers});
+      console.log(res);
+      console.log(res1);
     }
+
   },
 };
 </script>

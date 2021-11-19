@@ -1,0 +1,135 @@
+.cartTB {
+    width: 1200px;
+    margin: 20px auto;
+    text-align: center;
+    border-collapse: collapse;
+    thead {
+      tr {
+        th {
+          padding: 14px 20px;
+          border-bottom: 1px solid #eee;
+          text-align: center;
+        }
+      }
+    }
+    tbody {
+      .checkCon {
+        width: 10px;
+        vertical-align: top;
+        padding-top: 30px;
+      }
+      .imgCon {
+        width: 200px;
+      }
+      tr {
+        border-top: 1px solid #eee;
+        td {
+          padding: 20px 0px;
+          .cartImgBox {
+            width: 150px;
+            height: 150px;
+            padding: 20px 0 0 0;
+            margin-left: 10px;
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  .TitleCon {
+    // background: #eee;
+    padding: 26px 0px 16px 0px;
+    border-bottom: 1px solid #999;
+    margin-bottom: 15px;
+  }
+  .Title {
+    height: 40px;
+    h2 {
+      float: left;
+      font-size: 20px;
+      line-height: 40px;
+    }
+  }
+  .cartPriceCon {
+    .cartPrice {
+      float: right;
+      margin-right: 100px;
+      h4 {
+        float: left;
+        font-size: 2em;
+        font-weight: bold;
+        // line-height: 22px;
+        color: #f43142;
+      }
+      .price {
+        float: left;
+        display: block;
+        padding-left: 40px;
+        font-size: 15px;
+        color: #f43142;
+        text-align: right;
+        .totalPrice {
+          margin-right: 3px;
+          font-size: 34px;
+          font-weight: bold;
+          line-height: 41px;
+          vertical-align: -3px;
+          font-style: normal;
+        }
+      }
+      &:after {
+        display: block;
+        content: '';
+        clear: both;
+      }
+    }
+    &:after {
+      display: block;
+      content: '';
+      clear: both;
+    }
+  }
+  
+  .cartBtnBox {
+    text-align: center;
+    margin-top: 15px;
+  }
+  .fillBtn {
+    font-size: 25px;
+    padding: 5px 40px;
+    border: 2px solid #FF6B95;
+    background-color: transparent;
+    color: #FF6B95;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-weight: bold;
+    position: relative;
+    transition: all 0.4s;
+    overflow: hidden;
+    margin-right: 10px;
+  }
+  .fillBtn:focus {
+    outline: none;
+  }
+  .fillBtn::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(-45deg, #FFC796 0%, #FF6B95 100%);
+    top: 0%;
+    left: -100%;
+    transition: all 0.4s;
+    z-index: -1;
+  }
+  .fillBtn:hover::before {
+    transform: translateX(100%);
+  }
+  .fillBtn:hover {
+    color: #eeee;
+    // color: #fff;
+  }

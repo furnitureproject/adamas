@@ -30,7 +30,7 @@
 
 <script>
 import axios from 'axios';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   created() {
@@ -38,7 +38,7 @@ export default {
     this.getCate();
   },
   computed: {
-    ...mapState(['logincheck', 'isLogin']),
+    ...mapState(['logincheck', 'isLogin', 'categoryParent']),
   },
   data() {
     return {
@@ -57,6 +57,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['changecategoryParentAct']),
     logincontrolfunc() {
       console.log(sessionStorage.getItem('token'));
       if (sessionStorage.getItem('token') !== null) {
@@ -67,8 +68,16 @@ export default {
       }
     },
     async golist(val) {
+      console.log('-----------카테고리 코드-------');
       console.log(val);
-      this.$router.push(`/pruduct/list?sort=1&categoryParent=${val}&page=1`);
+      console.log(this.$route.path)
+      // this.$router.push({name: 'ProductList', query: {sort: 1, categoryParent: val, page: 1}});
+      // if(this.$route.path == '/product/list') {
+        console.log('실행')
+        this.changecategoryParentAct(val);
+        console.log(this.categoryParent);
+        this.$router.push('/product/list');
+      // }
     },
     async getCate() {
       const url = '/ROOT/category/list_category2';

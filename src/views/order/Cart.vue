@@ -9,7 +9,7 @@
     <table class="cartTB">
       <thead>
         <tr>
-          <th><input type="checkbox"></th>
+          <th><input type="checkbox" @click="selectAll" v-model="allSelected"></th>
           <th colspan="2">상품정보</th>
           <th>단가</th>
           <th>수량</th>
@@ -18,8 +18,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td class='checkCon'><input type="checkbox"></td>
+        <!-- <tr>
+          <td class='checkCon'><input type="checkbox" v-model="so"></td>
           <td class='imgCon'>
             <div class="cartImgBox">
               <img src='@/assets/img/desk1.jpg'>
@@ -36,24 +36,27 @@
             <p>바로구매</p>
             <p>삭제하기</p>
           </td>
-        </tr>
-        <tr>
-          <td class='checkCon'><input type="checkbox"></td>
+        </tr> -->
+        <tr v-for="(i, idx) in cartlist" :key="idx">
+          <!-- <td class='checkCon'><input type="checkbox" v-model="ischeck" :value="i.cartNo" @click="select"></td> -->
+          <td class='checkCon'><input type="checkbox" v-model="ischeck" :value="i" @click="select"></td>
+          {{ischeck}}
+          {{arrayprice}}
           <td class='imgCon'>
             <div class="cartImgBox">
-              <img src='@/assets/img/desk1.jpg'>
+              <img :src= i.cartImgName>
             </div>
           </td>
           <td>
-            <p>다리가 무려 4개!!!!! 총알배송 다리4개 책상</p>
-            <p>옵션: 다리4개 분홍색</p>
+            <p>{{i.cartName}}</p>
+            <p>{{i.cartOptionName}}</p>
           </td>
-          <td><p>120,000원</p></td>
-          <td><p>1개</p></td>
-          <td><p>120,000원</p></td>
+          <td><p>{{i.cartOptionPrice}}원</p></td>
+          <td><p>{{i.cartOptionCount}}개</p></td>
+          <td><p>{{i.cartOptionPrice*i.cartOptionCount}} 원</p></td>
           <td>
             <p>바로구매</p>
-            <p>삭제하기</p>
+            <p @click='deleteone(i.cartNo)'>삭제하기</p>
           </td>
         </tr>
       </tbody>
@@ -69,153 +72,109 @@
     </div>
 
     <div class="cartBtnBox">
-      <button class="fillBtn">상품 주문</button>
-      <button class="fillBtn">상품 삭제</button>
+      <button class="fillBtn" @click="goOrder">상품 주문</button>
+      <button class="fillBtn" @click="deleteSelected">상품 삭제</button>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+  mounted() {
+    this.getCart();
+  },
+  computed: {
+
+  },
+  data() {
+    return {
+      ischeck: [], //체크된 애들(userids)
+      realischeck: [],
+      cartlist: [], // 페이지 렌더링시 받은 유저가 고른 카트 전체
+      checklist: [], //체크했던 애들
+      selected: [],
+      allSelected: false,
+      token: sessionStorage.getItem('token'),
+      forselectdelete: [],
+      selectprice:0,
+      arrayprice: [],
+    };
+  },
+  methods: {
+    async getCart() {
+      console.log(this.arrayprice);
+      const token = this.token;
+      const url = '/ROOT/cart';
+      const headers = { 'Content-Type': 'application/json', 'token': token };
+      const res = await axios.get(url, { headers });
+      console.log(res);
+      this.cartlist = res.data.list;
+    },
+    select() {
+      this.allSelected = false;
+      // this.ischeck.push(val);
+    },
+    selectAll(){
+      this.ischeck = [];
+      this.arrayprice = [];
+      if (!this.allSelected) {
+        for (let i in this.cartlist) {
+          this.ischeck.push(this.cartlist[i].cartNo);
+          this.arrayprice.push(this.cartlist[i].cartOptionPrice);
+        }
+      }
+    },
+    goOrder() {
+      console.log(this.cartlist);
+      console.log(this.ischeck);
+    },
+    async deleteone(no) {
+      console.log(no);
+      
+      const token = this.token;
+      const url = 'ROOT/cart';
+      const headers = { 'Content-Type': 'application/json', token };
+      const data = [no];
+      const confirmdata = confirm('삭제하시겠습니까?');
+      if(confirmdata){
+      const res = await axios.delete(url, {headers:headers, data:data});
+      console.log(res);
+        if(res.data.status === 200) {
+          await this.getCart();
+          console.log(this.cartlist);
+        }
+      }
+    },
+    async deleteSelected() {
+      const token = this.token;
+      const url = 'ROOT/cart';
+      const headers = { 'Content-Type': 'application/json', token };
+      const data = this.ischeck;
+      // for(let i in this.ischeck) {
+      //   console.log(`${this.ischeck[i]}`)
+      //   this.forselectdelete.push({cartNo: `${this.ischeck[i]}`});
+      // }
+      // console.log(this.forselectdelete);
+      const confirmdata = confirm('삭제하시겠습니까?');
+      if(confirmdata) {
+      const res = await axios.delete(url, {headers:headers, data:data});
+      console.log(res);
+        if(res.data.status === 200) {
+          await this.getCart();
+          console.log(this.cartlist);
+        }
+      }
+    },
+    // 선택한 카트 가격 합
+    allpriceselected() {
+      console.log(this.ischeck);
+    }
+  },
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss' src='@/assets/scss/order/cart.scss' scoped>
 
-.cartTB {
-  width: 1200px;
-  margin: 20px auto;
-  text-align: center;
-  border-collapse: collapse;
-  thead {
-    tr {
-      th {
-        padding: 14px 20px;
-        border-bottom: 1px solid #eee;
-        text-align: center;
-      }
-    }
-  }
-  tbody {
-    .checkCon {
-      width: 10px;
-      vertical-align: top;
-      padding-top: 30px;
-    }
-    .imgCon {
-      width: 200px;
-    }
-    tr {
-      border-top: 1px solid #eee;
-      td {
-        padding: 20px 0px;
-        .cartImgBox {
-          width: 150px;
-          height: 150px;
-          padding: 20px 0 0 0;
-          margin-left: 10px;
-          img {
-            width: 100%;
-            height: 100%;
-          }
-        }
-      }
-    }
-  }
-}
-
-.TitleCon {
-  // background: #eee;
-  padding: 26px 0px 16px 0px;
-  border-bottom: 1px solid #999;
-  margin-bottom: 15px;
-}
-.Title {
-  height: 40px;
-  h2 {
-    float: left;
-    font-size: 20px;
-    line-height: 40px;
-  }
-}
-.cartPriceCon {
-  .cartPrice {
-    float: right;
-    margin-right: 100px;
-    h4 {
-      float: left;
-      font-size: 2em;
-      font-weight: bold;
-      // line-height: 22px;
-      color: #f43142;
-    }
-    .price {
-      float: left;
-      display: block;
-      padding-left: 40px;
-      font-size: 15px;
-      color: #f43142;
-      text-align: right;
-      .totalPrice {
-        margin-right: 3px;
-        font-size: 34px;
-        font-weight: bold;
-        line-height: 41px;
-        vertical-align: -3px;
-        font-style: normal;
-      }
-    }
-    &:after {
-      display: block;
-      content: '';
-      clear: both;
-    }
-  }
-  &:after {
-    display: block;
-    content: '';
-    clear: both;
-  }
-}
-
-.cartBtnBox {
-  text-align: center;
-  margin-top: 15px;
-}
-.fillBtn {
-  font-size: 25px;
-  padding: 5px 40px;
-  border: 2px solid #FF6B95;
-  background-color: transparent;
-  color: #FF6B95;
-  text-transform: uppercase;
-  letter-spacing: 5px;
-  font-weight: bold;
-  position: relative;
-  transition: all 0.4s;
-  overflow: hidden;
-  margin-right: 10px;
-}
-.fillBtn:focus {
-  outline: none;
-}
-.fillBtn::before {
-  content: "";
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-image: linear-gradient(-45deg, #FFC796 0%, #FF6B95 100%);
-  top: 0%;
-  left: -100%;
-  transition: all 0.4s;
-  z-index: -1;
-}
-.fillBtn:hover::before {
-  transform: translateX(100%);
-}
-.fillBtn:hover {
-  color: #eeee;
-  // color: #fff;
-}
 </style>
