@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
   state: {
@@ -82,4 +83,9 @@ export default createStore({
   },
   modules: {
   },
+  plugins: [ createPersistedState({ 
+    //주목! : 여기에 쓴 모듈만 저장됩니다. 
+    // https://ux.stories.pe.kr/207?category=770389
+    // paths: ["cart","auth"], 
+  }), ],
 });
