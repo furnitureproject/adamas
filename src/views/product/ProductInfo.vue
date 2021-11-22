@@ -233,7 +233,7 @@ export default {
         this.subimage = res3.data.list1;
         const res4 = await axios.get(url4, {headers});
         this.optionlist = res4.data.list;
-
+        
         // console.log(res);
         // console.log(res1);
         // console.log(res2);

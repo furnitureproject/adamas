@@ -8,12 +8,18 @@ import ProductList from '../views/product/ProductList.vue'
 import Cart from '../views/order/Cart.vue'
 import Order from '../views/order/Order.vue'
 import UserMypage from '../views/mypage/UserMypage.vue'
+import SellerMypage from '../views/mypage/SellerMypage.vue'
 import UserAddress from '@/components/mypage/user/UserAddress.vue';
 import UserMypageMain from '@/components/mypage/user/UserMypageMain.vue';
+import SellerMypageMain from '@/components/mypage/seller/SellerMypageMain.vue';
 import UserOrderList from '@/components/mypage/user/UserOrderList.vue';
+import SellerOrderList from '@/components/mypage/seller/SellerOrderList.vue';
 import UserInfo from '@/components/mypage/user/UserInfo.vue';
+import SellerInfo from '@/components/mypage/seller/SellerInfo.vue';
 import UserQnA from '@/components/mypage/user/UserQnA.vue';
+import SellerQnA from '@/components/mypage/seller/SellerQnA.vue';
 import UserWithdraw from '@/components/mypage/user/UserWithdraw.vue';
+import SellerWithdraw from '@/components/mypage/seller/SellerWithdraw.vue';
 import UserCancelRequest from '@/components/mypage/user/UserCancelRequest.vue';
 import UserJoin from '../views/join/UserJoin.vue';
 import SellerJoin from '../views/join/SellerJoin.vue';
@@ -44,6 +50,19 @@ const routes = [
     ],
     name: 'UserMypage',
     component: UserMypage,
+  },
+  { // 라우터 뷰 안에 라우터 뷰 쓸려면 이렇게 차일드 쓸것
+    path: '/seller/mypage',
+    children: [
+      { path: '/seller/mypage', component: SellerMypageMain },
+      { path: '/seller/order', component: SellerOrderList },
+      { path: '/seller/qna', component: SellerQnA },
+      { path: '/seller/info', component: SellerInfo },
+      { path: '/seller/withdraw', component: SellerWithdraw },
+
+    ],
+    name: 'SellerMypage',
+    component: SellerMypage,
   },
   { path: '/join', name: 'Join', component: Join },
   { path: '/user/join', name: 'UserJoin', component: UserJoin },

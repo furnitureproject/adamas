@@ -15,8 +15,12 @@ import axios from 'axios';
 import CheckButton from '@/components/CheckButton.vue';
 
 export default {
+  mounted() {
+    this.changeLoginAct(true);
+    console.log(this.logincheck);
+  },
   computed: {
-    ...mapState(['logincheck', 'isLogin']),
+    ...mapState(['logincheck', 'isLogin', 'roleLogin',]),
   },
   data() {
     return {
@@ -30,7 +34,7 @@ export default {
     CheckButton,
   },
   methods: {
-    ...mapActions(['changeisLoginAct']),
+    ...mapActions(['changeisLoginAct', 'changeroleLoginAct', 'changeLoginAct']),
     // 빨강색일때 유저 로그인
     async userlogin() {
       // 테스트 할거면 url 바꿔서 하면됨
@@ -47,27 +51,33 @@ export default {
         if (response.data.status === 200) {
           this.token = response.data.token;
           sessionStorage.setItem('token', this.token);
+          const role = response.data.role;
+          this.changeroleLoginAct(role);
           this.changeisLoginAct(true);
+          console.log(this.roleLogin);
           this.$router.push('/');
         } else if (response.data.status === 'invalid-password') {
           alert('아이디와 비밀번호가 일치하지 않습니다.');
         }
       } else if (this.logincheck.sellerlog) {
-        const url = '/ROOT/sellerlogin';
-        const headers = { 'Content-Type': 'application/json' };
-        const body = { sellerId: this.userId, sellerPw: this.userPw };
-        const response = await axios.post(url, body, { headers })
+        const url1 = '/ROOT/sellerlogin';
+        const headers1 = { 'Content-Type': 'application/json' };
+        const body1 = { sellerId: this.userId, sellerPw: this.userPw };
+        const response1 = await axios.post(url1, body1, { headers1 })
           .catch(() => {
             alert('존재하지않는 아이디 입니다.');
             // console.log(err);
           });
         // console.log(response);
-        if (response.data.status === 200) {
-          this.token = response.data.token;
+        if (response1.data.status === 200) {
+          this.token = response1.data.token;
           sessionStorage.setItem('token', this.token);
+          const role = response1.data.role;
+          this.changeroleLoginAct(role);
           this.changeisLoginAct(true);
+          console.log(this.roleLogin);
           this.$router.push('/');
-        } else if (response.data.status === 'invalid-password') {
+        } else if (response1.data.status === 'invalid-password') {
           alert('아이디와 비밀번호가 일치하지 않습니다.');
         }
       }

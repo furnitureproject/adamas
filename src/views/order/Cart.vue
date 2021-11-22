@@ -40,8 +40,8 @@
         <tr v-for="(i, idx) in cartlist" :key="idx">
           <!-- <td class='checkCon'><input type="checkbox" v-model="ischeck" :value="i.cartNo" @click="select"></td> -->
           <td class='checkCon'><input type="checkbox" v-model="ischeck" :value="i" @click="select"></td>
-          {{ischeck}}
-          {{arrayprice}}
+          <!-- {{ischeck}}
+          {{arrayprice}} -->
           <td class='imgCon'>
             <div class="cartImgBox">
               <img :src= i.cartImgName>
@@ -53,6 +53,7 @@
           </td>
           <td><p>{{i.cartOptionPrice}}원</p></td>
           <td><p>{{i.cartOptionCount}}개</p></td>
+          <!-- <td><p><input type="number" v-bind="i.cartOptionCount">개</p></td> -->
           <td><p>{{i.cartOptionPrice*i.cartOptionCount}} 원</p></td>
           <td>
             <p>바로구매</p>
@@ -66,7 +67,8 @@
       <div class="cartPrice">
         <h4>합계</h4>
         <span class='price'>
-          <em class='totalPrice'>54,578,500</em>원
+          <!-- <em class='totalPrice'>54,578,500</em>원 -->
+          <em class='totalPrice'>{{selectprice}}</em>원
         </span>
       </div>
     </div>
@@ -85,21 +87,24 @@ export default {
   mounted() {
     this.getCart();
   },
-  computed: {
-
+  watch: {
+    ischeck: {
+      deep: true,
+      handler: 'allpriceselected'
+    },
   },
   data() {
     return {
       ischeck: [], //체크된 애들(userids)
-      realischeck: [],
+      ischeckcartno: [], //체크된 애들의 cartno
       cartlist: [], // 페이지 렌더링시 받은 유저가 고른 카트 전체
       checklist: [], //체크했던 애들
       selected: [],
       allSelected: false,
       token: sessionStorage.getItem('token'),
-      forselectdelete: [],
+      forselectdelete: [], // for in 돌려서 key 줄려고했는데 안줘도 되서 지금은 안씀
       selectprice:0,
-      arrayprice: [],
+      arrayprice: [], //안씀
     };
   },
   methods: {
@@ -114,21 +119,22 @@ export default {
     },
     select() {
       this.allSelected = false;
-      // this.ischeck.push(val);
     },
     selectAll(){
       this.ischeck = [];
       this.arrayprice = [];
       if (!this.allSelected) {
         for (let i in this.cartlist) {
-          this.ischeck.push(this.cartlist[i].cartNo);
-          this.arrayprice.push(this.cartlist[i].cartOptionPrice);
+          // this.ischeck.push(this.cartlist[i].cartNo);
+          this.ischeck.push(this.cartlist[i]);
+          // this.arrayprice.push(this.cartlist[i].cartOptionPrice);
         }
       }
     },
     goOrder() {
       console.log(this.cartlist);
       console.log(this.ischeck);
+      this.$router.push('/order');
     },
     async deleteone(no) {
       console.log(no);
@@ -151,7 +157,8 @@ export default {
       const token = this.token;
       const url = 'ROOT/cart';
       const headers = { 'Content-Type': 'application/json', token };
-      const data = this.ischeck;
+      // const data = this.ischeck;
+      const data = this.ischeckcartno;
       // for(let i in this.ischeck) {
       //   console.log(`${this.ischeck[i]}`)
       //   this.forselectdelete.push({cartNo: `${this.ischeck[i]}`});
@@ -169,7 +176,16 @@ export default {
     },
     // 선택한 카트 가격 합
     allpriceselected() {
-      console.log(this.ischeck);
+      // console.log(this.ischeck);
+      this.selectprice = 0;
+      this.ischeckcartno = [];
+      for(let i in this.ischeck) {
+        // console.log(this.ischeck[i].cartOptionPrice);
+        this.selectprice += this.ischeck[i].cartOptionPrice * this.ischeck[i].cartOptionCount; //선택한 카트 총금액 합
+        this.ischeckcartno.push(this.ischeck[i].cartNo); //선택한 카트 넘버만 담기
+      }
+      console.log(this.selectprice);
+      console.log(this.ischeckcartno);
     }
   },
 };

@@ -21,7 +21,8 @@
         <li v-if="!isLogin"><router-link to='/login'>Login</router-link></li>
         <li v-if="isLogin"><router-link to='/logout'>Logout</router-link></li>
         <li v-if="!isLogin"><router-link to='/join'>Join</router-link></li>
-        <li v-if="isLogin"><router-link to='/user/mypage'>Mypage</router-link></li>
+        <!-- <li v-if="isLogin"><router-link to='/user/mypage'>Mypage</router-link></li> -->
+        <li v-if="isLogin"><span class="mypageurl" @click="setmypageurl">Mypage</span></li>
         <!-- <li><a href="#">Sitemap</a></li> -->
       </ul>
     </div>
@@ -38,7 +39,7 @@ export default {
     this.getCate();
   },
   computed: {
-    ...mapState(['logincheck', 'isLogin', 'categoryParent']),
+    ...mapState(['logincheck', 'isLogin', 'categoryParent', 'roleLogin']),
   },
   data() {
     return {
@@ -85,6 +86,14 @@ export default {
       const res = await axios.get(url, { headers });
       console.log(res);
       this.list = res.data.list;
+    },
+    setmypageurl() {
+      console.log(this.roleLogin);
+      if(this.roleLogin === 'user') {
+        this.$router.push('/user/mypage');
+      } else if(this.roleLogin === 'seller') {
+        this.$router.push('/seller/mypage');
+      }
     }
   },
 };
@@ -169,6 +178,12 @@ header {
     li {
       float: left;
       a {
+        display: block;
+        font: 12px/1 "Noto Sans KR";
+        color: #999;
+        padding: 0px 10px;
+      }
+      .mypageurl {
         display: block;
         font: 12px/1 "Noto Sans KR";
         color: #999;

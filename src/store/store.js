@@ -25,6 +25,7 @@ export default createStore({
       storePhone: null,
     },
     isLogin: false, //로그인 할때 씀
+    roleLogin: '', // 로그인 후에 역할 확인용
     categoryParent: 0, //product list 변경할때 씀
   },
   mutations: {
@@ -57,10 +58,14 @@ export default createStore({
     changeisLoginState: (state, payload) => {
       state.isLogin = payload;
     },
+    // 로그인 후에 역할 지정
+    changeroleLoginState: (state, payload) => {
+      state.roleLogin = payload;
+    },
     // navbar 카테고리 변경
     changecategoryParent: (state, payload) => {
       state.categoryParent = payload;
-    }
+    },
   },
   getters: {
   },
@@ -76,6 +81,9 @@ export default createStore({
     },
     changeisLoginAct: ({ commit }, payload) => {
       commit('changeisLoginState', payload);
+    },
+    changeroleLoginAct: ({ commit }, payload) => {
+      commit('changeroleLoginState', payload);
     },
     changecategoryParentAct: ({ commit }, payload) => {
       commit('changecategoryParent', payload);
