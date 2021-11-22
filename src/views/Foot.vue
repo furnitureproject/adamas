@@ -30,6 +30,8 @@ export default {
 
 <style lang='scss' scoped>
 footer{
+  // position: absolute;
+  // bottom: 0;
   width: 100%;
   background: #333;
   padding: 50px 0px;

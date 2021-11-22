@@ -1,0 +1,128 @@
+.inner {
+  // background: #fff9ee;
+}
+.container{
+  position: relative;
+  // background: #eee;
+  margin: 0 auto;
+}
+.productSummary {
+  width: 1000px;
+  // background: tan;
+}
+.forPadding {
+  padding-right: 40px;
+  padding-top: 50px;
+}
+.leftMidBoxCon {
+  margin-bottom: 50px;
+  &::after {
+    display: block;
+    content: '';
+    clear: both;
+  }
+}
+// 상단 왼쪽 박스
+.leftbox {
+  float: left;
+  // background: tomato;
+}
+.imagebox {
+  .titleImg {
+    width: 600px;
+    height: 600px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .subImg {
+    margin-top: 30px;
+    ul {
+      text-align: center;
+      font-size: 0;
+      li {
+        display: inline-block;
+        width: 65px;
+        height: 65px;
+        margin-left: 5px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      li:nth-child(1) {
+        margin-left: 0px;
+      }
+    }
+  }
+}
+
+
+// 상단 중간 박스
+.middlebox {
+  float: left;
+  width: 340px;
+  padding-left: 40px;
+  // background: slateblue;
+}
+.titlebox {
+  // background: steelblue;
+  padding-bottom: 10px;
+  p {
+    color: rgb(36, 35, 35);
+    font-size: 30px;
+  }
+}
+.tstar {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+
+}
+.tprice {
+  padding: 10px 0;
+  color: #111;
+  border-bottom: 1px solid #eee;
+
+  strong {
+    font-size: 32px;
+    vertical-align: bottom;
+    line-height: 41px;
+  }
+  span {
+    font-size: 24px;
+    vertical-align: bottom;
+    line-height: 36px;
+  }
+}
+.tdesc {
+  padding-top: 10px;
+}
+
+
+// 오른쪽 사이드바
+.productSidebar {
+  position: fixed;
+  // 스크롤 내리면 top 부분 수정할것
+  top: 120px;
+  // top: 0px;
+  right: 0;
+  // 어느정도 내려가면 bottom부분 이 올라와야 footer랑 안만남
+  bottom: 0;
+  left: 50%;
+  width: 300px;
+  margin-right: 40px;
+  margin-left: 330px;
+  // 왼쪽 박스 title 부분 높이랑 맞추면 될듯
+  padding-top: 50px;
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+}
+
+// 상품 상세 정보 이미지 박스
+.descbox {
+  width: 960px;
+  img {
+    width: 100%;
+  }
+}
