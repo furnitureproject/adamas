@@ -114,6 +114,7 @@ header {
 .inner{
 	width: 1340px;
 	height: 120px;
+  min-height: 0px;
 	margin: 0px auto;
 	position: relative; /* 자식 absoulte 요소의 기준점 설정 */
 	h1{

@@ -21,6 +21,7 @@ export default {
       if (token !== null) {
         sessionStorage.removeItem('token');
         this.changeisLoginAct(false);
+        alert('로그아웃이 완료되었습니다.');
         this.$router.push('/');
       }
     },

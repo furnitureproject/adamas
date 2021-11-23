@@ -20,7 +20,7 @@ export default {
 
 .inner{
 	width: 1340px;
-  // min-height: 1000px;
+  min-height: 1000px;
 	margin: 0px auto;
   margin-bottom: 50px;
 }

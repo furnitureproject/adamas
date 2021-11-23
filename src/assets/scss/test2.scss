@@ -5,10 +5,20 @@
   position: relative;
   // background: #eee;
   margin: 0 auto;
+  // overflow-x : hidden;
+  // overflow-y : scroll;
+  &::after {
+    display: block;
+    content: '';
+    clear: both;
+  }
 }
 .productSummary {
+  float: left;
   width: 1000px;
   // background: tan;
+  position: relative;
+
 }
 .forPadding {
   padding-right: 40px;
@@ -43,8 +53,8 @@
       font-size: 0;
       li {
         display: inline-block;
-        width: 65px;
-        height: 65px;
+        width: 70px;
+        height: 70px;
         margin-left: 5px;
         img {
           width: 100%;
@@ -102,22 +112,64 @@
 
 // 오른쪽 사이드바
 .productSidebar {
-  position: fixed;
+  float: left;
+  // position: relative;
+  // position: fixed;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
   // 스크롤 내리면 top 부분 수정할것
-  top: 120px;
-  // top: 0px;
-  right: 0;
+  // top: -49px;
+  top: 0px;
+  // right: 0;
   // 어느정도 내려가면 bottom부분 이 올라와야 footer랑 안만남
-  bottom: 0;
-  left: 50%;
-  width: 300px;
-  margin-right: 40px;
-  margin-left: 330px;
+  // bottom: 0;
+  // left: 50%;
+  width: 340px;
+  height: 100vh;
+  // margin-right: 40px;
+  // margin-left: 330px;
   // 왼쪽 박스 title 부분 높이랑 맞추면 될듯
   padding-top: 50px;
+  padding-left: 20px;
   border-left: 1px solid #eee;
   border-right: 1px solid #eee;
+  // background: tomato;
+  margin-bottom: 50px;
 }
+.rightforposition {
+  // position: relative;
+}
+// 옵션 선택 아코디언
+.optioncontainer {
+  // width: 300px;
+  // position: absolute;
+  // top: 0px;
+  // bottom: 240px;
+  .optionwrap { 
+    // position: absolute;
+    // top: 50px;
+    // bottom: 0px;
+    width: 300px;
+    // min-height: 600px;
+    margin: 0 auto 0 0;
+    // max-height: 800px;
+    // border: 1px solid #eee;
+    // overflow-x: hidden;
+    // overflow-y: auto;
+  }
+}
+.optionCard {
+  // width: 300px;
+  border: 1px solid black;
+  // background: white;
+}
+.buttonwrap {
+  position: absolute;
+  bottom: 120px;
+  height: 100px;
+  // background: red;
+}
+
 
 // 상품 상세 정보 이미지 박스
 .descbox {
@@ -126,3 +178,4 @@
     width: 100%;
   }
 }
+

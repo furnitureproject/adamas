@@ -1,12 +1,30 @@
 <template>
-<div>
-  아이디 <input type="text" v-model="userId"><br>
-  비밀번호 <input type="password" v-model="userPw"><br>
-  <!-- <button @click="login">로그인</button> -->
-  <CheckButton/>
-  <button @click="userlogin">로그인</button>
-  <!-- <button @click="testlogin">로그인</button> -->
-</div>
+  <div class="inner">
+    <!-- <div>
+      아이디 <input type="text" v-model="userId"><br>
+      비밀번호 <input type="password" v-model="userPw"><br>
+      <CheckButton/>
+      <button @click="userlogin">로그인</button>
+    </div> -->
+
+    <div class="container">
+      <h2>로그인</h2>
+      <div>
+        <div class="inputBox">
+          <input type="text" required="required" v-model="userId">
+          <span>ID</span>
+        </div>
+        <div class="inputBox">
+          <input type="password" required="required" v-model="userPw">
+          <span>PASSWORD</span>
+        </div>
+        <CheckButton/>
+        <div class="inputBox">
+          <input type="button" value="LOGIN" @click="userlogin">
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -55,6 +73,7 @@ export default {
           this.changeroleLoginAct(role);
           this.changeisLoginAct(true);
           console.log(this.roleLogin);
+          alert('로그인 완료');
           this.$router.push('/');
         } else if (response.data.status === 'invalid-password') {
           alert('아이디와 비밀번호가 일치하지 않습니다.');
@@ -76,6 +95,7 @@ export default {
           this.changeroleLoginAct(role);
           this.changeisLoginAct(true);
           console.log(this.roleLogin);
+          alert('로그인 완료');
           this.$router.push('/');
         } else if (response1.data.status === 'invalid-password') {
           alert('아이디와 비밀번호가 일치하지 않습니다.');
@@ -94,6 +114,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang='scss' scoped>
+@import '@/assets/scss/test1.scss';
 
 </style>

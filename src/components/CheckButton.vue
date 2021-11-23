@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+<div class="testcontainer">
+  <div class="container1">
     <label class="chlabel">
           <input type="checkbox" class="chbox" v-model="changecheck" @click='changeLogin'>
           <span>
@@ -7,6 +8,7 @@
           </span>
     </label>
   </div>
+</div>
 </template>
 
 <script>
@@ -38,5 +40,5 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import '@/assets/scss/checkbutton.scss';
+@import '@/assets/scss/checkbutton2.scss';
 </style>

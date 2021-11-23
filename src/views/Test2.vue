@@ -71,15 +71,31 @@
 
       <!-- 오른쪽 -->
       <div class="productSidebar">
-        <!-- 옵션 박스 -->
-        <div></div>
-        <!-- 옵션 박스 끝 -->
-        <!-- 가격 표시 박스 -->
-        <div></div>
-        <!-- 가격 표시 박스 끝 -->
-        <!-- 버튼 박스 -->
-        <div></div>
-        <!-- 버튼 박스 끝 -->
+        <div class="rightforposition">
+          <!-- 옵션 박스 -->          
+          <div class="optioncontainer">
+            <div class="optionwrap">
+              <label for="optionbutton">옵션</label>
+              <input type="button" id="optionbutton">
+              <div class="optionwindow">
+                <div class="optionCard">
+                  <p>01) 옵션1</p>
+                  <span>333,333</span><span>원</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 옵션 박스 끝 -->
+          <!-- 가격 표시 박스 -->
+          <div></div>
+          <!-- 가격 표시 박스 끝 -->
+          <!-- 버튼 박스 -->
+          <div class="buttonwrap">
+            <label for="pay">결제하기</label>
+            <input type="button" id="pay" value="">
+          </div>
+          <!-- 버튼 박스 끝 -->
+        </div>
       </div>
       <!-- 오른쪽 끝 -->
     </div>
@@ -90,7 +106,7 @@
 
 <script>
 export default {
-
+  
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>Our Newsletter</h2>
+    <h2>로그인</h2>
     <div>
       <div class="inputBox">
         <input type="text" required="required">
@@ -11,7 +11,7 @@
         <span>PASSWORD</span>
       </div>
       <div class="inputBox">
-        <input type="button" value="Subscribe">
+        <input type="button" value="LOGIN">
       </div>
     </div>
   </div>
@@ -28,12 +28,9 @@
 </template>
 
 <script>
-import { test } from '../assets/js/test.js';
 
 export default {
-  mounted() {
-    test();
-  }
+  
 };
 
 </script>

@@ -32,7 +32,7 @@ export default {
 footer{
   // position: absolute;
   // bottom: 0;
-  width: 100%;
+  min-width: 1380px;
   background: #333;
   padding: 50px 0px;
   border-top: 1px solid #888;
