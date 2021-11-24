@@ -160,8 +160,9 @@
 }
 .optionwindow {
   height: 30vh;
-  margin-bottom: 30px;
-  padding-right: 10px;
+  border: 3px solid #eee; 
+  margin-bottom: 120px;
+  // padding-right: 10px;
   overflow-y: auto;
   // 스크롤바 없애기(스크롤바 꾸미기로 갈것)
   -ms-overflow-style: none; /* IE and Edge */
@@ -183,11 +184,11 @@
 }
 .optionCard {
   // width: 300px;
-  border: 1px solid #eee;
+  border-bottom: 1px solid #eee;
   padding: 10px;
   margin-bottom: 5px;
   p {
-    font-size: 16px;
+    font-size: 17px;
   }
   .forcal {
     margin-top: 10px;
@@ -201,7 +202,7 @@
       text-align: right;
       margin-left: 10px;
       strong {
-        font-size: 15px;
+        font-size: 20px;
         color: #111;
       }
       span {
@@ -224,28 +225,89 @@
     margin-bottom: 0px;
   }
 }
-.buttonwrap {
+.sideprice {
+  width: 300px;
   position: absolute;
-  bottom: 120px;
+  bottom: 250px;
+  text-align: right;
+  padding-right: 10px;
+  color: #f43142;
+}
+.buttonwrap {
+  width: 300px;
+  position: absolute;
+  bottom: 140px;
   // margin-top: 60px;
-  height: 60px;
+  // height: 60px;
   // background: red;
-  button {
-    width: 140px;
-    padding: 10px 15px;
-    margin-right: 10px;
-    border: 3px solid #222;
-    color: #222;
-    background: transparent;
-    font-size: 20px;
-    font-weight: 500;
-    &:nth-last-child(1) {
-      margin-right: 0px;
-    }
-    &:focus {
-      // background: red;
-    }
-  }
+  // button {
+  //   width: 140px;
+  //   padding: 10px 15px;
+  //   margin-right: 20px;
+  //   border: 3px solid #222;
+  //   color: #222;
+  //   background: transparent;
+  //   font-size: 20px;
+  //   font-weight: 500;
+  //   &:nth-last-child(1) {
+  //     margin-right: 0px;
+  //   }
+  //   &:focus {
+  //     // background: red;
+  //   }
+  // }
+}
+// 장바구니 담기 버튼
+.fillBtn {
+
+  font-size: 20px;
+  padding: 10px 0;
+  border: 3px solid #333333;
+  background-color: transparent;
+  color: #b4b2b2;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-weight: bold;
+  position: relative;
+  transition: all 0.4s;
+  overflow: hidden;
+  margin-right: 10px;
+  width: 145px;
+}
+.fillBtn:focus {
+  outline: none;
+}
+.fillBtn::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  top: 100%;
+  left: 0;
+  transition: all 0.4s;
+  z-index: -1;
+}
+.fillBtn:hover::before {
+  transform: translateY(-100%);
+}
+.fillBtn:hover {
+  color: #1d1b2e;
+  // color: #fff;
+  cursor: pointer;
+}
+// 구매하기 버튼
+.orderBtn {
+  border: 3px solid #f43142;
+  color: #f43142;
+  margin-right: 0px;
+}
+.orderBtn::before {
+  background: #f43142;
+}
+.orderBtn:hover {
+  // color: #1d1b2e;
+  color: #fff;
 }
 
 

@@ -1,178 +1,137 @@
 <template>
   <div class="inner">
-    <div class='TitleCon'>
-      <div class="Title">
-        <h2>상품 정보</h2>
-      </div>
-    </div>
+    <!-- 전체 박스 -->
+    <div class="container">
 
-      <div>
-        <!-- <h1>WORKSTATION DESK</h1> -->
-        <h1>{{product.productTitle}}</h1>
-      </div>
-
-    <div class="topCon">
-      <div class="imgBox">
-        <!-- <img src="@/assets/img/desk1.jpg" width="500" height="500"> -->
-        <img :src= thumimage width="500" height="500">
-      </div>
-
-      <div class="topMenu">
-          <div class="optionBox">
-            <!-- <h1>옵션</h1> -->
-            <!-- <select id="optionselect" size="15">
-              <option v-for="i in optionlist" :key="i">{{i.optionName}}</option>
-            </select> -->
-
-            <!-- 옵션 선택 -->
-            <div>
-              <!-- 옵션 선택 드롭박스 -->
-              <div>옵션</div>
-              <!-- 드롭박스 클릭후 나올 창 -->
-              <div>
-                <div v-for="i in optionlist" :key="i" @click="funClone(i)">
-                  <div>{{i.optionName}}</div>
-                  <div>{{i.optionPrice}}원</div>
+      <!-- 왼쪽 -->
+      <div class="productSummary">
+        <!-- 왼쪽박스 패딩용 박스 -->
+        <div class="forPadding">
+          <!-- 상단 왼쪽 중앙 container -->
+          <div class="leftMidBoxCon">
+            <!-- 상단 제일 왼쪽 박스 -->
+            <div class="leftbox">
+              <!-- 이미지 -->
+              <div class="imagebox">
+                <!-- 메인 이미지 -->
+                <div class="titleImg">
+                  <img :src= thumimage>
+                </div>
+                <!-- 서브 이미지 -->
+                <div class="subImg">
+                  <ul>
+                    <li><img src="@/assets/img/desk3.jpg"></li>
+                    <li><img src="@/assets/img/desk3.jpg"></li>
+                  </ul>
                 </div>
               </div>
+              <!-- 이미지 끝 -->
             </div>
+            <!-- 상단 제일 왼쪽 박스 끝 -->
 
-            <!-- 선택한 옵션 표시 -->
-            <div>
-              <div v-for="s in selOptionlist" :key="s">
-                <div>{{s.optionName}}</div>
-                <div>{{s.optionPrice}}</div>
-                <!-- <div><input type="number" id="ss" v-model="cartcnt"></div> -->
-                <div><input type="number" id="ss" v-model="s.cartOptionCount"></div>
+            <!-- 상단 중간 박스 -->
+            <div class="middlebox">
+              <!-- 제목 -->
+              <div class="titlebox">
+                <p>{{product.productTitle}}</p>
+              </div>
+              <!-- 제목 끝 -->
+              <!-- 평점 별 -->
+              <div class="tstar">
+                스타 표시
+              </div>
+              <!-- 평점 별 끝 -->
+              <!-- 대표가격 -->
+              <div class="tprice">
+                <strong>599,999</strong><span>원</span>
+              </div>
+              <!-- 대표가격 끝 -->
+              <!-- 상품 요약 설명 -->
+              <div class="tdesc">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque rerum iste aliquid. Qui nobis facilis tempora suscipit perspiciatis facere quibusdam optio amet quis deleniti atque ea repudiandae mollitia, autem voluptates?
+                  Consequatur itaque unde vitae dicta quis ipsum sint fugiat! Incidunt soluta dicta facere minus laborum sed perferendis explicabo, quo, adipisci, aliquid voluptatum molestias aspernatur commodi a beatae nemo tenetur velit?
+                </p>
+              </div>
+              <!-- 상품 요약 설명 끝 -->
+            </div>
+            <!-- 상단 중간 박스 끝-->
+          </div>
+          <!-- 상단 왼쪽 중앙 container 끝 -->
+          <!-- 상품 정보 사진 -->
+          <div class="descbox">
+            <img :src=i v-for="(i, idx) in deslist" :key="idx">
+          </div>
+          <!-- 상품 정보 사진 끝 -->
+        </div>
+        <!-- 왼쪽박스 패딩용 박스 끝 -->
+      </div>
+      <!-- 왼쪽 끝 -->
+
+
+      <!-- 오른쪽 -->
+      <div class="productSidebar">
+        <div class="rightforposition">
+          <!-- 옵션 박스 -->          
+          <div class="optioncontainer">
+            <div class="optionwrap">
+              <!-- <label for="optionbutton">옵션</label>
+              <input type="button" id="optionbutton"> -->
+              <p>옵션</p>
+              <div class="optionwindow">
+                <!-- 여기 카드부분이 반복문 돌아가면 됨 -->
+                <div class="optionCard" v-for="(i, idx) in optionlist" :key="i" @click="funClone(i)">
+                  <p>{{idx}}) {{i.optionName}}</p>
+                  <div class="forcal forcal2">
+                    <div>
+                      <strong>{{i.optionPrice}}</strong><span> 원</span>
+                    </div>
+                  </div>  
+                </div>
+
+                              
+
               </div>
             </div>
           </div>
-          <div class="paymentBox">
-            <h1>결제 및 카트</h1>
-            <div class="cartPriceCon">
-              <div class="cartPrice">
-                <h4>판매가</h4>
-                <span class='price'>
-                  <em class='totalPrice'>54,578,500</em>원
-                </span>
-              </div>
-            </div>
-            <div class="cartPriceCon">
-              <div class="cartPrice">
-                <h4 class="discountTitle">할인가</h4>
-                <span class='discountprice'>
-                  <em class='totalPrice'>54,578,500</em>원
-                </span>
+          <!-- 선택한 옵션 박스 -->
+          <div class="optioncontainer">
+            <div class="optionwrap">
+              <div class="optionwindow windowforheight">
+                <div class="optionCard" v-for="(s, no) in selOptionlist" :key="s">
+                  <p>{{no}}) {{s.optionName}}</p>
+                  <div class="forcal">
+                    <input type="number" v-model="s.cartOptionCount">
+                    <div>
+                      <strong>{{s.optionPrice}}</strong><span> 원</span>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
-        <div class="buttonBox">
-          <div class="buttonWrap">
-            <button class="fillBtn" @click="commitCnt">장바구니 담기</button>
+          <!-- 옵션 박스 끝 -->
+          <!-- 가격 표시 박스 -->
+          <div>
+            <div class="tprice sideprice">
+              <strong>555,555</strong><span>원</span>
+            </div>
+          </div>
+          <!-- 가격 표시 박스 끝 -->
+          <!-- 버튼 박스 -->
+          <div class="buttonwrap">
+            <button class="fillBtn" @click="commitCnt">장바구니</button>
             <button class="fillBtn orderBtn" @click='GoOrder'>구매하기</button>
           </div>
+          <!-- 버튼 박스 끝 -->
         </div>
       </div>
+      <!-- 오른쪽 끝 -->
     </div>
-    <!-- 설명란 -->
-    <div class="descCon">
-      <!-- 설명 nav 칸 -->
-      <div class="descNav">
-        <div class="navWrap">
-          <ul>
-            <li>상세정보</li>
-            <li>상품후기</li>
-            <li>QnA</li>
-            <li>배송안내</li>
-          </ul>
-        </div>
-      </div>
-      <!-- 설명 이미지 칸 -->
-      <div>
-        <div class="descimgbox">
-          <!-- <img src='@/assets/img/11st1.jpg'> -->
-          <img :src=i v-for="(i, idx) in deslist" :key="idx">
-        </div>
-      </div>
-      <!-- 상품후기 칸 -->
-      <div class="reviewWrap">
-        <div class="reviewInner">
-          <!-- reviewListWrap 부분을 반복문 돌릴것 -->
-          <div class="reviewListWrap">
-            <ul>
-              <li class="realReview">
-                <div class="reviewTop">
-                  <!-- <p class="reviewIndex">reviewIndex</p> -->
-                  <p class="reviewTitle">reviewTitle</p>
-                  <p class="reviewRegdate">reviewRegdate</p>
-                </div>
-                <p class="starRating">starRating</p>
-                <div class="reviewContentWrap">
-                  <p class="reviewContent">reviewContent</p>
-                </div>
-                <div class="reviewImgWrap">
-                  <img src="@/assets/img/model1.jpg" class="reviewImg">
-                  <img src="@/assets/img/model2.jpg" class="reviewImg">
-                  <img src="@/assets/img/model3.jpg" class="reviewImg">
-                </div>
-              </li>
-              <li class="realReview">
-                <div class="reviewTop">
-                  <!-- <p class="reviewIndex">reviewIndex</p> -->
-                  <p class="reviewTitle">reviewTitle</p>
-                  <p class="reviewRegdate">reviewRegdate</p>
-                </div>
-                <p class="starRating">starRating</p>
-                <div class="reviewContentWrap">
-                  <p class="reviewContent">reviewContent</p>
-                </div>
-                <div class="reviewImgWrap">
-                  <img src="@/assets/img/model1.jpg" class="reviewImg">
-                  <img src="@/assets/img/model2.jpg" class="reviewImg">
-                  <img src="@/assets/img/model3.jpg" class="reviewImg">
-                </div>
-              </li>
-            </ul>
-            <div class="reviewPage">Pagenation</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- QnA -->
-      <div class="qnaWrap">
-        <div class="accordion">
-          <input type="radio" name="accordion" checked id="answer01">
-          <label for="answer01">QNATitle<em></em></label>
-          <div>
-            <div><p>QNAContent</p></div>
-            <div><p>QNAanswer</p></div>
-          </div>
-          <input type="radio" name="accordion" id="answer02">
-          <label for="answer02">QNATitle<em></em></label>
-          <div>
-            <div><p>QNAContent</p></div>
-            <div><p>QNAanswer</p></div>
-          </div>
-          <input type="radio" name="accordion" id="answer03">
-          <label for="answer03">QNATitle<em></em></label>
-          <div>
-            <div><p>QNAContent</p></div>
-            <div><p>QNAanswer</p></div>
-          </div>
-          <input type="radio" name="accordion" id="answer04">
-          <label for="answer04">QNATitle<em></em></label>
-          <div>
-            <div><p>QNAContent</p></div>
-            <div><p>QNAanswer</p></div>
-          </div>
-        </div>
-        <div>
-          <div>PAGENATION</div>
-        </div>
-      </div>
-    </div>
-
+    <!-- 전체 박스 끝 -->
   </div>
+  <!-- inner 끝 -->
 </template>
 
 <script>
@@ -288,7 +247,7 @@ export default {
 };
 </script>
 
-<style lang='scss' src='@/assets/scss/product/productinfo.scss' scoped>
-
+<style lang='scss' scoped>
+@import '@/assets/scss/product/productinfo.scss';
 
 </style>

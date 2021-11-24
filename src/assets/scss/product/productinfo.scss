@@ -1,54 +1,213 @@
-.TitleCon {
-  // background: #eee;
-  padding: 26px 0px 16px 0px;
-  border-bottom: 1px solid #d9d9d9;
-  margin-bottom: 15px;
+.inner {
+  // background: #fff9ee;
 }
-.Title {
-  height: 40px;
-  h2 {
-    float: left;
-    font-size: 20px;
-    line-height: 40px;
+.container{
+  position: relative;
+  // background: #eee;
+  margin: 0 auto;
+  // overflow-x : hidden;
+  // overflow-y : scroll;
+  &::after {
+    display: block;
+    content: '';
+    clear: both;
+  }
+}
+.productSummary {
+  float: left;
+  width: 1000px;
+  // background: tan;
+  position: relative;
+
+}
+.forPadding {
+  padding-right: 40px;
+  padding-top: 50px;
+}
+.leftMidBoxCon {
+  margin-bottom: 50px;
+  &::after {
+    display: block;
+    content: '';
+    clear: both;
+  }
+}
+// 상단 왼쪽 박스
+.leftbox {
+  float: left;
+  // background: tomato;
+}
+.imagebox {
+  .titleImg {
+    width: 600px;
+    height: 600px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .subImg {
+    margin-top: 30px;
+    ul {
+      text-align: center;
+      font-size: 0;
+      li {
+        display: inline-block;
+        width: 70px;
+        height: 70px;
+        margin-left: 5px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      li:nth-child(1) {
+        margin-left: 0px;
+      }
+    }
   }
 }
 
-.topCon {
-  .imgBox {
-    float: left;
-    margin-right: 50px;
+
+// 상단 중간 박스
+.middlebox {
+  float: left;
+  width: 340px;
+  padding-left: 40px;
+  // background: slateblue;
+}
+.titlebox {
+  // background: steelblue;
+  padding-bottom: 10px;
+  p {
+    color: rgb(36, 35, 35);
+    font-size: 30px;
   }
-  .topMenu {
-    float: left;
-    width: 750px;
-    height: 500px;
-    // padding: 0 20px;
-    // border: 1px solid black;
-    // background: wheat;
-    .optionBox {
+}
+.tstar {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+
+}
+.tprice {
+  padding: 10px 0;
+  color: #111;
+  border-bottom: 1px solid #eee;
+
+  strong {
+    font-size: 32px;
+    vertical-align: bottom;
+    line-height: 41px;
+  }
+  span {
+    font-size: 24px;
+    vertical-align: bottom;
+    line-height: 36px;
+  }
+}
+.tdesc {
+  padding-top: 10px;
+}
+
+
+// 오른쪽 사이드바
+.productSidebar {
+  float: left;
+  // position: relative;
+  // position: fixed;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  // 스크롤 내리면 top 부분 수정할것
+  // top: -49px;
+  top: 0px;
+  // right: 0;
+  // 어느정도 내려가면 bottom부분 이 올라와야 footer랑 안만남
+  // bottom: 0;
+  // left: 50%;
+  width: 340px;
+  height: 100vh;
+  // margin-right: 40px;
+  // margin-left: 330px;
+  // 왼쪽 박스 title 부분 높이랑 맞추면 될듯
+  padding-top: 50px;
+  padding-left: 20px;
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+  // background: tomato;
+  margin-bottom: 50px;
+}
+.rightforposition {
+  // position: relative;
+}
+// 옵션 선택 아코디언
+.optioncontainer {
+  // width: 300px;
+  // position: absolute;
+  // top: 0px;
+  // bottom: 240px;
+  .optionwrap { 
+    // position: absolute;
+    // top: 50px;
+    // bottom: 0px;
+    width: 300px;
+    // min-height: 600px;
+    margin: 0 auto 0 0;
+    // max-height: 800px;
+    // border: 1px solid #eee;
+    // overflow-x: hidden;
+    // overflow-y: auto;
+  }
+}
+.optionwindow {
+  height: 30vh;
+  border: 3px solid #eee; 
+  margin-bottom: 120px;
+  // padding-right: 10px;
+  overflow-y: auto;
+  // 스크롤바 없애기(스크롤바 꾸미기로 갈것)
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    // display: none; /* Chrome, Safari, Opera*/
+    width: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    // 스크롤바 색상
+    background-color: #222;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent; /*스크롤바 트랙 색상*/
+  }
+}
+.windowforheight {
+  height: 25vh;
+}
+.optionCard {
+  // width: 300px;
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+  margin-bottom: 5px;
+  p {
+    font-size: 17px;
+  }
+  .forcal {
+    margin-top: 10px;
+    input[type*='number'] {
+      width: 100px;
       float: left;
-      width: 370px;
-      height: 100%;
-      border-right: 1px solid #d9d9d9;
-      padding: 0 20px 30px 20px;
-      text-align: center;
-      // 옵션박스 제목
-      h1 {
-        font-size: 20px;
-        margin-bottom: 10px;
-      }
-      select {
-        width: 300px;
-      }
     }
-    .paymentBox {
+    div {
+      width: 150px;
       float: left;
-      width: 370px;
-      padding: 0 20px 30px 20px;
-      // 결제및카트 제목
-      h1 {
+      text-align: right;
+      margin-left: 10px;
+      strong {
         font-size: 20px;
-        margin-bottom: 10px;
+        color: #111;
+      }
+      span {
+        font-weight: 600;
+        color: #111;
       }
     }
     &::after {
@@ -57,88 +216,52 @@
       clear: both;
     }
   }
-  // 상단 우측 칸
-  .cartPriceCon {
-    .cartPrice {
-      float: right;
-      margin-right: 100px;
-      h4 {
-        float: left;
-        font-size: 20px;
-        font-weight: bold;
-        // line-height: 22px;
-        color: darkgrey;
-      }
-      .price {
-        float: left;
-        display: block;
-        padding-left: 20px;
-        font-size: 15px;
-        color: darkgrey;
-        text-align: right;
-        .totalPrice {
-          margin-right: 3px;
-          font-size: 25px;
-          font-weight: bold;
-          line-height: 41px;
-          vertical-align: -3px;
-          font-style: normal;
-        }
-      }
-      .discountTitle {
-        color: #f43142;
-      }
-      .discountprice {
-        float: left;
-        display: block;
-        padding-left: 20px;
-        font-size: 15px;
-        color: #f43142;
-        text-align: right;
-        .totalPrice {
-          margin-right: 3px;
-          font-size: 25px;
-          font-weight: bold;
-          line-height: 41px;
-          vertical-align: -3px;
-          font-style: normal;
-        }
-      }
-      &:after {
-        display: block;
-        content: '';
-        clear: both;
-      }
-    }
-    &:after {
-      display: block;
-      content: '';
-      clear: both;
+  .forcal2 {
+    div {
+      margin-left: 110px;
     }
   }
-
-  // 상단 결제 라인
-  .buttonBox {
-    float: left;
-    width: 750px;
-    border-top: 1px solid #d9d9d9;
-    height: 138px;
-    text-align: center;
-    .buttonWrap {
-      margin-top: 15px;
-    }
-  }
-  &::after {
-    display: block;
-    content: '';
-    clear: both;
+  &:nth-last-child(1) {
+    margin-bottom: 0px;
   }
 }
-
+.sideprice {
+  width: 300px;
+  position: absolute;
+  bottom: 250px;
+  text-align: right;
+  padding-right: 10px;
+  color: #f43142;
+}
+.buttonwrap {
+  width: 300px;
+  position: absolute;
+  bottom: 140px;
+  // margin-top: 60px;
+  // height: 60px;
+  // background: red;
+  // button {
+  //   width: 140px;
+  //   padding: 10px 15px;
+  //   margin-right: 20px;
+  //   border: 3px solid #222;
+  //   color: #222;
+  //   background: transparent;
+  //   font-size: 20px;
+  //   font-weight: 500;
+  //   &:nth-last-child(1) {
+  //     margin-right: 0px;
+  //   }
+  //   &:focus {
+  //     // background: red;
+  //   }
+  // }
+}
 // 장바구니 담기 버튼
 .fillBtn {
-  font-size: 25px;
-  padding: 5px 40px;
+
+  font-size: 20px;
+  padding: 10px 0;
   border: 3px solid #333333;
   background-color: transparent;
   color: #b4b2b2;
@@ -149,7 +272,7 @@
   transition: all 0.4s;
   overflow: hidden;
   margin-right: 10px;
-  width: 300px;
+  width: 145px;
 }
 .fillBtn:focus {
   outline: none;
@@ -177,6 +300,7 @@
 .orderBtn {
   border: 3px solid #f43142;
   color: #f43142;
+  margin-right: 0px;
 }
 .orderBtn::before {
   background: #f43142;
@@ -187,156 +311,11 @@
 }
 
 
-// 설명칸
-.descCon {
-  width: 920px;
+// 상품 상세 정보 이미지 박스
+.descbox {
+  width: 960px;
   img {
     width: 100%;
   }
-  // 설명란 nav 바
-  .descNav {
-    .navWrap {
-      ul {
-        margin: 0 auto;
-        text-align: center;
-        border-bottom: 1px solid #333333;
-        li {
-          float: left;
-          width: 210px;
-          padding: 20px 30px;
-          font-size: 20px;
-          text-align: center;
-          cursor: pointer;
-        }
-        &::after {
-          display: block;
-          content: '';
-          clear: both;
-        }
-      }
-    }
-  }
-  // 상품리뷰
-  .reviewWrap {
-    width: 840px;
-    padding: 20px;
-    .reviewInner {
-      .reviewListWrap {
-        .realReview {
-          border-bottom: 1px solid #777;
-          margin-bottom: 10px;
-        }
-        width: 800px;
-        // border: 5px solid red;
-        .reviewTop {
-          width: 100%;
-          position: relative;
-          padding: 5px 10px 5px 10px;
-          border-bottom: 1px solid #777;
-          // .reviewIndex {
-          //   font-size: 10px;
-          //   letter-spacing: 0px;
-          //   color: red;
-          // }
-          .reviewTitle {
-            display: inline-block;
-            vertical-align: middle;
-            font-size: 18px;
-            letter-spacing: 1px;
-            color: #111;
-            font-weight: 900;
-          }
-          .reviewRegdate {
-            display: inline-block;
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            vertical-align: middle;
-            font-size: 14px;
-            letter-spacing: 1px;
-          }
-        }
-        // 별점은 나중에 해보고 수정할것
-        .starRating {
-        }
-        .reviewContentWrap {
-          .reviewContent {
-  
-          }
-        }
-        .reviewImgWrap {
-          .reviewImg {
-            width: 100px;
-            height: 100px;
-          }
-        }
-        .reviewPage {
-          text-align: center;
-        }
-      }
-    }
-  }
 }
 
-// QNA
-.qnaWrap {
-  width: 840px;
-  height: 600px;
-  padding: 20px;
-}
-// 아코디언 스타일
-.accordion {width:800px;margin: 0 auto;}
-// id값에 answer가 있는 애들
-input[id*='answer'] {
-  display: none;
-}
-// 버튼으로 보이는 라벨 꾸미기
-input[id*='answer'] + label {
-  display: block;
-  padding: 20px;
-  border-bottom: 3px solid #eee;
-  // border-bottom: 0;
-  color: #fff;
-  font-weight: 900;
-  background: #555;
-  cursor: pointer;
-  // em태그인 버튼모양 위치를 잡기위해 relative 선언
-  position: relative;
-}
-// 오른쪽 버튼 모양 위치 잡기
-input[id*='answer'] + label em {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  width: 30px;
-  height: 30px;
-  margin-top: -15px;
-  display: inline-block;
-  // url 쓸일 있으면 @import 해오지 말고 src 로 할것. url을 모듈이름으로 인식하는것 같음
-  // https://jolly-sally.tistory.com/87
-  background: url('../../img/arrow.png') 0 0 no-repeat;
-}
-// 컨텐츠가 보여질 영역
-input[id*='answer'] + label + div{
-  max-height: 0;
-  transition: all .35s;
-  overflow: hidden;
-  background: #ebf8ff;
-  font-size: 11px;
-}
-// 컨텐츠 내용 텍스트
-input[id*='answer'] + label + div p{
-  display: inline-block;
-  padding: 20px;
-}
-// input이 checked가 되면 input 다음에 라벨, 라벨 다음에 div에 스타일을 줌
-// 최대높이값을 100px 줌
-input[id*="answer"]:checked + label + div {
-  max-height:100px;
-}
-// 오른쪽 버튼이 위로 올라가게 함(세로로 길게 되어있는 이미지라서 이렇게 처리함)
-input[id*="answer"]:checked + label em {
-  background-position:0 -30px;
-}
-
-  
