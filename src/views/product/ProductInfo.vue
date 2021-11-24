@@ -69,7 +69,7 @@
         <div class="buttonBox">
           <div class="buttonWrap">
             <button class="fillBtn" @click="commitCnt">장바구니 담기</button>
-            <button class="fillBtn orderBtn">구매하기</button>
+            <button class="fillBtn orderBtn" @click='GoOrder'>구매하기</button>
           </div>
         </div>
       </div>
@@ -266,13 +266,22 @@ export default {
     async commitCnt() {
       console.log(this.selOptionlist);
       const url = '/ROOT/cart';
-      const url1 = '/ROOT/order';
-      const headers = {'Content-Type': 'application/json', token: sessionStorage.getItem('token')};
+      // const url1 = '/ROOT/order';
+      const headers = { 'Content-Type': 'application/json', token: sessionStorage.getItem('token') };
       const body = this.selOptionlist;
       const res = await axios.post(url, body, {headers});
-      const res1 = await axios.post(url1, body, {headers});
+      // const res1 = await axios.post(url1, body, {headers});
       console.log(res);
-      console.log(res1);
+      // console.log(res1);
+      if(res.data.status === 200) {
+        const YesOrNo = confirm('장바구니에 담겼습니다. 장바구니로 이동하시겠습니까?');
+        if(YesOrNo === true) {
+          this.$router.push('/cart');
+        }
+      }
+    },
+    async GoOrder() {
+      this.$router.push('/order');
     }
 
   },

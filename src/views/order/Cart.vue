@@ -82,6 +82,7 @@
 
 <script>
 import axios from 'axios';
+import { mapActions } from 'vuex';
 
 export default {
   mounted() {
@@ -108,6 +109,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['changesendcartAct']),
     async getCart() {
       console.log(this.arrayprice);
       const token = this.token;
@@ -134,6 +136,7 @@ export default {
     goOrder() {
       console.log(this.cartlist);
       console.log(this.ischeck);
+      this.changesendcartAct(this.ischeck);
       this.$router.push('/order');
     },
     async deleteone(no) {

@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Test from '../views/Test.vue'
 import Test1 from '../views/Test1.vue'
 import Test2 from '../views/Test2.vue'
+import Test3 from '../views/Test3.vue'
 import ProductRegist from '../views/product/ProductRegist.vue'
 import ProductInfo from '../views/product/ProductInfo.vue'
 import ProductList from '../views/product/ProductList.vue'
@@ -34,6 +35,7 @@ const routes = [
   { path: '/test', name: 'Test', component: Test },
   { path: '/test1', name: 'Test1', component: Test1 },
   { path: '/test2', name: 'Test2', component: Test2 },
+  { path: '/test3', name: 'Test3', component: Test3 },
   { path: '/product/regist', name: 'ProductRegist', component: ProductRegist },
   { path: '/product/info', name: 'ProductInfo', component: ProductInfo },
   { path: '/product/list', name: 'ProductList', component: ProductList },

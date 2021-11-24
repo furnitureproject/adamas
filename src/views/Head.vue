@@ -37,6 +37,7 @@ export default {
   created() {
     this.logincontrolfunc();
     this.getCate();
+
   },
   computed: {
     ...mapState(['logincheck', 'isLogin', 'categoryParent', 'roleLogin']),
@@ -58,14 +59,16 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['changecategoryParentAct']),
+    ...mapActions(['changecategoryParentAct', 'changeisLoginAct']),
     logincontrolfunc() {
       console.log(sessionStorage.getItem('token'));
       if (sessionStorage.getItem('token') !== null) {
-        this.logincontrol = true;
+        // this.logincontrol = true;
+        this.changeisLoginAct(true);
       }
       if (sessionStorage.getItem('token') === null) {
-        this.logincontrol = false;
+        // this.logincontrol = false;
+        this.changeisLoginAct(false);
       }
     },
     async golist(val) {

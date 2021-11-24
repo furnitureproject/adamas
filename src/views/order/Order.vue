@@ -105,8 +105,15 @@
 
 <script>
 import axios from 'axios';
+import { mapState } from 'vuex';
 
 export default {
+  mounted() {
+    console.log(this.sendcart);
+  },
+  computed: {
+    ...mapState(['sendcart']),
+  },
   data() {
     return {
       zip: '',

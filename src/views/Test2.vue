@@ -75,24 +75,56 @@
           <!-- 옵션 박스 -->          
           <div class="optioncontainer">
             <div class="optionwrap">
-              <label for="optionbutton">옵션</label>
-              <input type="button" id="optionbutton">
+              <!-- <label for="optionbutton">옵션</label>
+              <input type="button" id="optionbutton"> -->
+              <p>옵션</p>
               <div class="optionwindow">
+                <!-- 여기 카드부분이 반복문 돌아가면 됨 -->
                 <div class="optionCard">
                   <p>01) 옵션1</p>
-                  <span>333,333</span><span>원</span>
+                  <div class="forcal forcal2">
+                    <div>
+                      <strong>333,333</strong><span> 원</span>
+                    </div>
+                  </div>  
                 </div>
+
+                              
+
+              </div>
+            </div>
+          </div>
+          <!-- 선택한 옵션 박스 -->
+          <div class="optioncontainer">
+            <div class="optionwrap">
+              <div class="optionwindow windowforheight">
+                <div class="optionCard">
+                  <p>01) FREDDE-프레데-블랙-책상</p>
+                  <div class="forcal">
+                    <input type="number">
+                    <div>
+                      <strong>333,333</strong><span> 원</span>
+                    </div>
+                  </div>
+                </div>
+
+               
+
               </div>
             </div>
           </div>
           <!-- 옵션 박스 끝 -->
           <!-- 가격 표시 박스 -->
-          <div></div>
+          <div>
+            <div>
+              <span>1개</span><p>555555원</p>
+            </div>
+          </div>
           <!-- 가격 표시 박스 끝 -->
           <!-- 버튼 박스 -->
           <div class="buttonwrap">
-            <label for="pay">결제하기</label>
-            <input type="button" id="pay" value="">
+            <button>장바구니</button>
+            <button>구매하기</button>
           </div>
           <!-- 버튼 박스 끝 -->
         </div>

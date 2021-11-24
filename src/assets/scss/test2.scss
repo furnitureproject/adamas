@@ -158,16 +158,94 @@
     // overflow-y: auto;
   }
 }
+.optionwindow {
+  height: 30vh;
+  margin-bottom: 30px;
+  padding-right: 10px;
+  overflow-y: auto;
+  // 스크롤바 없애기(스크롤바 꾸미기로 갈것)
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    // display: none; /* Chrome, Safari, Opera*/
+    width: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    // 스크롤바 색상
+    background-color: #222;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent; /*스크롤바 트랙 색상*/
+  }
+}
+.windowforheight {
+  height: 25vh;
+}
 .optionCard {
   // width: 300px;
-  border: 1px solid black;
-  // background: white;
+  border: 1px solid #eee;
+  padding: 10px;
+  margin-bottom: 5px;
+  p {
+    font-size: 16px;
+  }
+  .forcal {
+    margin-top: 10px;
+    input[type*='number'] {
+      width: 100px;
+      float: left;
+    }
+    div {
+      width: 150px;
+      float: left;
+      text-align: right;
+      margin-left: 10px;
+      strong {
+        font-size: 15px;
+        color: #111;
+      }
+      span {
+        font-weight: 600;
+        color: #111;
+      }
+    }
+    &::after {
+      display: block;
+      content: '';
+      clear: both;
+    }
+  }
+  .forcal2 {
+    div {
+      margin-left: 110px;
+    }
+  }
+  &:nth-last-child(1) {
+    margin-bottom: 0px;
+  }
 }
 .buttonwrap {
   position: absolute;
   bottom: 120px;
-  height: 100px;
+  // margin-top: 60px;
+  height: 60px;
   // background: red;
+  button {
+    width: 140px;
+    padding: 10px 15px;
+    margin-right: 10px;
+    border: 3px solid #222;
+    color: #222;
+    background: transparent;
+    font-size: 20px;
+    font-weight: 500;
+    &:nth-last-child(1) {
+      margin-right: 0px;
+    }
+    &:focus {
+      // background: red;
+    }
+  }
 }
 
 

@@ -27,6 +27,7 @@ export default createStore({
     isLogin: false, //로그인 할때 씀
     roleLogin: '', // 로그인 후에 역할 확인용
     categoryParent: 0, //product list 변경할때 씀
+    sendcart: [], // 주문화면에 보낼 카트 데이터
   },
   mutations: {
     changeLoginMut: (state, payload) => {
@@ -66,6 +67,10 @@ export default createStore({
     changecategoryParent: (state, payload) => {
       state.categoryParent = payload;
     },
+    // 주문화면에 보낼 카트 변경
+    changesendcart: (state, payload) => {
+      state.sendcart = payload;
+    },
   },
   getters: {
   },
@@ -87,7 +92,10 @@ export default createStore({
     },
     changecategoryParentAct: ({ commit }, payload) => {
       commit('changecategoryParent', payload);
-    }
+    },
+    changesendcartAct: ({ commit }, payload) => {
+      commit('changesendcart', payload);
+    },
   },
   modules: {
   },
