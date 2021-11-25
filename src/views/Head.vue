@@ -2,7 +2,7 @@
   <header>
     <div class='inner'>
       <ul class="gnb">
-        <li><router-link to='/'>Home</router-link></li>
+        <router-link to='/'><li>Home</li></router-link>
         <!-- <li :value="tab1" @click="golist(tab1)">거실가구</li>
         <li :value="tab1" @click="golist(tab1)">침실가구</li>
         <li :value="tab1" @click="golist(tab1)">주방가구</li>
@@ -17,7 +17,8 @@
       <ul class="util">
         <!-- <li><a href="#">Contact</a></li>
         <li><a href="#">Help</a></li> -->
-        <li><router-link to='/cart'>Cart<span>장바구니</span> </router-link></li>
+        <li><router-link to='/cart' v-if=cartcontroller()>Cart</router-link></li>
+        <li><router-link to='/product/regist' v-if=ProductRegist()>상품등록</router-link></li>
         <li v-if="!isLogin"><router-link to='/login'>Login</router-link></li>
         <li v-if="isLogin"><router-link to='/logout'>Logout</router-link></li>
         <li v-if="!isLogin"><router-link to='/join'>Join</router-link></li>
@@ -96,6 +97,28 @@ export default {
         this.$router.push('/user/mypage');
       } else if(this.roleLogin === 'seller') {
         this.$router.push('/seller/mypage');
+      }
+    },
+    cartcontroller() {
+      if(!this.isLogin) {
+        return false;
+      } else if(this.isLogin) {
+        if(this.roleLogin === 'user') {
+          return true;
+        } else if(this.roleLogin === 'seller') {
+          return false;
+        }
+      }
+    },
+    ProductRegist() {
+      if(!this.isLogin) {
+        return false;
+      } else if(this.isLogin) {
+        if(this.roleLogin === 'seller') {
+          return true;
+        } else if(this.roleLogin === 'user') {
+          return false;
+        }
       }
     }
   },

@@ -46,7 +46,8 @@
         <div class="pagebox">
             <div class="pagenation">
               <ul>
-                <li v-for="(i, idx) in allpage" :key="i"><router-link to="/product/list">{{idx+1}}</router-link></li>
+                <!-- <li v-for="(i, idx) in allpage" :key="i"><router-link :to= changepage(idx+1)>{{idx+1}}</router-link></li> -->
+                <li v-for="(i, idx) in allpage" :key="i" @click="changepage(idx+1)">{{idx+1}}</li>
               </ul>
             </div>
           </div>
@@ -117,6 +118,18 @@ export default {
     async goProductinfo(val) {
       console.log(val);
       this.$router.push(`/product/info?productCode=${val}`);
+    },
+    // 페이지 네이션 변경
+    async changepage(val) {
+      const url = `/ROOT/product/select_list2?sort=${this.sort}&categoryParent=${this.categoryParent}&page=${val}`
+      // return url;
+      const headers = {'Content-Type': 'application/json'};
+      const res = await axios.get(url, {headers});
+      console.log(res);
+      // console.log(res.data.list);
+      this.list = res.data.list;
+      this.allpage = res.data.cnt;
+      // console.log(this.list);
     },
   },
 };

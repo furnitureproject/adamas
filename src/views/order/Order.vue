@@ -109,7 +109,7 @@ import { mapState } from 'vuex';
 
 export default {
   mounted() {
-    console.log(this.sendcart);
+    this.getcartcode();
   },
   computed: {
     ...mapState(['sendcart']),
@@ -258,6 +258,9 @@ export default {
           console.log(extraRoadAddr);
         }
     }).open();
+    },
+    async getcartcode() {
+      console.log(this.sendcart);
     }
   },
 }

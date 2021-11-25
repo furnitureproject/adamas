@@ -43,14 +43,13 @@
               <!-- 평점 별 끝 -->
               <!-- 대표가격 -->
               <div class="tprice">
-                <strong>599,999</strong><span>원</span>
+                <strong>{{bossprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}}</strong><span>원</span>
               </div>
               <!-- 대표가격 끝 -->
               <!-- 상품 요약 설명 -->
               <div class="tdesc">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque rerum iste aliquid. Qui nobis facilis tempora suscipit perspiciatis facere quibusdam optio amet quis deleniti atque ea repudiandae mollitia, autem voluptates?
-                  Consequatur itaque unde vitae dicta quis ipsum sint fugiat! Incidunt soluta dicta facere minus laborum sed perferendis explicabo, quo, adipisci, aliquid voluptatum molestias aspernatur commodi a beatae nemo tenetur velit?
+                  {{product.productDesc}}
                 </p>
               </div>
               <!-- 상품 요약 설명 끝 -->
@@ -59,8 +58,8 @@
           </div>
           <!-- 상단 왼쪽 중앙 container 끝 -->
           <!-- 상품 정보 사진 -->
-          <div class="descbox">
-            <img :src=i v-for="(i, idx) in deslist" :key="idx">
+          <div class="descbox" v-for="(i, idx) in deslist" :key="idx">
+            <img :src= i>
           </div>
           <!-- 상품 정보 사진 끝 -->
         </div>
@@ -84,7 +83,8 @@
                   <p>{{idx}}) {{i.optionName}}</p>
                   <div class="forcal forcal2">
                     <div>
-                      <strong>{{i.optionPrice}}</strong><span> 원</span>
+                      <!-- <strong>{{i.optionPrice}}</strong><span> 원</span> -->
+                      <strong>{{i.optionPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}}</strong><span> 원</span>
                     </div>
                   </div>  
                 </div>
@@ -103,7 +103,7 @@
                   <div class="forcal">
                     <input type="number" v-model="s.cartOptionCount">
                     <div>
-                      <strong>{{s.optionPrice}}</strong><span> 원</span>
+                      <strong>{{s.optionPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}}</strong><span> 원</span>
                     </div>
                   </div>
                 </div>
@@ -140,6 +140,7 @@ import axios from 'axios';
 export default {
   created() {
     this.testgetproductinfo();
+    console.log(this.optionlist);
   },
   data() {
     return {
@@ -163,6 +164,12 @@ export default {
       selOptionlist: [],
       // 카트에 담기는 수량
       cartcnt: 1,
+      // 변경된 product 대표가격
+      commaPrice: '',
+      // 변경된 옵션 가격
+      commaoptionPrice: '',
+      // 대표가격
+      bossprice: 0,
     };
   },
   methods: {
@@ -192,8 +199,9 @@ export default {
         this.subimage = res3.data.list1;
         const res4 = await axios.get(url4, {headers});
         this.optionlist = res4.data.list;
+        this.bossprice = res4.data.price;
         
-        // console.log(res);
+        console.log(res);
         // console.log(res1);
         // console.log(res2);
         // console.log(res3);
@@ -239,8 +247,16 @@ export default {
         }
       }
     },
+    // 주문하기 버튼
     async GoOrder() {
       this.$router.push('/order');
+    },
+    // 돈표시로 바꾸기
+    changeMainDollar() {
+      return product.optionPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    },
+    changeOptionDollar() {
+      return product.optionPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
 
   },

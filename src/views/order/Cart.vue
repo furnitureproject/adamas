@@ -56,8 +56,8 @@
           <!-- <td><p><input type="number" v-bind="i.cartOptionCount">개</p></td> -->
           <td><p>{{i.cartOptionPrice*i.cartOptionCount}} 원</p></td>
           <td>
-            <p>바로구매</p>
-            <p @click='deleteone(i.cartNo)'>삭제하기</p>
+            <!-- <p>바로구매</p> -->
+            <p @click='deleteone(i.cartNo)' class="deleteonebtn">삭제하기</p>
           </td>
         </tr>
       </tbody>
@@ -136,7 +136,7 @@ export default {
     goOrder() {
       console.log(this.cartlist);
       console.log(this.ischeck);
-      this.changesendcartAct(this.ischeck);
+      this.changesendcartAct(this.ischeckcartno);
       this.$router.push('/order');
     },
     async deleteone(no) {
