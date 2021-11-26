@@ -136,6 +136,7 @@
 
 <script>
 import axios from 'axios';
+import { mapActions } from 'vuex';
 
 export default {
   created() {
@@ -173,6 +174,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['changeorderdataAct']),
     async testgetproductinfo() {
       // 상품 정보
       const url = `/ROOT/product/select_one?productCode=${this.productCode}`;
@@ -249,7 +251,15 @@ export default {
     },
     // 주문하기 버튼
     async GoOrder() {
-      this.$router.push('/order');
+      console.log(this.selOptionlist);
+      const url = '/ROOT/orderdir';
+      const headers = { 'Content-Type': 'application/json', token: sessionStorage.getItem('token') };
+      const body = this.selOptionlist;
+      console.log(body);
+      const res = await axios.post(url, body, { headers });
+      console.log(res);
+      this.changeorderdataAct(res.data.orderCode);
+      this.$router.push('/orderdir');
     },
     // 돈표시로 바꾸기
     changeMainDollar() {
@@ -258,7 +268,6 @@ export default {
     changeOptionDollar() {
       return product.optionPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
-
   },
 };
 </script>

@@ -51,10 +51,10 @@
             <p>{{i.cartName}}</p>
             <p>{{i.cartOptionName}}</p>
           </td>
-          <td><p>{{i.cartOptionPrice}}원</p></td>
+          <td><p>{{i.cartOptionPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}}원</p></td>
           <td><p>{{i.cartOptionCount}}개</p></td>
           <!-- <td><p><input type="number" v-bind="i.cartOptionCount">개</p></td> -->
-          <td><p>{{i.cartOptionPrice*i.cartOptionCount}} 원</p></td>
+          <td><p>{{(i.cartOptionPrice*i.cartOptionCount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}} 원</p></td>
           <td>
             <!-- <p>바로구매</p> -->
             <p @click='deleteone(i.cartNo)' class="deleteonebtn">삭제하기</p>
@@ -68,7 +68,7 @@
         <h4>합계</h4>
         <span class='price'>
           <!-- <em class='totalPrice'>54,578,500</em>원 -->
-          <em class='totalPrice'>{{selectprice}}</em>원
+          <em class='totalPrice'>{{selectprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}}</em>원
         </span>
       </div>
     </div>

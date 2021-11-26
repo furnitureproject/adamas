@@ -10,6 +10,7 @@ import ProductInfo from '../views/product/ProductInfo.vue'
 import ProductList from '../views/product/ProductList.vue'
 import Cart from '../views/order/Cart.vue'
 import Order from '../views/order/Order.vue'
+import Orderdir from '../views/order/Orderdir.vue'
 import UserMypage from '../views/mypage/UserMypage.vue'
 import SellerMypage from '../views/mypage/SellerMypage.vue'
 import UserAddress from '@/components/mypage/user/UserAddress.vue';
@@ -43,6 +44,7 @@ const routes = [
   { path: '/product/list', name: 'ProductList', component: ProductList },
   { path: '/cart', name: 'Cart', component: Cart },
   { path: '/order', name: 'Order', component: Order },
+  { path: '/orderdir', name: 'Orderdir', component: Orderdir },
   { // 라우터 뷰 안에 라우터 뷰 쓸려면 이렇게 차일드 쓸것
     path: '/user/mypage',
     children: [
