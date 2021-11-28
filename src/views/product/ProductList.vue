@@ -34,8 +34,7 @@
                   <h3>{{i.productTitle}}</h3>
                   <!-- <h3>asdsadsadsadddddddddddsadasdasdasdsadas</h3> -->
                   <div>
-                    <span>10%</span>
-                    <p>{{i.optionPrice}}~</p>
+                    <p>{{i.optionPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}}원~</p>
                   </div>
                 </div>
               <!-- </router-link> -->

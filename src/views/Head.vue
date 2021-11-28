@@ -209,16 +209,28 @@ header {
         font: 12px/1 "Noto Sans KR";
         color: #999;
         padding: 0px 10px;
+        &:hover {
+        // border-bottom: 1px solid #666;
+        transition: ease-out 1s;
+        color: #222;
+        }
       }
       .mypageurl {
         display: block;
         font: 12px/1 "Noto Sans KR";
         color: #999;
         padding: 0px 10px;
+        &:hover {
+          // border-bottom: 1px solid #666;
+          // transition: ease-out 1s;
+          color: #222;
+          cursor: pointer;
+        }
       }
       &:hover {
         // border-bottom: 1px solid #666;
         transition: ease-out 1s;
+        color: #222;
       }
     }
 }

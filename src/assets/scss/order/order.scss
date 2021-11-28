@@ -208,9 +208,9 @@
   .fillBtn {
     font-size: 25px;
     padding: 5px 40px;
-    border: 2px solid #FF6B95;
+    border: 3px solid #333333;
     background-color: transparent;
-    color: #FF6B95;
+    color: #b4b2b2;
     text-transform: uppercase;
     letter-spacing: 5px;
     font-weight: bold;
@@ -227,16 +227,38 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    background-image: linear-gradient(-45deg, #FFC796 0%, #FF6B95 100%);
-    top: 0%;
-    left: -100%;
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    top: 100%;
+    left: 0;
     transition: all 0.4s;
     z-index: -1;
   }
   .fillBtn:hover::before {
-    transform: translateX(100%);
+    transform: translateY(-100%);
   }
   .fillBtn:hover {
-    color: #eeee;
+    color: #1d1b2e;
     // color: #fff;
+    cursor: pointer;
+  }
+  .danalBtn {
+    border: 3px solid #f43142;
+    color: #f43142;
+    margin-right: 0px;
+  }
+  .danalBtn::before {
+    background: #f43142;
+  }
+  .danalBtn:hover {
+    // color: #1d1b2e;
+    color: #fff;
+  }
+  .kakaoBtn {
+  }
+  .kakaoBtn::before {
+    background: gold;
+  }
+  .kakaoBtn:hover {
+    // color: #1d1b2e;
+    color: #222;
   }

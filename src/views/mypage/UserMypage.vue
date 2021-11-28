@@ -6,7 +6,7 @@
       <ul>
         <router-link to='/user/order'><li>주문 및 배송조회</li></router-link>
         <!-- <router-link to='/user/cancelrequest'><li>취소/반품/교환 조회</li></router-link> -->
-        <router-link to='/user/address'><li>배송지 관리</li></router-link>
+        <!-- <router-link to='/user/address'><li>배송지 관리</li></router-link> -->
         <router-link to='/user/qna'><li>상품 QnA</li></router-link>
         <router-link to='/user/info'><li>회원정보 변경</li></router-link>
         <router-link to='/user/withdraw'><li>회원 탈퇴</li></router-link>
@@ -82,9 +82,9 @@ export default {
     a.router-link-active {
       li {
         color: black;
-        font-size: 19px;
+        // font-size: 19px;
         font-weight: 700;
-        transition: ease-in-out 0.5s;
+        // transition: ease-in-out 0.5s;
       }
     }
   }

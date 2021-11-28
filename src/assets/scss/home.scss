@@ -1,0 +1,53 @@
+.TitleCon {
+  // background: #eee;
+  padding: 26px 0px 16px 0px;
+  // border-bottom: 1px solid #999;
+  margin-bottom: 15px;
+}
+.Title {
+  height: 40px;
+  h2 {
+      float: left;
+      font-size: 20px;
+      line-height: 40px;
+  }
+}
+.listcon {
+  // border: 1px solid #222;
+  margin: 20px 0px;
+}
+.productcard {
+  float: left;
+  width: 300px;
+  padding: 0 12px 40px 12px;
+  .imgbox {
+    width: 276px;
+    height: 300px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .cardcontent {
+    padding: 5px 10px 15px 10px;
+    .cardtitle {
+      color: #444;
+      font-size: 16px;
+    }
+    .carddesc {
+      color: #666;
+      font-size: 15px;
+    }
+    .cardprice {
+      text-align: right;
+      strong {
+        color: #222;
+        font-size: 17px;
+      }
+      span {
+        color: #222;
+        font-size: 16px;
+      }
+    }
+  }
+}

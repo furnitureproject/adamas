@@ -26,20 +26,7 @@ label {
   font-weight: 500;
   margin: 10px 0;
 }
-// 카테고리 선택
-.cateWrap {
-  width: 880px;
-  div {
-    display: inline-block;
-    margin-right: 20px;
-    // border: 1px solid red;
-  }
-  &:after {
-    display: block;
-    content: '';
-    clear: both;
-  }
-}
+
 
 // 버튼 꾸미기
 .fillBtn {
@@ -164,6 +151,41 @@ label {
     .firstnum {
       width: 110px;
       margin: 0;
+    }
+  }
+}
+
+// 카테고리 선택박스
+.cateWrap {
+  &::after {
+    display: block;
+    content: '';
+    clear: both;
+  }
+  .catebox {
+    width: 300px;
+    min-height: 450px;
+    float: left;
+    // border: 1px solid #222;
+    margin-right: 20px;
+    p {
+      font-size: 16px;
+      font-weight: 700;
+      color: #222;
+      border-bottom: 1px solid #222;
+    }
+    .selectbox {
+      .selectcard {
+        label {
+          width: 300px;
+          height: 100px;
+          margin-top: 10px;
+          border: 1px solid #eee; 
+        }
+        input[type='button'] {
+          display: none;
+        }
+      }
     }
   }
 }

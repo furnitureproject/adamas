@@ -40,7 +40,7 @@
       </div>
       <div class="registbox">
         <label for="productContent">
-          <input type="checkbox" v-model="contentOnOff">상품 내용(텍스트)
+          <input type="checkbox" v-model="contentOnOff"> 상품 내용(텍스트)
         </label>
         <textarea rows="10" cols="100" id="productContent" v-model="productDesc"
           v-if="contentOnOff"></textarea>
@@ -51,38 +51,40 @@
         <input type="file" @change='handlerFile' name="filename" id="filebox" accept=".jpg, .png" hidden>
       </div>
       <div class="registbox">
-        <label for="multibox">상세정보 이미지 첨부</label>
+        <button class="fillBtn"><label for="multibox">상세정보 이미지 첨부</label></button>
         <input multiple="multiple" @change='handlerFiles' ref="file" type="file" name="filename[]" id="multibox" accept=".jpg, .png" hidden>
       </div>
       <div class="registbox">
         <div class='TitleCon'>
-        <div class="Title">
-          <h2>옵션지정</h2>
+          <div class="Title">
+            <h2>옵션지정</h2>
+          </div>
         </div>
-      </div>
-        <div><h3>옵션1</h3></div>
-        <!-- <div>
-          <label for="optionName">옵션 이름</label>
-          <input type="text" id="optionName" v-model="optionName">  
-        </div> -->
-        <div class="field">
-          <input type="text" class="fieldInput" placeholder="옵션 이름" v-model="optionName">
+        <div class="optionbox" v-for="(i, idx) in optionlist" :key="idx">
+          <div><h3>옵션{{idx+1}}</h3></div>
+          <!-- <div>
+            <label for="optionName">옵션 이름</label>
+            <input type="text" id="optionName" v-model="optionName">  
+          </div> -->
+          <div class="field">
+            <input type="text" class="fieldInput" placeholder="옵션 이름" v-model="optionlist[idx].optionName">
+          </div>
+          <!-- <div>
+            <label for="optionQuantity">옵션수량</label>
+            <input type="text" id="optionQuantity" v-model="optionQuantity">
+          </div> -->
+          <div class="field">
+            <input type="text" class="fieldInput" placeholder="옵션 수량" v-model="optionlist[idx].optionQuantity">
+          </div>
+          <!-- <div>
+            <label for="optionPrice">옵션가격</label>
+            <input type="text" id="optionPrice" v-model="optionPrice"><span>원</span>
+          </div> -->
+          <div class="field">
+            <input type="text" class="fieldInput" placeholder="옵션 가격" v-model="optionlist[idx].optionPrice">
+          </div>
         </div>
-        <!-- <div>
-          <label for="optionQuantity">옵션수량</label>
-          <input type="text" id="optionQuantity" v-model="optionQuantity">
-        </div> -->
-        <div class="field">
-          <input type="text" class="fieldInput" placeholder="옵션 수량" v-model="optionQuantity">
-        </div>
-        <!-- <div>
-          <label for="optionPrice">옵션가격</label>
-          <input type="text" id="optionPrice" v-model="optionPrice"><span>원</span>
-        </div> -->
-        <div class="field">
-          <input type="text" class="fieldInput" placeholder="옵션 가격" v-model="optionPrice">
-        </div>
-        <div><button class="fillBtn">옵션 추가</button></div>
+        <div><button class="fillBtn" @click="optionplus">옵션 추가</button></div>
       </div>
       <div class='TitleCon'>
           <div class="Title">
@@ -92,27 +94,38 @@
       <div class="cateWrap">
         <div class='catebox cateboxtier1'>
           <p>카테고리 대분류</p>
-          <select size="15" v-model="tier1" >
-            <option value="100000" @click="tierOneOnClick">국내</option>
-            <option value="200000" @click="tierOneOnClick">해외</option>
-          </select>
+          <div class="selectbox">
+            <div class="selectcard">
+              <label for="tier1">국내</label>
+              <input type="button" @click="tierOneOnClick(100000)" id="tier1">
+            </div>
+            <div class="selectcard">
+              <label for="tier12">해외</label>
+              <input type="button" @click="tierOneOnClick(200000)" id="tier12">
+            </div>
+          </div>
         </div>
         <div class='catebox cateboxtier2'>
           <p>카테고리 중분류</p>
-          <select size="15" v-model="tier2">
-            <option v-for="(ct2, idx) in tier2list" :key="idx" :value="ct2.categoryCode" @click="tiertwoOnClick">{{ct2.categoryName}}</option>
-          </select>
+          <div class="selectbox">
+            <div v-for="(ct2, cidx) in tier2list" :key="cidx" class="selectcard">
+              <label :for= "'tier2'+cidx" >{{ct2.categoryName}}</label>
+              <input type="button" @click="tiertwoOnClick(ct2.categoryCode)" :id="'tier2'+cidx">
+            </div>
+          </div>
         </div>
         <div class='catebox cateboxtier3'>
           <p>카테고리 소분류</p>
-          <select size="15" v-model="tier3">
-            <option v-for="(ct3, idx) in tier3list" :key="idx" :value="ct3.categoryCode" @click="tierthreeOnClick">{{ct3.categoryName}}</option>
-          </select>
+          <div class="selectbox">
+            <div v-for="(ct3, tidx) in tier3list" :key="tidx" class="selectcard">
+              <label :for= "'tier3'+tidx" >{{ct3.categoryName}}</label>
+              <input type="button" @click="tierthreeOnClick(ct3.categoryCode)" :id="'tier3'+tidx">
+            </div>
+          </div>
         </div>
-        
       </div>
     </div>
-    <button @click="setProduct">제품 등록</button>
+    <button @click="setProduct" class="fillBtn">제품 등록</button>
   </div>
 </template>
 
@@ -140,12 +153,14 @@ export default {
       repimg: null,
       // 설명 이미지
       descimg: [],
-      optioncard: [],
+      optioncard: { optionName: '', optionQuantity: '', optionPrice: '' },
+      optionlist: [{ optionName: '', optionQuantity: '', optionPrice: '' }],
     };
   },
   methods: {
     // 카테고리 선택
-    async tierOneOnClick() {
+    async tierOneOnClick(val) {
+      this.tier1 = val;
       console.log(this.tier1);
       const url = `/ROOT/category/list_category?categoryParent=${this.tier1}`;
       const headers = { 'Content-Type': 'application/json' };
@@ -153,14 +168,17 @@ export default {
       this.tier2list = res.data.list;
       console.log(this.tier2list);
     },
-    async tiertwoOnClick() {
+    async tiertwoOnClick(val) {
+      this.tier2 = val;
+      console.log(this.tier2);
       const url = `/ROOT/category/list_category?categoryParent=${this.tier2}`;
       const headers = { 'Content-Type': 'application/json' };
       const res = await axios.get(url, { headers });
       this.tier3list = res.data.list;
       console.log(this.tier3list);
     },
-    tierthreeOnClick() {
+    tierthreeOnClick(val) {
+      this.tier3 = val;
       console.log(this.tier3);
     },
     // 이미지 첨부시 이렇게 해서 change씀
@@ -227,9 +245,16 @@ export default {
     async setoptions() {
       const url = `/ROOT/productoption/insertAll?productCode=${this.productCode}`;
       const headers = { 'Content-Type': 'application/json' };
-      const body = [{optionName: this.optionName, optionQuantity: this.optionQuantity, optionPrice: this.optionPrice}];
+      // const body = [{optionName: this.optionName, optionQuantity: this.optionQuantity, optionPrice: this.optionPrice}];
+      const body = this.optionlist;
       const res = await axios.post(url, body, { headers });
       console.log(res);
+    },
+    // 옵션 추가
+    optionplus() {
+      this.optioncard = { optionName: '', optionQuantity: '', optionPrice: '' };
+      this.optionlist.push(this.optioncard);
+      console.log(this.optionlist);
     }
   },
 };

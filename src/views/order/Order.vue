@@ -66,19 +66,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr v-for="(o, idx) in orderlist" :key="idx">
           <td class='imgCon'>
             <div class="cartImgBox">
-              <img src='@/assets/img/desk1.jpg'>
+              <img :src= o.imageurl>
             </div>
           </td>
           <td>
-            <p>다리가 무려 4개!!!!! 총알배송 다리4개 책상</p>
-            <p>옵션: 다리4개 분홍색</p>
+            <p>{{o.productTitle}}</p>
+            <p>옵션: {{o.optionName}}</p>
           </td>
-          <td><p>120,000원</p></td>
-          <td><p>1개</p></td>
-          <td><p>120,000원</p></td>
+          <td><p>{{o.optionPrice}}원</p></td>
+          <td><p>{{o.cartOptionCount}}개</p></td>
+          <td><p>{{o.optionPrice * o.cartOptionCount}}원</p></td>
           <td>
             <p>택배</p>
           </td>
@@ -90,7 +90,7 @@
       <div class="cartPrice">
         <h4>합계</h4>
         <span class='price'>
-          <em class='totalPrice'>54,578,500</em>원
+          <em class='totalPrice'>{{totalprice}}</em>원
         </span>
       </div>
     </div>
@@ -116,9 +116,13 @@ export default {
   },
   data() {
     return {
+      token: sessionStorage.getItem('token'),
       zip: '',
       addr1: '',
-      addr2: ''
+      addr2: '',
+      orderCode: 0, // 주문코드
+      orderlist: [], // 주문 리스트
+      totalprice: 0,
     };
   },
   methods: {
@@ -261,6 +265,20 @@ export default {
     },
     async getcartcode() {
       console.log(this.sendcart);
+      const url = '/ROOT/order';
+      const headers = { 'Content-Type': 'application/json', token: this.token };
+      const body = this.sendcart;
+      const res = await axios.post(url, body, { headers });
+      console.log(res);
+      this.orderCode = res.data.orderCode; // 카트 넘버를 넘겨주고 받은 주문코드
+      const url1 = `/ROOT/order?no=${this.orderCode}`;
+      const res1 = await axios.get(url1, { headers });
+      // console.log(res1);
+      this.orderlist = res1.data.list; // 주문코드를 넘겨주고 받은 주문리스트
+      console.log(this.orderlist);
+      for(let i of this.orderlist) {
+        this.totalprice += i.optionPrice * i.cartOptionCount
+      }
     }
   },
 }

@@ -77,7 +77,7 @@
             <p>{{o.productTitle}}</p>
             <p>옵션: {{o.optionName}}</p>
           </td>
-          <td><p>{{o.optionPrice}}</p></td>
+          <td><p>{{o.optionPrice}}원</p></td>
           <td><p>{{o.cartOptionCount}}개</p></td>
           <td><p>{{o.optionPrice * o.cartOptionCount}}원</p></td>
           <td>
@@ -97,10 +97,8 @@
     </div>
 
     <div class="cartBtnBox">
-      <button class="fillBtn">결제하기</button>
-      <button class="fillBtn" @click="kakaopay">카카오 테스트</button>
-      <button class="fillBtn" @click="danalss">다날 테스트</button>
-      <button class="fillBtn" @click="test">다날 테스트</button>
+      <button class="fillBtn kakaoBtn" @click="kakaopay">카카오PAY 결제</button>
+      <button class="fillBtn danalBtn" @click="danalss">다날 결제</button>
     </div>
   </div>
 </template>
@@ -133,31 +131,11 @@ export default {
   },
   methods: {
     kakaopay() {
-      var IMP = window.IMP; // 생략가능
+      var IMP = window.IMP;
       IMP.init('imp50325691');
-      // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-      // i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
       IMP.request_pay({
-      pg: 'kakaopay', // version 1.1.0부터 지원.
-      /*
-      'kakaopay':카카오페이,
-      html5_inicis':이니시스(웹표준결제)
-      'nice':나이스페이
-      'jtnet':제이티넷
-      'uplus':LG유플러스
-      'danal':다날
-      'payco':페이코
-      'syrup':시럽페이
-      'paypal':페이팔
-      */
+      pg: 'kakaopay',
       pay_method: 'card',
-      /*
-      'samsung':삼성페이,
-      'card':신용카드,
-      'trans':실시간계좌이체,
-      'vbank':가상계좌,
-      'phone':휴대폰소액결제
-      */
       merchant_uid: 'merchant_' + new Date().getTime(),
       /*
       merchant_uid에 경우

@@ -2,7 +2,11 @@
 <template>
   <div class="inner">
     <div class="joinform">
-      <h1>회원가입</h1>
+      <div class='TitleCon'>
+        <div class="Title">
+          <h2>회원가입</h2>
+        </div>
+      </div>
       <div class='inputdiv'>
         <label for="idinput">ID</label>
         <input type='text' class="joinbox" id="idinput"
@@ -47,7 +51,9 @@
           <option :value='4'>nate.com</option>
           <option :value='5'>daum.net</option>
         </select> -->
-      <button class="joinbtn" @click="goJoin">회원가입</button>
+      <div class="btnbox">
+        <button class="fillBtn" @click="goJoin">회원가입</button>
+      </div>
     </div>
   </div>
 </template>
@@ -164,42 +170,89 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    margin-top: 100px;
+.TitleCon {
+  // background: #eee;
+  padding: 26px 0px 16px 0px;
+  border-bottom: 1px solid #999;
+  margin-bottom: 15px;
+}
+.Title {
+  height: 40px;
+  h2 {
+    float: left;
+    font-size: 20px;
+    line-height: 40px;
   }
-  .joinform {
-    padding: 0 75px;
-  }
+}
+.joinform {
+  padding: 0 75px;
+}
+label {
+  display: inline-block;
+  // border: 3px dotted red;
+  width: 200px;
+  // text-align: center;
+}
+.inputdiv {
+  // text-align: center;
+  margin-bottom: 30px;
+  padding-left: 20px;
+}
+.joinbox{
+  width: 600px;
+  padding: 10px 4px;
+  border: none;
+  border-bottom: 1px solid #444;
+}
+#emailinput {
+  width: 170px;
+}
+#emailinput2 {
+  width: 310px;
+}
+.btnbox {
+  width: 820px;
+  margin-top: 30px;
+  text-align: right;
+  padding: 20px 0px;
+}
+.fillBtn {
+  font-size: 25px;
+  padding: 5px 40px;
+  border: 3px solid #333333;
+  background-color: transparent;
+  color: #b4b2b2;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-weight: bold;
+  position: relative;
+  transition: all 0.4s;
+  overflow: hidden;
+  // margin-right: 10px;
   label {
-    display: inline-block;
-    // border: 3px dotted red;
-    width: 200px;
-    // text-align: center;
+    padding: 10px;
   }
-  .inputdiv {
-    text-align: center;
-    margin-bottom: 15px;
-  }
-  .joinbtn {
-    padding: 20px;
-    border: 0px;
-    &:hover{
-      cursor: pointer;
-    }
-    background: turquoise;
-  }
-  .joinbox{
-    width: 600px;
-    padding: 10px 4px;
-    border: none;
-    border-bottom: 1px solid #444;
-  }
-  #emailinput {
-    width: 170px;
-  }
-  #emailinput2 {
-    width: 310px;
-  }
+}
+.fillBtn:focus {
+  outline: none;
+}
+.fillBtn::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  top: 100%;
+  left: 0;
+  transition: all 0.4s;
+  z-index: -1;
+}
+.fillBtn:hover::before {
+  transform: translateY(-100%);
+}
+.fillBtn:hover {
+  color: #1d1b2e;
+  // color: #fff;
+  cursor: pointer;
+}
 </style>

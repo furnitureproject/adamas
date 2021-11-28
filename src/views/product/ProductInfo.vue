@@ -145,6 +145,7 @@ export default {
   },
   data() {
     return {
+      token: sessionStorage.getItem('token'),
       // 나중에 vuex에 넣고 query말고 action으로 변경할것.
       // productinfo 테스트용 변수
       productCode: this.$route.query.productCode,
@@ -233,6 +234,9 @@ export default {
     },
     // 장바구니 담기
     async commitCnt() {
+      if(this.token === null) {
+        this.$router.push('/login');
+      }
       console.log(this.selOptionlist);
       const url = '/ROOT/cart';
       // const url1 = '/ROOT/order';
@@ -251,6 +255,9 @@ export default {
     },
     // 주문하기 버튼
     async GoOrder() {
+      if(this.token === null) {
+        this.$router.push('/login');
+      }
       console.log(this.selOptionlist);
       const url = '/ROOT/orderdir';
       const headers = { 'Content-Type': 'application/json', token: sessionStorage.getItem('token') };
