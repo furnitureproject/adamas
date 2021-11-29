@@ -62,6 +62,52 @@
             <img :src= i>
           </div>
           <!-- 상품 정보 사진 끝 -->
+
+          <!-- 리뷰 시작 -->
+          <div>
+            <div class="reviewconTitle">
+              <p> 전체리뷰 ({{reviewcount}}) </p>
+            </div>
+            <div v-for="review in reviewlist" v-bind:key="review.reviewNum" class="reviewcard">
+              <div class="reviewtitlebox">
+                <div class="reviewid">
+                  {{review.user}}
+                </div>
+                <div class="reviewtitle">
+                  {{review.reivewTitle}}
+                </div>
+                <div class="reviewdate">
+                  {{review.reviewRegDateString}}
+                </div>
+              </div>
+              
+              
+              <div class="star-ratings">
+                <div 
+                  class="star-ratings-fill space-x-2 text-lg"
+                  :style="{ width: review.reviewStar*20 + '%' }"
+                >
+                  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+                <div class="star-ratings-base space-x-2 text-lg">
+                  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span> 
+                </div>  
+              </div>
+              <div class="reviewcontent">
+                {{review.reviewContent}}
+              </div>
+              
+              <img :src= review.reviewImage1 style="width:100px; height:100px" onerror="this.style.display='none'" v-if="review.reviewImage1">
+              <img :src= review.reviewImage2 style="width:100px; height:100px" onerror="this.style.display='none'" v-if="review.reviewImage2">
+              <img :src= review.reviewImage3 style="width:100px; height:100px" onerror="this.style.display='none'" v-if="review.reviewImage3">
+            </div>
+            <!-- 테스트용 버튼임 지울것 -->
+            <div>
+              <button class="fillBtn" @click="setReview">리뷰추가</button>
+            </div>
+          </div>
+          <!-- 리뷰 끝 -->
+
         </div>
         <!-- 왼쪽박스 패딩용 박스 끝 -->
       </div>
@@ -140,7 +186,7 @@ import { mapActions } from 'vuex';
 
 export default {
   created() {
-    this.testgetproductinfo();
+    this.getproductinfo();
     console.log(this.optionlist);
   },
   data() {
@@ -172,11 +218,14 @@ export default {
       commaoptionPrice: '',
       // 대표가격
       bossprice: 0,
+      reviewlist : [],
+      reviewcount : 0,
+      imgbox : [], 
     };
   },
   methods: {
     ...mapActions(['changeorderdataAct']),
-    async testgetproductinfo() {
+    async getproductinfo() {
       // 상품 정보
       const url = `/ROOT/product/select_one?productCode=${this.productCode}`;
       // 상품 설명 이미지
@@ -187,6 +236,8 @@ export default {
       const url3 = `/ROOT/product/select_subimglist?productCode=${this.productCode}`;
       // 상품 옵션
       const url4 = `/ROOT/productoption/select_list?productCode=${this.productCode}`;
+      // 리뷰
+      const url5 = `/ROOT/review/test?productcode=${this.productCode}&page=1`;
       const headers = { 'Content-Type': 'application/json' };
       try {
         const res = await axios.get(url, {headers});
@@ -194,16 +245,21 @@ export default {
         // productCode: 202111090005 productDesc: "헹거2" 
         // productHit: 0 productTitle: "헹거2"
         this.product = res.data.product; 
-        const res1 = await axios.get(url1, {headers});
+        const res1 = await axios.get(url1, { headers });
         this.deslist = res1.data.list1;
-        const res2 = await axios.get(url2, {headers});
+        const res2 = await axios.get(url2, { headers });
         this.thumimage = res2.data.image;
-        const res3 = await axios.get(url3, {headers});
+        const res3 = await axios.get(url3, { headers });
         this.subimage = res3.data.list1;
-        const res4 = await axios.get(url4, {headers});
+        const res4 = await axios.get(url4, { headers });
         this.optionlist = res4.data.list;
         this.bossprice = res4.data.price;
-        
+        const res5 = await axios.get(url5, { headers });
+        console.log(res5);
+        if(res5.data.status == 200){
+          this.reviewlist = res5.data.list.content
+          this.reviewcount = res5.data.list.content.length
+        }
         console.log(res);
         // console.log(res1);
         // console.log(res2);
@@ -274,7 +330,14 @@ export default {
     },
     changeOptionDollar() {
       return product.optionPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
+    },
+    async setReview() {
+      const url = `/ROOT/review/test`;
+      const headers = { 'Content-Type': 'application/json', token: this.token };
+      const body = { reviewTitle: '테스트', reviewContent: '테스트테스트', reviewStar: 4, product: {productCode: this.productCode} };
+      const res = await axios.post(url, body, { headers });
+      console.log(res);
+    },
   },
 };
 </script>

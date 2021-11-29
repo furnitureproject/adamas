@@ -8,38 +8,38 @@
       <div class="inputcon">
         <div class='inputdiv'>
           <label for="idinput2">ID</label>
-          <input type='text' class="joinbox" id="idinput2" disabled>
+          <input type='text' class="joinbox" id="idinput2" disabled :value="userinfo.userId">
         </div>
         <div class='inputdiv'>
           <label for="pwinput2">비밀번호</label>
-          <input type='password' class="joinbox" id="pwinput2">
+          <input type='password' class="joinbox" id="pwinput2" v-model="userPw">
         </div>
         <div class='inputdiv'>
-          <label for="pw2input2">비밀번호 확인</label>
-          <input type='password' class="joinbox" id="pw2input2">
+          <label for="pw2input2">새 비밀번호</label>
+          <input type='password' class="joinbox" id="pw2input2" v-model="userNewPw">
         </div>
         <div class='inputdiv'>
           <label for="nameinput2">이름</label>
-          <input type='text' class="joinbox" id="nameinput2" disabled>
+          <input type='text' class="joinbox" id="nameinput2" disabled :value="userinfo.userName">
         </div>
         <div class='inputdiv'>
           <label for="birthinput2">생년월일</label>
-          <input type='text' class="joinbox" id="birthinput2" disabled>
+          <input type='text' class="joinbox" id="birthinput2" disabled :value="userinfo.userBirth">
         </div>
         <div class='inputdiv'>
           <label for="phoneinput2">전화번호</label>
-          <input type='text' class="joinbox" id="phoneinput2">
+          <input type='text' class="joinbox" id="phoneinput2" v-model="userPhone">
         </div>
         <div class='inputdiv'>
           <label for="emailinput3">E-mail</label>
-          <input type='text' class="joinbox emailid" id="emailinput3">
+          <input type='text' class="joinbox emailid" id="emailinput3" :value="emailId">
           @
-          <input type='text' class="joinbox emailaddress" id="emailinput4">
+          <input type='text' class="joinbox emailaddress" id="emailinput4" :value="emailAddress">
         </div>
       </div>
 
     <div class="btnbox">
-      <button class="fillBtn">변경하기</button>
+      <button class="fillBtn" @click="updateinfo">변경하기</button>
     </div>
   </div>
 </template>
@@ -54,14 +54,40 @@ export default {
   data() {
     return {
       token: sessionStorage.getItem('token'),
+      userinfo: {},
+      userPw: '',
+      userNewPw: '',
+      userPhone: '',
+      emailId: '',
+      emailAddress: '',
     };
   },
   methods: {
     async getinfo() {
-      const url = '/ROOT/user/update';
+      const url = '/ROOT/test/info';
       const headers = { 'Content-Type': 'application/json', token: this.token };
-      const res = await axios.get(url, { headers });
+      const body = {};
+      const res = await axios.post(url, body, { headers });
       console.log(res);
+      this.userinfo = res.data.user;
+      console.log(this.userinfo);
+      const emailarray = this.userinfo.userEmail.split('@');
+      console.log(emailarray);
+      this.emailId = emailarray[0];
+      this.emailAddress = emailarray[1];
+      this.userPhone = this.userinfo.userPhone;
+    },
+    async updateinfo() {
+      const url = '/ROOT/test/user/update';
+      const headers = { 'Content-Type': 'application/json', token: this.token };
+      const userEmail = `${this.emailId}@${this.emailAddress}`;
+      const body = {userPw: this.userPw, userNewPw: this.userNewPw, userPhone: this.userPhone, userEmail: userEmail};
+      const res = await axios.post(url, body, { headers });
+      console.log(res);
+      if(res.status == 200) {
+        alert('회원정보 변경 완료');
+        this.$router.push('/user/mypage');
+      }
     }
   },
 };

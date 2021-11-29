@@ -172,6 +172,7 @@ export default {
       const res = await axios.delete(url, {headers:headers, data:data});
       console.log(res);
         if(res.data.status === 200) {
+          this.selectprice = 0;
           await this.getCart();
           console.log(this.cartlist);
         }

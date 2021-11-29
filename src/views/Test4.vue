@@ -1,40 +1,34 @@
 <template>
   <h3> 전체리뷰 ({{reviewcount}}) </h3>
   <div v-for="review in reviewlist" v-bind:key="review.reviewNum" style="height: 200px; border-bottom:1px solid #eee">
-          <div class="title">
-          {{review.user}}  {{review.reivewTitle}}
-          </div>
-          <div class="date">
-          {{review.reviewRegDateString}}
-          </div>
-          
-          <div class="star-ratings">
-          <div 
-            class="star-ratings-fill space-x-2 text-lg"
-            :style="{ width: review.reviewStar*20 + '%' }"
-          >
-            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-          </div>
-          <div class="star-ratings-base space-x-2 text-lg">
-            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span> 
-          </div>  
-         
-        </div>
-         
-          <div>
-          {{review.reviewContent}}
-          </div>
-
-       
-          <img :src= review.reviewImage1 style="width:100px; height:100px" onerror="this.style.display='none'" v-if="review.reviewImage1">
-          <img :src= review.reviewImage2 style="width:100px; height:100px" onerror="this.style.display='none'" v-if="review.reviewImage2">
-          <img :src= review.reviewImage3 style="width:100px; height:100px" onerror="this.style.display='none'" v-if="review.reviewImage3">
-          
-        
-         
-   
- 
+    <div class="title">
+    {{review.user}}  {{review.reivewTitle}}
+    </div>
+    <div class="date">
+    {{review.reviewRegDateString}}
+    </div>
     
+    <div class="star-ratings">
+    <div 
+      class="star-ratings-fill space-x-2 text-lg"
+      :style="{ width: review.reviewStar*20 + '%' }"
+    >
+      <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+    </div>
+    <div class="star-ratings-base space-x-2 text-lg">
+      <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span> 
+    </div>  
+    
+  </div>
+    
+  <div>
+  {{review.reviewContent}}
+  </div>
+
+
+  <img :src= review.reviewImage1 style="width:100px; height:100px" onerror="this.style.display='none'" v-if="review.reviewImage1">
+  <img :src= review.reviewImage2 style="width:100px; height:100px" onerror="this.style.display='none'" v-if="review.reviewImage2">
+  <img :src= review.reviewImage3 style="width:100px; height:100px" onerror="this.style.display='none'" v-if="review.reviewImage3">
   </div>
   <router-view/>
 </template>
@@ -46,18 +40,16 @@ import axios from 'axios';
 export default {
     data(){
         return {
-          productcode : 	202111110009,
+          productCode : 	202111110009,
           reviewlist : [],
           reviewcount : 0,
           imgbox : [], 
-
-          
         }
     },
     methods:{
       async userreview(){
         const header = { "content-Type" : "application/json"}
-        const url = `/ROOT/review/test?productcode=${this.productcode}&page=1`;
+        const url = `/ROOT/review/test?productcode=${this.productCode}&page=1`;
         const response = await axios.get(url, header);
         console.log(response);
         if(response.data.status == 200){
@@ -79,16 +71,16 @@ export default {
 
 
 <style scoped>
-  .date {
+.date {
   float: right;
 
 }
-  .title {
+.title {
   width: max-content;
   color: #0a0a0a; 
   font-weight: bolder;
 }
-  .star-ratings {
+.star-ratings {
   color: #aaa9a9; 
   position: relative;
   unicode-bidi: bidi-override;

@@ -46,9 +46,12 @@
           v-if="contentOnOff"></textarea>
       </div>
       <div class="registbox">
+        <div :class="imgclass">
+          <img :src="imgdata">
+        </div>
         <button class="fillBtn"><label for="filebox">대표 이미지 첨부</label></button>
         <!-- <label for="filebox">대표 이미지 첨부</label> -->
-        <input type="file" @change='handlerFile' name="filename" id="filebox" accept=".jpg, .png" hidden>
+        <input type="file" @change='handlerFile($event)' name="filename" id="filebox" accept=".jpg, .png" hidden>
       </div>
       <div class="registbox">
         <button class="fillBtn"><label for="multibox">상세정보 이미지 첨부</label></button>
@@ -155,6 +158,9 @@ export default {
       descimg: [],
       optioncard: { optionName: '', optionQuantity: '', optionPrice: '' },
       optionlist: [{ optionName: '', optionQuantity: '', optionPrice: '' }],
+      imgdata: '',
+      imgclass: [{imgbox: false}],
+      subimglist: [],
     };
   },
   methods: {
@@ -183,17 +189,36 @@ export default {
     },
     // 이미지 첨부시 이렇게 해서 change씀
     handlerFile(e) {
+      this.imgclass[0].imgbox = true;
       const file = e.target.files[0];
       this.repimg = file;
       console.log(this.repimg);
+      const reader = new FileReader();
+      const vm = this;
+      reader.onload = e => {
+        vm.imgdata = e.target.result;
+      }
+      // reader가 이미지 읽도록 하기
+      reader.readAsDataURL(this.repimg);
     },
+    // 서브이미지 첨부
     handlerFiles(e) {
+      console.log(e.target);
       const files = e.target.files;
+      const vm = this;
       for(let i=0; i< files.length; i++) {
         console.log(i);
         this.descimg.push(files[i]);
         console.log(this.descimg);
       }
+      // const reader = new FileReader();
+      // reader.onload = e => {
+      //   for(let t=0; t< files.length; t++){
+      //     vm.subimglist.push(files[t]);
+      //   }
+      //   reader.readAsDataURL(this.subimglist);
+      //   console.log(this.subimglist);
+      // }
       // const formData = new FormData();
       // for( var i = 0; i < this.$refs.file.files.length; i++ ){
       //   let file = this.$refs.file.files[i];

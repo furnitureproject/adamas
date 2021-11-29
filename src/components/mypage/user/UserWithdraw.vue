@@ -39,6 +39,10 @@ export default {
         const headers = { 'Content-Type': 'application/json', token: this.token };
         const res = await axios.delete(url, { headers });
         console.log(res);
+        if(res.status === 200) {
+          alert('회원탈퇴 완료');
+          this.$router.push('/');
+        }
       }
     }
   },

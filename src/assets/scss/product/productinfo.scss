@@ -319,3 +319,66 @@
   }
 }
 
+// 리뷰
+.reviewconTitle {
+  padding: 10px 30px;
+  border-bottom: 1px solid #eee;
+  p {
+    font-size: 25px;
+  }
+}
+.reviewcard {
+  width:900px;
+  min-height: 100px; 
+  border-bottom:1px solid #eee;
+  padding: 10px 30px
+}
+.reviewtitlebox {
+  width: 400px;
+  color: #0a0a0a; 
+  .reviewid {
+    font-size: 15px;
+    color: #eee;
+  }
+  .reviewtitle {
+    font-size: 23px;
+    color: #222;
+    font-weight: bold;
+  }
+  .reviewdate {
+    font-size: 13px;
+  }
+  &::after {
+    display: block;
+    content: '';
+    clear: both;
+  }
+}
+.star-ratings {
+  color: #aaa9a9; 
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29;
+  font-size: 20px;
+}
+ 
+.star-ratings-fill {
+  color: #fff58c;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-text-fill-color: gold;
+  font-size: 20px;
+}
+ 
+.star-ratings-base {
+  z-index: 0;
+  padding: 0;
+}
