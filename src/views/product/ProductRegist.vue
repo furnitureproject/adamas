@@ -98,14 +98,14 @@
         <div class='catebox cateboxtier1'>
           <p>카테고리 대분류</p>
           <div class="selectbox">
-            <div class="selectcard">
-              <label for="tier1">국내</label>
-              <input type="button" @click="tierOneOnClick(100000)" id="tier1">
+            <div class="selectcard" v-for="(ct1, aidx) in tier1list" :key="aidx">
+              <label :for="'tier1'+aidx">{{ct1.categoryName}}</label>
+              <input type="button" @click="tierOneOnClick(ct1.categoryCode)" :id="'tier1'+aidx">
             </div>
-            <div class="selectcard">
+            <!-- <div class="selectcard">
               <label for="tier12">해외</label>
               <input type="button" @click="tierOneOnClick(200000)" id="tier12">
-            </div>
+            </div> -->
           </div>
         </div>
         <div class='catebox cateboxtier2'>
@@ -136,6 +136,9 @@
 import axios from 'axios';
 
 export default {
+  mounted() {
+    this.getTierOne();
+  },
   data() {
     return {
       productCode: 1,
@@ -150,6 +153,7 @@ export default {
       tier1: '',
       tier2: '',
       tier3: '', //tier3 은 담아서 보내줘야함.
+      tier1list: [],
       tier2list: [],
       tier3list: [],
       // 대표이미지
@@ -164,6 +168,14 @@ export default {
     };
   },
   methods: {
+    // 1티어 받아오기
+    async getTierOne() {
+      const url = '/ROOT/category/list_category1';
+      const headers = { 'Content-Type': 'application/json' };
+      const res = await axios.get(url, { headers });
+      console.log(res);
+      this.tier1list = res.data.list;
+    },
     // 카테고리 선택
     async tierOneOnClick(val) {
       this.tier1 = val;

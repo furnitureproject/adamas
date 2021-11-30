@@ -228,7 +228,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['changeorderdataAct']),
+    ...mapActions(['changeorderdataAct', 'changeorderidsAct']),
     async getproductinfo() {
       // 상품 정보
       const url = `/ROOT/product/select_one?productCode=${this.productCode}`;
@@ -325,7 +325,8 @@ export default {
       console.log(body);
       const res = await axios.post(url, body, { headers });
       console.log(res);
-      this.changeorderdataAct(res.data.orderCode);
+      this.changeorderdataAct(res.data.orderCode); // 오더 코드
+      this.changeorderidsAct(res.data.orderId); // 오더 아이디
       this.$router.push('/orderdir');
     },
     // 돈표시로 바꾸기

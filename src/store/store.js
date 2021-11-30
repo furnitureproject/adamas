@@ -29,6 +29,7 @@ export default createStore({
     categoryParent: 0, //product list 변경할때 씀
     sendcart: [], // 주문화면에 보낼 카트 데이터
     orderdata: 0, // 상품상세화면에서 바로 주문할 시에 주문페이지에서 보여줄 orderCode
+    orderids: [], // 상품 상세화면에서 바로 주문할때 주문페이지에서 보내줄 orderid
   },
   mutations: {
     changeLoginMut: (state, payload) => {
@@ -74,6 +75,9 @@ export default createStore({
     },
     changeorderdata: (state, payload) => {
       state.orderdata = payload;
+    },
+    changeorderids: (state, payload) => {
+      state.orderids = payload;
     }
   },
   getters: {
@@ -102,7 +106,10 @@ export default createStore({
     },
     changeorderdataAct: ({ commit }, payload) => {
       commit('changeorderdata', payload);
-    }
+    },
+    changeorderidsAct: ({ commit }, payload) => {
+      commit('changeorderids', payload);
+    },
   },
   modules: {
   },

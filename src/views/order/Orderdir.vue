@@ -109,23 +109,24 @@ import { mapState } from 'vuex';
 
 export default {
   mounted() {
+    console.log(this.orderids);
     this.getorder();
     this.test1();
   },
   computed: {
-    ...mapState(['orderdata']),
+    ...mapState(['orderdata', 'orderids']),
   },
   data() {
     return {
       token: sessionStorage.getItem('token'),
-      zip: '', // 우편 번호
-      addr1: '', // 주소
-      addr2: '', // 상세주소
-      receiver: '', // 받는사람
+      zip: 5656, // 우편 번호
+      addr1: '우리집', // 주소
+      addr2: '우리집', // 상세주소
+      receiver: '나', // 받는사람
       tel1: '010', // 핸드폰 번호 첫번째 자리
-      tel2: '', // 핸드폰번호 두번째 자리
-      tel3: '', // 핸드폰번호 세번째 자리
-      req: '', // 요구사항
+      tel2: '5555', // 핸드폰번호 두번째 자리
+      tel3: '4444', // 핸드폰번호 세번째 자리
+      req: '없음', // 요구사항
       orderlist: '', // 받은 orderdata 값들
       totalprice: 0, // 주문 상품 총가격
       payment: {}, // 페이먼트 정보
@@ -174,6 +175,7 @@ export default {
       await this.setpayment();
       await this.setdelivery();
       alert(msg);
+      this.$router.push('/orderdone');
       // console.log(this);
       } else {
       var msg = '결제에 실패하였습니다.';
@@ -317,10 +319,17 @@ export default {
     async setdelivery() {
       const url = '/ROOT/delivery/insert';
       const headers = { 'Content-Type': 'application/json', token: this.token};
-      const body = { order: {orderNo: this.orderdata}, payment: {paymentNo: this.payment.paymentNo}, userAddress: {addressNo: this.address.addressNo}};
+      const body = [];
+      for(let i in this.orderids) {
+        const del = {order: {orderNo: this.orderids[i]}, payment: {paymentNo: this.payment.paymentNo}, userAddress: {addressNo: this.address.addressNo}}
+        body.push(del);
+      };
       console.log(body);
       const res = await axios.post(url, body, { headers });
       console.log(res);
+      if(res.data.status === 200) {
+        
+      }
     } 
   },
 }
