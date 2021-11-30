@@ -20,8 +20,8 @@
                 <!-- 서브 이미지 -->
                 <div class="subImg">
                   <ul>
-                    <li><img src="@/assets/img/desk3.jpg"></li>
-                    <li><img src="@/assets/img/desk3.jpg"></li>
+                    <li v-for="(subimg, subnum) in subimglist" :key="subnum"><img :src=subimg></li>
+                    <!-- <li><img src="@/assets/img/desk3.jpg"></li> -->
                   </ul>
                 </div>
               </div>
@@ -188,6 +188,7 @@ export default {
   created() {
     this.getproductinfo();
     console.log(this.optionlist);
+    this.getSubImg();
   },
   data() {
     return {
@@ -218,9 +219,12 @@ export default {
       commaoptionPrice: '',
       // 대표가격
       bossprice: 0,
+      // 리뷰용 변수 3개
       reviewlist : [],
       reviewcount : 0,
       imgbox : [], 
+      // 서브 이미지 변수
+      subimglist: [],
     };
   },
   methods: {
@@ -331,6 +335,7 @@ export default {
     changeOptionDollar() {
       return product.optionPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     },
+    // 리뷰 가져오기
     async setReview() {
       const url = `/ROOT/review/test`;
       const headers = { 'Content-Type': 'application/json', token: this.token };
@@ -338,6 +343,14 @@ export default {
       const res = await axios.post(url, body, { headers });
       console.log(res);
     },
+    // 서브 이미지 가져오기
+    async getSubImg() {
+      const url = `/ROOT/product/select_subimglist?productCode=${this.productCode}`;
+      const headers = { 'Content-Type': 'application/json' };
+      const res = await axios.get(url, { headers });
+      console.log(res);
+      this.subimglist = res.data.list1;
+    }
   },
 };
 </script>

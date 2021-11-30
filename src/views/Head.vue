@@ -186,7 +186,7 @@ header {
           // color: #555;
           color: black;
           /* 클릭 영역 확보를 위해 블록화 한 뒤에 패딩을 설정 */
-          padding: 20px 40px;
+          padding: 20px 25px;
           transition: all 0.5s;
         &:hover{
           // background: #555;

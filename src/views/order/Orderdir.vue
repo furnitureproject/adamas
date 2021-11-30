@@ -11,7 +11,7 @@
         <div class='orderTitleCon'>
           <div class='orderTitle'>
             <h2>배송정보</h2>
-            <input type='button' class='deliveryBtn' value="배송지 목록">
+            <!-- <input type='button' class='deliveryBtn' value="배송지 목록"> -->
           </div>
         </div>
         <div class='deliveryBox'>
@@ -128,6 +128,8 @@ export default {
       req: '', // 요구사항
       orderlist: '', // 받은 orderdata 값들
       totalprice: 0, // 주문 상품 총가격
+      payment: {}, // 페이먼트 정보
+      address: {}, // address 정보
     };
   },
   methods: {
@@ -160,7 +162,7 @@ export default {
       결제가 끝나고 랜딩되는 URL을 지정
       (카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐)
       */
-      }, function (rsp) {
+      }, async (rsp) => {
       console.log(rsp);
       if (rsp.success) {
       var msg = '결제가 완료되었습니다.';
@@ -168,12 +170,17 @@ export default {
       // msg += '상점 거래ID : ' + rsp.merchant_uid;
       // msg += '결제 금액 : ' + rsp.paid_amount;
       // msg += '카드 승인번호 : ' + rsp.apply_num;
+      await this.setaddress();
+      await this.setpayment();
+      await this.setdelivery();
       alert(msg);
+      // console.log(this);
       } else {
       var msg = '결제에 실패하였습니다.';
       msg += '에러내용 : ' + rsp.error_msg;
+      // alert(msg);
       alert(msg);
-      console.log(this);
+      // console.log(this.totalprice);
       }
       // alert(msg);
       });
@@ -281,8 +288,40 @@ export default {
       const body = {};
       const res = await axios.post(url, body, { headers });
       console.log(res);
-    }
-
+    },
+    // 결제 정보 보내주기
+    async setpayment() {
+      const url = '/ROOT/payment/insert';
+      const headers = { 'Content-Type': 'application/json' };
+      const res = await axios.post(url, {}, { headers });
+      console.log(res);
+      this.payment = res.data.payment;
+    },
+    // 주소 보내주기
+    async setaddress() {
+      const url = '/ROOT/address/insert';
+      const headers = { 'Content-Type': 'application/json', token: this.token };
+      const body = {
+        addressZipcode: this.zip,
+        addressCity: this.addr1,
+        addressDetail: this.addr2,
+        receiverPhone: this.tel1+this.tel2+this.tel3,
+        receiverName: this.receiver,
+        requireComment: this.req
+      }
+      const res = await axios.post(url, body, { headers });
+      console.log(res);
+      this.address = res.data.address;
+    },
+    // 배송정보 등록
+    async setdelivery() {
+      const url = '/ROOT/delivery/insert';
+      const headers = { 'Content-Type': 'application/json', token: this.token};
+      const body = { order: {orderNo: this.orderdata}, payment: {paymentNo: this.payment.paymentNo}, userAddress: {addressNo: this.address.addressNo}};
+      console.log(body);
+      const res = await axios.post(url, body, { headers });
+      console.log(res);
+    } 
   },
 }
 </script>
