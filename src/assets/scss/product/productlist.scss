@@ -11,6 +11,19 @@ margin-bottom: 15px;
       font-size: 20px;
       line-height: 40px;
   }
+  div {
+    float: right;
+    text-align: bottom;
+    padding-top: 15px;
+    p {
+      display: inline-block;
+      margin-right: 10px;
+      cursor: pointer;
+      &:hover {
+        color: #222;
+      }
+    }
+  }
 }
 
 // nav + productlist

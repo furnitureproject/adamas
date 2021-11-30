@@ -1,30 +1,39 @@
 <template>
-  <div class="container">
-    <h2>로그인</h2>
-    <div>
-      <div class="inputBox">
-        <input type="text" required="required">
-        <span>ID</span>
-      </div>
-      <div class="inputBox">
-        <input type="email" required="required">
-        <span>PASSWORD</span>
-      </div>
-      <div class="inputBox">
-        <input type="button" value="LOGIN">
-      </div>
-    </div>
+<section class="cards">
+<article class="card card--1">
+  <!-- <div class="card__img"></div>
+  <a href="#" class="card_link">
+    <div class="card__img--hover"></div>
+  </a> -->
+  <div>
+  <img src="@/assets/img/desk1.jpg" class="card__img">
   </div>
-
-  <nav>
-    <div id='marker'></div>
-    <a href="#">Home</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Portfolio</a>
-    <a href="#">Team</a>
-    <a href="#">Contact</a>
-  </nav>
+  <div>
+  <img src="@/assets/img/desk1.jpg" class="card__img--hover">
+  </div>
+  <div class="card__info">
+    <span class="card__category"> Recipe</span>
+    <h3 class="card__title">Crisp Spanish tortilla Matzo brei</h3>
+    <span class="card__by">by <a href="#" class="card__author" title="author">Celeste Mills</a></span>
+  </div>
+</article>
+  
+  
+<article class="card card--2">
+  <div class="card__img"></div>
+  <a href="#" class="card_link">
+    <div class="card__img--hover"></div>
+  </a>
+  <div class="card__info">
+    <span class="card__category"> Travel</span>
+    <h3 class="card__title">Discover the sea</h3>
+    <span class="card__by">by <a href="#" class="card__author" title="author">John Doe</a></span>
+  </div>
+</article>  
+  
+  
+  
+  </section>
 </template>
 
 <script>

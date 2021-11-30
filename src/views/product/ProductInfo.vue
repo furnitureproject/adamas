@@ -80,8 +80,6 @@
                   {{review.reviewRegDateString}}
                 </div>
               </div>
-              
-              
               <div class="star-ratings">
                 <div 
                   class="star-ratings-fill space-x-2 text-lg"
@@ -106,9 +104,58 @@
               <button class="fillBtn" @click="setReview">리뷰추가</button>
               <button class="fillBtn" @click="setQnA">QnA추가</button>
             </div>
+            <!-- 리뷰 등록 화면 -->
+            <div class="reviewboard">
+              <input type="text" placeholder="제목" v-model="reviewTitle">
+              <textarea cols="25" rows="10" placeholder="내용" v-model="reviewContent"></textarea>
+              <input type="text" placeholder="별점 1-5점까지" v-model="reviewStar">
+              <div class="reviewselimg">
+                <button class="fillBtn"><label for="multibox">리뷰 이미지 첨부(3장까지)</label></button>
+                <input multiple="multiple" @change='handlerFiles' ref="file" type="file" name="filename[]" id="multibox" accept=".jpg, .png" hidden>
+              </div>
+              <button class="fillBtn">리뷰작성</button>
+            </div>
           </div>
           <!-- 리뷰 끝 -->
-
+          <!-- QNA -->
+          <div class="qnaWrap">
+            <div class="accordion">
+              <input type="radio" name="accordion" checked id="answer01">
+              <label for="answer01">QNATitle<em></em></label>
+              <div>
+                <div><p>QNAContent</p></div>
+                <div><p>QNAanswer</p></div>
+              </div>
+              <input type="radio" name="accordion" id="answer02">
+              <label for="answer02">QNATitle<em></em></label>
+              <div>
+                <div><p>QNAContent</p></div>
+                <div><p>QNAanswer</p></div>
+              </div>
+              <input type="radio" name="accordion" id="answer03">
+              <label for="answer03">QNATitle<em></em></label>
+              <div>
+                <div><p>QNAContent</p></div>
+                <div><p>QNAanswer</p></div>
+              </div>
+              <input type="radio" name="accordion" id="answer04">
+              <label for="answer04">QNATitle<em></em></label>
+              <div>
+                <div><p>QNAContent</p></div>
+                <div><p>QNAanswer</p></div>
+              </div>
+            </div>
+            <div>
+              <div>PAGENATION</div>
+            </div>
+          </div>
+          <!-- QnA 등록 화면 -->
+            <div class="qnaboard">
+              <input type="text" placeholder="제목" v-model="qnaTitle">
+              <textarea cols="25" rows="10" placeholder="내용" v-model="qnaContent"></textarea>
+              <button class="fillBtn">문의글 작성</button>
+            </div>
+          <!-- QnA 끝 -->
         </div>
         <!-- 왼쪽박스 패딩용 박스 끝 -->
       </div>
@@ -220,13 +267,19 @@ export default {
       commaoptionPrice: '',
       // 대표가격
       bossprice: 0,
-      // 리뷰용 변수 3개
-      reviewlist : [],
-      reviewcount : 0,
-      imgbox : [], 
       // 서브 이미지 변수
       subimglist: [],
       fullprice: 0, // 선택한 옵션 가격
+      // QnA 변수 3개
+      qnaTitle: '', // qna 제목
+      qnaContent: '', //qna 내용
+      // 리뷰용 변수 6개
+      reviewlist : [], // 받아온 리뷰
+      reviewcount : 0, // 리뷰 개수
+      reviewimgbox : [], // 리뷰 이미지
+      reviewTitle: '', // 리뷰 제목
+      reviewContent: '', // 리뷰 내용
+      reviewStar: '', // 리뷰 별점
     };
   },
   methods: {
@@ -349,6 +402,16 @@ export default {
     changeOptionDollar() {
       return product.optionPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     },
+    // 리뷰 이미지 이벤트
+    handlerFiles(e) {
+      console.log(e.target);
+      const files = e.target.files;
+      for(let i=0; i< files.length; i++) {
+        console.log(i);
+        this.reviewimgbox.push(files[i]);
+        console.log(this.reviewimgbox);
+      }
+    },
     // 리뷰 등록
     async setReview() {
       const url = `/ROOT/review/test`;
@@ -377,7 +440,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
-@import '@/assets/scss/product/productinfo.scss';
+<style lang='scss' src='@/assets/scss/product/productinfo.scss' scoped>
+// @import '@/assets/scss/product/productinfo.scss';
 
 </style>

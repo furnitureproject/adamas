@@ -3,6 +3,11 @@
     <div class='TitleCon'>
       <div class="Title">
         <h2>상품리스트</h2>
+        <div>
+          <p @click="changesort(1)">최신순</p>
+          <p @click="changesort(3)">가격높은순</p>
+          <p @click="changesort(4)">가격낮은순</p>
+        </div>
       </div>
     </div>
     <div class="listwrap">
@@ -113,7 +118,7 @@ export default {
     // vuex 연동 시킬것. header에서 클릭시 리셋이 안됨
     // 메인 리스트
     async getListByCate() {
-      this.sort = 1;
+      // this.sort = 1;
       // const url = `/ROOT/product/select_list2?sort=${this.sort}&categoryParent=${this.categoryParent}&page=1`;
       // console.log(this.$route.query.categoryParent);
       // const url = `/ROOT/product/select_list2?sort=${this.sort}&categoryParent=${this.navcategoryParent}&page=1`;
@@ -131,6 +136,11 @@ export default {
       const res1 = await axios.get(url1, { headers: headers1 });
       console.log(res1);
       this.tier3list = res1.data.list;
+    },
+    // 정렬 시키기
+    changesort(val) {
+      this.sort = val;
+      this.getListByCate();
     },
     // 서브메뉴 클릭시 화면표시
     async getTier3List(val) {

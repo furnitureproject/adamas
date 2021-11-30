@@ -1,8 +1,16 @@
 <template>
   <Carousel/>
   <div class="inner">
+    <div class="mainImageTitle">
+      <!-- <div class="mainImageText">
+        <span class="text1st">Furniture</span>
+        <span class="text2nd">Shop</span>
+      </div> -->
+      <div class="mainimgbox">
+        <img src="@/assets/img/bigbed.jpg">
+      </div>
+    </div>
     <div>
-
       <div class='TitleCon'>
         <div class="Title">
           <h2>베스트 상품</h2>
@@ -33,15 +41,30 @@
         </div>
       </div>
     </div>
+    <div>
+    <SixBox/>
+    </div>
   </div>
 </template>
 
 <script>
 import Carousel from '@/components/home/Carousel.vue';
+import SixBox from '@/components/home/SixBox.vue';
 
 export default {
   components: {
-    Carousel,
+    Carousel, SixBox,
+  },
+  mounted() {
+    
+  },
+  data() {
+    return {
+      
+    };
+  },
+  methods: {
+    
   },
 };
 </script>

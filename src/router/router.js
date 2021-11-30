@@ -26,16 +26,19 @@ import UserQnA from '@/components/mypage/user/UserQnA.vue';
 import SellerQnA from '@/components/mypage/seller/SellerQnA.vue';
 import UserWithdraw from '@/components/mypage/user/UserWithdraw.vue';
 import SellerWithdraw from '@/components/mypage/seller/SellerWithdraw.vue';
+import SellerProductManager from '@/components/mypage/seller/SellerProductManager.vue';
 import UserCancelRequest from '@/components/mypage/user/UserCancelRequest.vue';
 import UserJoin from '../views/join/UserJoin.vue';
 import SellerJoin from '../views/join/SellerJoin.vue';
 import Join from '../views/join/Join.vue';
 import Login from '../views/login/Login.vue';
 import Logout from '../views/login/Logout.vue';
+import SixBox from '@/components/home/SixBox.vue';
 
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
+  { path: '/sixbox', name: 'SixBox', component: SixBox },
   { path: '/test', name: 'Test', component: Test },
   { path: '/test1', name: 'Test1', component: Test1 },
   { path: '/test2', name: 'Test2', component: Test2 },
@@ -71,6 +74,7 @@ const routes = [
       { path: '/seller/qna', component: SellerQnA },
       { path: '/seller/info', component: SellerInfo },
       { path: '/seller/withdraw', component: SellerWithdraw },
+      { path: '/seller/product', component: SellerProductManager },
 
     ],
     name: 'SellerMypage',

@@ -1,6 +1,11 @@
 <template>
   <div>
     판매자 마이페이지 메인
+    <div class="title">
+      타이틀 박스
+    </div>
+    <div class="content">
+    </div>
   </div>
 </template>
 
@@ -28,6 +33,12 @@ export default {
 };
 </script>
 
-<style>
-
+<style lang='scss' scoped>
+.title {
+  height: 75px;
+  background: #eee;
+}
+.content {
+  margin-top: 15px;
+}
 </style>

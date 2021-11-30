@@ -1,7 +1,7 @@
 <template>
   <div class="inner">
-    <div class="test1">
-      <router-link to='/seller/mypage'><div>내 정보</div></router-link>
+    <div class="navbar">
+      <router-link to='/seller/mypage'><div class="myinfo">내 정보</div></router-link>
       <ul>
         <router-link to='/seller/order'><li>주문 및 배송관리</li></router-link>
         <router-link to='/seller/product'><li>등록 상품 관리</li></router-link>
@@ -10,9 +10,8 @@
         <router-link to='/seller/withdraw'><li>회원탈퇴</li></router-link>
       </ul>
     </div>
-    <div class="test2wrap">
-      <div class="test2">
-        화면표시
+    <div class="viewwrap">
+      <div class="viewscreen">
         <router-view></router-view>
       </div>
     </div>
@@ -34,23 +33,49 @@ export default {
     clear: both;
   }
 }
-.test1 {
+.navbar {
   float: left;
-  padding-left: 40px;
+  // padding-left: 40px;
   width: 200px;
   min-height: 1000px;
-  background: red;
+  // background: grey;
+  // border-left: 1px solid #eee;
+  // border-right: 2px solid var(--backcolor);
+  .myinfo {
+    font-size: 30px;
+    // border-bottom: 1px solid #222;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    padding-top: 15px;
+  }
+  ul {
+    li {
+      font-size: 20px;
+      padding-top: 15px;
+      padding-bottom: 5px;
+      // border-bottom: 1px solid #222;
+      border-bottom: 3px solid var(--linecolor);
+    }
+  }
+  a.router-link-active {
+    // color: #222;
+    // font-weight: 500;
+    li {
+      color: #222;
+      font-weight: 500;
+    }
+  }
 }
-.test2wrap{
+.viewwrap{
   float: left;
   width: 1140px;
   min-height: 1000px;
-  background: turquoise;
-  .test2 {
+  // background: turquoise;
+  .viewscreen {
   margin: 0 auto;
   width: 1040px;
   min-height: 1000px;
-  background: violet;
+  // background: violet;
   }
 }
 

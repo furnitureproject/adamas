@@ -9,14 +9,14 @@
         <div>
           <label for="aslide04" class="left"></label>
           <label for="aslide02" class="right"></label>
-          <a><img src="@/assets/img/room1.jpg"></a>
+          <a><img src="@/assets/img/bigbed.jpg"></a>
         </div>
       </li>
       <li class="aslideitem">
         <div>
           <label for="aslide01" class="left"></label>
           <label for="aslide03" class="right"></label>
-          <a><img src="@/assets/img/room2.jpg"></a>
+          <a><img src="@/assets/img/bigtable.jpg"></a>
         </div>
       </li>
       <li class="aslideitem">
@@ -35,7 +35,7 @@
       </li>
     </ul>
     <!-- 아래버튼 -->
-    <ul class="paginglist">
+    <!-- <ul class="paginglist">
       <li>
         <label for="aslide01"></label>
       </li>
@@ -48,7 +48,7 @@
       <li>
         <label for="aslide04"></label>
       </li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
