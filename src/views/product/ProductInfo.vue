@@ -37,9 +37,9 @@
               </div>
               <!-- 제목 끝 -->
               <!-- 평점 별 -->
-              <div class="tstar">
+              <!-- <div class="tstar">
                 스타 표시
-              </div>
+              </div> -->
               <!-- 평점 별 끝 -->
               <!-- 대표가격 -->
               <div class="tprice">
@@ -104,6 +104,7 @@
             <!-- 테스트용 버튼임 지울것 -->
             <div>
               <button class="fillBtn" @click="setReview">리뷰추가</button>
+              <button class="fillBtn" @click="setQnA">QnA추가</button>
             </div>
           </div>
           <!-- 리뷰 끝 -->
@@ -159,11 +160,11 @@
           </div>
           <!-- 옵션 박스 끝 -->
           <!-- 가격 표시 박스 -->
-          <div>
+          <!-- <div>
             <div class="tprice sideprice">
               <strong>555,555</strong><span>원</span>
             </div>
-          </div>
+          </div> -->
           <!-- 가격 표시 박스 끝 -->
           <!-- 버튼 박스 -->
           <div class="buttonwrap">
@@ -225,6 +226,7 @@ export default {
       imgbox : [], 
       // 서브 이미지 변수
       subimglist: [],
+      fullprice: 0, // 선택한 옵션 가격
     };
   },
   methods: {
@@ -286,6 +288,17 @@ export default {
       const org = {productOption:{optionCode: val.optionCode}, optionName: val.optionName, optionPrice: val.optionPrice, cartOptionCount: 1};
       // console.log(org);
       this.makeCard(org);
+      console.log(this.selOptionlist);
+      for(let i of this.selOptionlist) {
+        // console.log(i.optionPrice);
+        // console.log(i.cartOptionCount);
+        let tt = i.optionPrice*i.cartOptionCount;
+        console.log(tt);
+        const ee = 0;
+        const ee2 = ee+=tt;
+        console.log(ee2);
+      }
+      this.fullprice
     },
     // 선택한 옵션을 선택옵션리스트에 추가해주는 함수
     makeCard(val) {
@@ -336,7 +349,7 @@ export default {
     changeOptionDollar() {
       return product.optionPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     },
-    // 리뷰 가져오기
+    // 리뷰 등록
     async setReview() {
       const url = `/ROOT/review/test`;
       const headers = { 'Content-Type': 'application/json', token: this.token };
@@ -351,6 +364,14 @@ export default {
       const res = await axios.get(url, { headers });
       console.log(res);
       this.subimglist = res.data.list1;
+    },
+    // QnA 등록
+    async setQnA() {
+      const url = `/ROOT/qna/insert?pno=${this.productCode}`;
+      const headers = { 'Content-Type': 'application/json', token: this.token };
+      const body = { qnaTitle: '문의', qnaContent: '내용' };
+      const res = await axios.post(url, body, { headers });
+      console.log(res);
     }
   },
 };

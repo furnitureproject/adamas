@@ -141,36 +141,18 @@ export default {
       pg: 'kakaopay',
       pay_method: 'card',
       merchant_uid: 'merchant_' + new Date().getTime(),
-      /*
-      merchant_uid에 경우
-      https://docs.iamport.kr/implementation/payment
-      위에 url에 따라가시면 넣을 수 있는 방법이 있습니다.
-      참고하세요.
-      나중에 포스팅 해볼게요.
-      */
       name: '주문명:결제테스트',
-      //결제창에서 보여질 이름
       amount: this.totalprice,
-      //가격
       buyer_email: 'iamport@siot.do',
       buyer_name: this.receiver,
       buyer_tel: `${this.tel1}-${this.tel2}-${this.tel3}`,
       buyer_addr: this.addr1 + this.addr2,
       buyer_postcode: this.zip,
       m_redirect_url: 'http://localhost:9090/orderdone'
-      /*
-      모바일 결제시,
-      결제가 끝나고 랜딩되는 URL을 지정
-      (카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐)
-      */
       }, async (rsp) => {
       console.log(rsp);
       if (rsp.success) {
       var msg = '결제가 완료되었습니다.';
-      // msg += '고유ID : ' + rsp.imp_uid;
-      // msg += '상점 거래ID : ' + rsp.merchant_uid;
-      // msg += '결제 금액 : ' + rsp.paid_amount;
-      // msg += '카드 승인번호 : ' + rsp.apply_num;
       await this.setaddress();
       await this.setpayment();
       await this.setdelivery();

@@ -106,6 +106,7 @@ export default {
       forselectdelete: [], // for in 돌려서 key 줄려고했는데 안줘도 되서 지금은 안씀
       selectprice:0,
       arrayprice: [], //안씀
+      orderids: [], // 오더 넘버즈
     };
   },
   methods: {

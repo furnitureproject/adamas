@@ -17,22 +17,22 @@
         </div>
       </div>
       <div class="divTableBody">
-        <div class="divTableRow">
+        <div class="divTableRow" v-for="(d, di) in dellist" :key="di">
           <div class="orderTableCell orderTableDate">
             <router-link to='/user/order'>
-              <p>20211112</p>
-              <p>20211112555502</p>
+              <p>{{d.orderDateString}}</p>
+              <p>{{d.orderCode}}</p>
               <span>상세보기</span>
             </router-link>
           </div>
           <div class="orderTableCell">
             <div class='tableTitleBox'>
               <div class='imgCell'>
-                <img src='@/assets/img/desk1.jpg' style="width:60px;height:60px">
+                <img :src='`/ROOT/product/select_image?productCode=${d.productCode}`' style="width:60px;height:60px">
               </div>
               <div class="tableTitle">
                 <router-link to='/user/order'>
-                  <p>다리가 무려 4개!!!!! 총알배송 다리4개 책상</p>
+                  <p>{{d.productTitle}}</p>
                   <p>옵션: 다리4개 분홍색</p>
                 </router-link>
               </div>
@@ -53,14 +53,59 @@
             <p>리뷰쓰기</p>
           </div>
         </div>
+        <!-- <div>
+          <div class="reviewbox">
+            <label for="reviewtitle">제목</label>
+            <input type="text" id="reviewtitle" placeholder="제목">
+            <label for="reviewcontent">내용</label>
+            <input type="text" id="reviewcontent" placeholder="내용">
+            <label for="reviewimg">사진첨부</label>
+            <input type="file" multiple id="reviewimg">
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <div class="pagelist">
+      <div>
+      <ul>
+        <li v-for="(p, pidx) in pages" :key="pidx" @click="changePage(pidx+1)">{{pidx+1}}</li>
+      </ul>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+  mounted() {
+    this.getdelivery();
+  },
+  data() {
+    return {
+      token: sessionStorage.getItem('token'),
+      page: 1, // 현재 페이지
+      pages: 1, // 전체 페이지 네이션
+      dellist: [], // 배송 정보 받은것
+    };
+  },
+  methods: {
+    async getdelivery() {
+      const url = `/ROOT/delivery/select_userdellist?page=${this.page}`;
+      const headers = { 'Content-Type': 'application/json', token: this.token };
+      const res = await axios.get(url, { headers });
+      console.log(res);
+      this.dellist = res.data.list;
+      this.pages = res.data.cnt;
+    },
+    // 페이지 변경
+    changePage(val) {
+      this.page = val;
+      console.log(this.page);
+      this.getdelivery();
+    }
+  },
 };
 </script>
 
@@ -138,6 +183,29 @@ div.blueTable {
     content: '';
     display: block;
     clear: both;
+  }
+}
+// 페이지네이션
+.pagelist {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  div{
+    ul {
+      text-align: center;
+      li {
+        display: inline-block;
+        margin-right: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        text-align: center;
+      }
+    }
+    &::after {
+        display: block;
+        content: '';
+        clear: both;
+    }
   }
 }
 </style>

@@ -10,39 +10,71 @@
         <div class="divTableRow">
           <div class="divTableHead">번호</div>
           <div class="divTableHead">상품명</div>
-          <div class="divTableHead">판매자</div>
+          <div class="divTableHead">문의제목</div>
           <div class="divTableHead">문의내용</div>
           <div class="divTableHead">작성일</div>
         </div>
       </div>
       <div class="divTableBody">
-        <div class="divTableRow">
+        <div class="divTableRow" v-for="(q, i) in qnalist" :key="i">
           <div class="orderTableCell">
-            <p>1</p>
+            <p>{{i+1}}</p>
           </div>
             <div class='orderTableCell'>
               <p>다리가 무려 4개!!!!! 총알배송 다리4개 책상</p>
               <p>옵션: 다리4개 분홍색</p>
             </div>
           <div class="orderTableCell">
-            <p>다리익선</p>
+            <p>{{q.qnaTitle}}</p>
           </div>
           <div class="orderTableCell">
-            <p>다리가 몇개인게 제일 좋나요?</p>
+            <p>{{q.qnaContent}}</p>
           </div>
           <div class="orderTableCell">
-            <p>2021-11-12</p>
+            <p>{{q.qnaRegdateString}}</p>
           </div>
         </div>
       </div>
     </div>
-
+    <div class="pagelist">
+      <div>
+      <ul>
+        <li v-for="(p, pidx) in pages" :key="pidx" @click="changePage(pidx+1)">{{pidx+1}}</li>
+      </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+  mounted() {
+    this.getQnA();
+  },
+  data() {
+    return {
+      token: sessionStorage.getItem('token'),
+      qnalist: [],
+      page: 1,
+      pages: 1,
+    };
+  },
+  methods: {
+    async getQnA() {
+      const url = `/ROOT/select_userqnalist?page=${this.page}`;
+      const headers = { 'Content-Type': 'application/json', token: this.token };
+      const res = await axios.get(url, { headers });
+      console.log(res);
+      this.qnalist = res.data.list;
+      this.pages = res.data.cnt;
+    },
+    changePage(val) {
+      this.page= val;
+      this.getQnA();
+    }
+  },
 };
 </script>
 
@@ -106,5 +138,28 @@ height: 40px;
   .divTableHeading { display: table-header-group;}
   .divTableBody { display: table-row-group;}
   
+  // 페이지네이션
+.pagelist {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  div{
+    ul {
+      text-align: center;
+      li {
+        display: inline-block;
+        margin-right: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        text-align: center;
+      }
+    }
+    &::after {
+        display: block;
+        content: '';
+        clear: both;
+    }
+  }
+}
  
 </style>
