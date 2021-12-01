@@ -6,21 +6,29 @@
       <CheckButton/>
       <button @click="userlogin">로그인</button>
     </div> -->
-
     <div class="container">
-      <h2>로그인</h2>
-      <div>
-        <div class="inputBox">
-          <input type="text" required="required" v-model="userId">
-          <span>ID</span>
+      <div class="leftImageBox">
+        <img src="@/assets/img/book3.jpg" alt="">
+        <div></div>
+      </div>
+      <div class="loginform">
+        <div class="title">
+          <p>LOGIN</p>
         </div>
-        <div class="inputBox">
-          <input type="password" required="required" v-model="userPw">
-          <span>PASSWORD</span>
-        </div>
-        <CheckButton/>
-        <div class="inputBox">
-          <input type="button" value="LOGIN" @click="userlogin">
+        <div class="inputcon">
+          <div class="inputBox">
+            <input type="text" placeholder="ID" v-model="userId">
+          </div>
+          <div class="inputBox passbox">
+            <input type="password" placeholder="PASSWORD" v-model="userPw">
+          </div>
+          <div class="checkbtnbox">
+            <CheckButton class="checkbtn"></CheckButton>
+          </div>
+          <div class="btnBox">
+            <!-- <input type="button" value="LOGIN" @click="userlogin"> -->
+            <button @click="userlogin">LOGIN</button>
+          </div>
         </div>
       </div>
     </div>
@@ -115,6 +123,6 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import '@/assets/scss/test1.scss';
+@import '@/assets/scss/login.scss';
 
 </style>

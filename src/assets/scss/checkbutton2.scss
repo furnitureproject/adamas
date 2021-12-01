@@ -1,7 +1,7 @@
 .testcontainer {
-  width: 300px;
-  margin-left: 260px;
-  margin-bottom: 10px;
+  // width: 300px;
+  // margin-left: 260px;
+  // margin-bottom: 10px;
 }
 .container1{
   display: flex;
@@ -11,8 +11,10 @@
 }
 .chlabel{
   position: relative;
-  width: 40px;
-  height: 20px;
+  // width: 40px;
+  width: 80px;
+  // height: 20px;
+  height: 40px;
   cursor: pointer;
 
   .chbox{
@@ -24,7 +26,7 @@
               background: #05be05;
               box-shadow: 0 15px 25px #05be0566;
               i{
-                  left: 21px;
+                  left: 42px;
                   // &:before{
                   //     background: #05be05;
                   //     box-shadow: 35px 0 0 #05be05;
@@ -54,10 +56,10 @@
       box-shadow: 0 15px 25px #fe000066;
       i{
           position: absolute;
-          top: 1px;
-          left: 1px;
-          width: 18px;
-          height: 18px;
+          top: 2px;
+          left: 2px;
+          width: 36px;
+          height: 36px;
           background: #fff;
           border-radius: 50%;
           transition: 0.5s;

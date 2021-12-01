@@ -53,11 +53,12 @@ const routes = [
   { path: '/orderdir', name: 'Orderdir', component: Orderdir },
   { path: '/orderdone', name: 'Orderdone', component: Orderdone },
   { // 라우터 뷰 안에 라우터 뷰 쓸려면 이렇게 차일드 쓸것
-    path: '/user/mypage',
+    // path: '/user/mypage',
+    path: '/user',
     children: [
-      { path: '/user/order', component: UserOrderList },
+      // { path: '/user/order', component: UserOrderList },
       { path: '/user/info', component: UserInfo },
-      { path: '/user/mypage', component: UserMypageMain },
+      { path: '/user/mypage', component: UserOrderList },
       { path: '/user/withdraw', component: UserWithdraw },
       { path: '/user/address', component: UserAddress },
       { path: '/user/cancelrequest', component: UserCancelRequest },
@@ -67,10 +68,11 @@ const routes = [
     component: UserMypage,
   },
   { // 라우터 뷰 안에 라우터 뷰 쓸려면 이렇게 차일드 쓸것
-    path: '/seller/mypage',
+    // path: '/seller/mypage',
+    path: '/seller',
     children: [
-      { path: '/seller/mypage', component: SellerMypageMain },
-      { path: '/seller/order', component: SellerOrderList },
+      { path: '/seller/mypage', component: SellerOrderList },
+      // { path: '/seller/order', component: SellerOrderList },
       { path: '/seller/qna', component: SellerQnA },
       { path: '/seller/info', component: SellerInfo },
       { path: '/seller/withdraw', component: SellerWithdraw },

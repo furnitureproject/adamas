@@ -2,9 +2,10 @@
   <div class="inner">
     <!-- 왼쪽 nav menu -->
     <div class="wrapMenu">
-      <router-link to='/user/mypage'><div class="myinfofo">내 정보</div></router-link>
+      <!-- <router-link to='/user/mypage'><div class="myinfofo">내 정보</div></router-link> -->
+      <div class="myinfofo">내 정보</div>
       <ul>
-        <router-link to='/user/order'><li>주문 및 배송조회</li></router-link>
+        <router-link to='/user/mypage'><li>주문 및 배송조회</li></router-link>
         <!-- <router-link to='/user/cancelrequest'><li>취소/반품/교환 조회</li></router-link> -->
         <!-- <router-link to='/user/address'><li>배송지 관리</li></router-link> -->
         <router-link to='/user/qna'><li>상품 QnA</li></router-link>

@@ -1,9 +1,10 @@
 <template>
   <div class="inner">
     <div class="navbar">
-      <router-link to='/seller/mypage'><div class="myinfo">내 정보</div></router-link>
+      <!-- <router-link to='/seller/mypage'><div class="myinfo">내 정보</div></router-link> -->
+      <div class="myinfo">내 정보</div>
       <ul>
-        <router-link to='/seller/order'><li>주문 및 배송관리</li></router-link>
+        <router-link to='/seller/mypage'><li>주문 및 배송관리</li></router-link>
         <router-link to='/seller/product'><li>등록 상품 관리</li></router-link>
         <router-link to='/seller/qna'><li>상품 QnA</li></router-link>
         <router-link to='/seller/info'><li>판매자정보 변경</li></router-link>

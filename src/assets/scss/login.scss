@@ -1,0 +1,106 @@
+.container {
+  width: 1200px;
+  height: 700px;
+  margin-top: 50px;
+  margin-left: 70px;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 60%), 0 2px 12px 0 rgb(0 0 0 / 30%);
+  &::after {
+    display: block;
+    content: '';
+    clear: both;
+  }
+}
+.leftImageBox {
+  position: relative;
+  float: left;
+  width: 600px;
+  height: 700px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  div {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(36, 36, 36, 0.39);
+    content: '';
+  }
+}
+.loginform {
+  float: left;
+  width: 600px;
+  height: 700px;
+  background: linear-gradient(90deg, rgba(255,255,251,0.5) 5%, rgba(180,178,170,0.2) 100%);
+  .title {
+    margin-bottom: 20px;
+    background: blanchedalmond;
+    padding-left: 0px;
+    p {
+      margin-left: 30px;
+      font-size: 40px;
+      font-weight: 600;
+      color: #222;
+    }
+  }
+  .inputcon {
+    padding-left: 30px;
+    .inputBox {
+      input {
+        width: 450px;
+        padding: 20px;
+        line-height: normal;
+        border: 3px solid antiquewhite;
+        margin-bottom: 30px;
+        font-size: 20px;
+        border-radius: 5px;
+        &:focus {
+          border: 3px solid rgba(34, 34, 34, 0.8);
+          outline: none;
+        }
+        &::placeholder {
+          color: #e2e2e2;
+          font-size: 20px;
+        }
+      }
+    }
+    .passbox {
+      input{
+        margin-bottom: 10px;
+      }
+    }
+    .checkbtnbox {
+      position: relative;
+      width: 450px;
+      height: 50px;
+      .checkbtn {
+        position: absolute;
+        top: 0;
+        right: 15px;
+      }
+    }
+    .btnBox {
+      width: 450px;
+      margin-top: 20px;
+      button {
+        float: right;
+        width: 200px;
+        padding: 10px 20px;
+        font-size: 25px;
+        font-weight: 500;
+        border: 3px solid #222;
+        border-radius: 5px;
+        &:hover {
+          background: #fff;
+          cursor: pointer;
+        }
+      }
+      &::after {
+        display: block;
+        content: '';
+        clear: both;
+      }
+    }
+  }
+}
