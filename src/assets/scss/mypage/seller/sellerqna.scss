@@ -1,0 +1,130 @@
+// qna 테이블
+table.type09 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    margin-top: 82px;
+  }
+  table.type09 thead th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    // color: #369;
+    // border-bottom: 3px solid #036;
+    color: #2F4858;
+    border-bottom: 3px solid #2F4858;
+  }
+  table.type09 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #f3f6f7;
+  }
+  table.type09 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+  }
+
+  body {
+    position: relative;
+  }
+  // qna 등록화면
+  .qnaboard {
+    background: rgba(34, 34, 34, 0.767);
+    position: absolute;
+    display: none;
+    width: 540px;
+    left: 35%;
+    padding: 20px;
+    input[type='text'] {
+      display: block;
+      width: 500px;
+      border: 2px solid #2b2a29;
+      padding: 10px;
+    }
+    textarea {
+      width: 500px;
+      border: 2px solid #2b2a29;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    .fillBtn {
+      width: 500px;
+      margin-top: 10px;
+    }
+  }
+  .qnapagination {
+    text-align:center;
+    color: #222;
+    ul {
+      li {
+        display: inline-block;
+        margin-right: 10px;
+        font-size: 20px;
+        font-weight: 500;
+      }
+    }
+  }
+  
+  @keyframes slidein {
+    from {
+      margin-left: 100%;
+      // width: 100%
+    }
+  
+    to {
+      margin-left: 0%;
+      // width: 100%;
+    }
+  }
+  .boardappear {
+    display: block;
+    // transition: all 2s;
+    animation-duration: 3s;
+    animation-name: slidein;
+  }
+
+
+  // 버튼
+  .fillBtn {
+  
+    font-size: 20px;
+    padding: 10px 0;
+    border: 3px solid #333333;
+    background-color: transparent;
+    color: #b4b2b2;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-weight: bold;
+    position: relative;
+    transition: all 0.4s;
+    overflow: hidden;
+    margin-right: 10px;
+    width: 145px;
+  }
+  .fillBtn:focus {
+    outline: none;
+  }
+  .fillBtn::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    top: 100%;
+    left: 0;
+    transition: all 0.4s;
+    z-index: -1;
+  }
+  .fillBtn:hover::before {
+    transform: translateY(-100%);
+  }
+  .fillBtn:hover {
+    color: #1d1b2e;
+    // color: #fff;
+    cursor: pointer;
+  }

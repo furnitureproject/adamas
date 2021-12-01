@@ -1,5 +1,10 @@
 <template>
   <div>
+    <!-- QnA 등록 화면 -->
+    <div :class="qnaboardclass">
+      <textarea cols="25" rows="10" placeholder="내용" v-model="qnaReply"></textarea>
+      <button class="fillBtn" @click="qnaAnswer">답글 작성</button>
+    </div>
     <table class="type09">
       <thead>
       <tr>
@@ -7,7 +12,7 @@
         <th scope="cols">상품명</th>
         <th scope="cols">문의글 제목</th>
         <th scope="cols">문의글 내용</th>
-        <th scope="cols">날짜</th>
+        <th scope="cols">등록일자</th>
         <th scope="cols">답글</th>
       </tr>
       </thead>
@@ -17,8 +22,8 @@
         <td>{{q.productTitle}}</td>
         <td>{{q.qnaTitle}}</td>
         <td>{{q.qnaContent}}</td>
-        <td>{{q.qnaReplyRegdateString}}</td>
-        <td><button>답글달기</button></td>
+        <td>{{q.qnaRegdateString}}</td>
+        <td><button class="addreply" v-if="q.qnaReply==null" @click="showreply(q.qnaNum)">답글달기</button><p v-if="q.qnaReply!=null">{{q.qnaReply}}</p></td>
       </tr>
       </tbody>
     </table>
@@ -37,7 +42,10 @@ export default {
       token: sessionStorage.getItem('token'), // 토큰
       qnapage: 1, // 현재 페이지
       qnaAllpages: 1, // 전체 페이지 
-      qnalist: [], // 받은 데이터    
+      qnalist: [], // 받은 데이터
+      qnano: 0,
+      qnaboardclass: [{ qnaboard: true }, { boardappear: false }], // 화면 나오게 하기    
+      qnaReply: '',
     };
   },
   methods: {
@@ -48,40 +56,29 @@ export default {
       console.log(res);
       this.qnalist = res.data.list;
       this.qnaAllpages = res.data.cnt;
-    }
+    },
+    // 답글 창 열기
+    async showreply(val) {
+      console.log(val);
+      this.qnano = val;
+      this.qnaboardclass[1].boardappear = true;
+    },
+    // 답글 등록
+    async qnaAnswer() {
+      const url = `/ROOT/qna/update2?qnano=${this.qnano}`;
+      const headers = { 'Content-Type': 'application/json', token: this.token };
+      const body = { qnaReply: this.qnaReply };
+      const res = await axios.put(url, body, { headers });
+      console.log(res);
+      this.qnaboardclass[1].boardappear = false;
+      this.getQnAdata();
+    },
   },
 };
 </script>
 
 <style lang='scss' scoped>
-table.type09 {
-  border-collapse: collapse;
-  text-align: left;
-  line-height: 1.5;
-  margin-top: 82px;
-}
-table.type09 thead th {
-  padding: 10px;
-  font-weight: bold;
-  vertical-align: top;
-  // color: #369;
-  // border-bottom: 3px solid #036;
-  color: #2F4858;
-  border-bottom: 3px solid #2F4858;
-}
-table.type09 tbody th {
-  width: 150px;
-  padding: 10px;
-  font-weight: bold;
-  vertical-align: top;
-  border-bottom: 1px solid #ccc;
-  background: #f3f6f7;
-}
-table.type09 td {
-  width: 350px;
-  padding: 10px;
-  vertical-align: top;
-  border-bottom: 1px solid #ccc;
-}
+@import '@/assets/scss/mypage/seller/sellerqna.scss';
+
 </style>
 
