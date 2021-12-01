@@ -3,17 +3,16 @@
     <div class="footInner">
       <div class="upper">
         <h1>TEAMPROJECT</h1>
-        <ul>
+        <!-- <ul>
           <li><a href="#">Policy</a></li>
           <li><a href="#">Terms</a></li>
           <li><a href="#">Family Site</a></li>
           <li><a href="#">Sitemap</a></li>
-        </ul>
+        </ul> -->
       </div>
       <div class="lower">
         <address>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, ullam.<br>
-        TEL : 031-111-1234 C.P : 010-1234-5678
+        Funiture Store
         </address>
         <p>
           2021 TEAMPROJECT & copy; copyright all right reserved.

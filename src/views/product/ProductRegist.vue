@@ -49,13 +49,17 @@
         <div :class="imgclass">
           <img :src="imgdata">
         </div>
-        <button class="fillBtn"><label for="filebox">대표 이미지 첨부</label></button>
+        <button class="fillBtn" style="width:350px"><label for="filebox">대표 이미지 첨부</label></button>
         <!-- <label for="filebox">대표 이미지 첨부</label> -->
         <input type="file" @change='handlerFile($event)' name="filename" id="filebox" accept=".jpg, .png" hidden>
       </div>
       <div class="registbox">
-        <button class="fillBtn"><label for="multibox">상세정보 이미지 첨부</label></button>
-        <input multiple="multiple" @change='handlerFiles' ref="file" type="file" name="filename[]" id="multibox" accept=".jpg, .png" hidden>
+        <button class="fillBtn" style="width:350px"><label for="multibox">옵션 이미지 첨부(3장)</label></button>
+        <input multiple="multiple" @change='handlerOptionFiles($event)' ref="file" type="file" name="filename[]" id="multibox" accept=".jpg, .png" hidden>
+      </div>
+      <div class="registbox">
+        <button class="fillBtn" style="width:350px"><label for="multibox1">상세정보 이미지 첨부</label></button>
+        <input multiple="multiple" @change='handlerFiles($event)' ref="file" type="file" name="filename[]" id="multibox1" accept=".jpg, .png" hidden>
       </div>
       <div class="registbox">
         <div class='TitleCon'>
@@ -87,7 +91,7 @@
             <input type="text" class="fieldInput" placeholder="옵션 가격" v-model="optionlist[idx].optionPrice">
           </div>
         </div>
-        <div><button class="fillBtn" @click="optionplus">옵션 추가</button></div>
+        <div><button class="fillBtn" @click="optionplus" style="width:350px">옵션 추가</button></div>
       </div>
       <div class='TitleCon'>
           <div class="Title">
@@ -128,7 +132,7 @@
         </div>
       </div>
     </div>
-    <button @click="setProduct" class="fillBtn">제품 등록</button>
+    <button @click="setProduct" class="fillBtn" style="width:350px">제품 등록</button>
   </div>
 </template>
 
@@ -165,6 +169,7 @@ export default {
       imgdata: '',
       imgclass: [{imgbox: false}],
       subimglist: [],
+      optionimglist: [],
     };
   },
   methods: {
@@ -223,23 +228,19 @@ export default {
         this.descimg.push(files[i]);
         console.log(this.descimg);
       }
-      // const reader = new FileReader();
-      // reader.onload = e => {
-      //   for(let t=0; t< files.length; t++){
-      //     vm.subimglist.push(files[t]);
-      //   }
-      //   reader.readAsDataURL(this.subimglist);
-      //   console.log(this.subimglist);
-      // }
-      // const formData = new FormData();
-      // for( var i = 0; i < this.$refs.file.files.length; i++ ){
-      //   let file = this.$refs.file.files[i];
-      //   formData.append('files[' + i + ']', file);
-      // }
-      // this.descimg = formData;
-      // this.descimg.push(files);
-      // console.log(files);
       console.log(this.descimg);
+    },
+    // 옵션 이미지 핸들러
+    handlerOptionFiles(e) {
+      // console.log(e.target);
+      const files = e.target.files;
+      const vm = this;
+      for(let i=0; i< files.length; i++) {
+        // console.log(i);
+        this.optionimglist.push(files[i]);
+        // console.log(this.optionimglist);
+      }
+      console.log(this.optionimglist);
     },
     // 제품등록
     // 방식은 왼쪽엔 제품기본정보 등록하는거 놔두고 카테고리까지 골라지면 오른쪽에 옵션 등록이 활성화되면서 옵션까지 마치고나면 한번에 등록하도록 할것.
@@ -261,8 +262,11 @@ export default {
       console.log(res.data.product);
       this.productCode = res.data.product;
       // 상품 설명 이미지 넣는 부분
-      this.setDescImg();
-      this.setoptions();
+      await this.setDescImg();
+      await this.setOptionImg();
+      await this.setoptions();
+      alert('등록 완료하였습니다.');
+      this.$router.push('/');
     },
     async setDescImg() {
       // 상품 설명 이미지 넣는 부분
@@ -270,7 +274,21 @@ export default {
       const headers = { 'Content-Type': 'multipart/form-data', token: this.token };
       const body = new FormData();
       for(let i=0; i< this.descimg.length; i++){
-        body.append('File' ,this.descimg[i]);
+        body.append('File', this.descimg[i]);
+      }
+      // body.append('file', [this.descimg]);
+      console.log(body)
+      // body.append('file', this.descimg);
+      const res = await axios.post(url, body, {headers});
+      console.log(res);
+    },
+    async setOptionImg() {
+      // 옵션 이미지 넣는 부분
+      const url = `/ROOT/product/insert_subimage?productCode=${this.productCode}`;
+      const headers = { 'Content-Type': 'multipart/form-data', token: this.token };
+      const body = new FormData();
+      for(let i=0; i< this.optionimglist.length; i++){
+        body.append('file', this.optionimglist[i]);
       }
       // body.append('file', [this.descimg]);
       console.log(body)

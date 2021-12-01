@@ -10,7 +10,7 @@
         <div class="divTableRow">
           <div class="divTableHead">주문일자</div>
           <div class="divTableHead">상품 상세 정보</div>
-          <div class="divTableHead">상품 금액(수량)</div>
+          <div class="divTableHead">결제 금액(수량)</div>
           <div class="divTableHead">판매자</div>
           <div class="divTableHead">주문상태</div>
           <div class="divTableHead">리뷰작성</div>
@@ -19,7 +19,7 @@
       <div class="divTableBody">
         <div class="divTableRow" v-for="(d, di) in dellist" :key="di">
           <div class="orderTableCell orderTableDate">
-            <router-link to='/user/order'>
+            <router-link :to="`/product/info?productCode=${d.productCode}`">
               <p>{{d.orderDateString}}</p>
               <p>{{d.orderCode}}</p>
               <span>상세보기</span>
@@ -31,26 +31,28 @@
                 <img :src='`/ROOT/product/select_image?productCode=${d.productCode}`' style="width:60px;height:60px">
               </div>
               <div class="tableTitle">
-                <router-link to='/user/order'>
+                <router-link :to="`/product/info?productCode=${d.productCode}`">
                   <p>{{d.productTitle}}</p>
-                  <p>옵션: 다리4개 분홍색</p>
+                  <p>옵션: {{d.optionName}}</p>
                 </router-link>
               </div>
             </div>
           </div>
           <div class="orderTableCell">
-            <p>120,000원</p>
-            <span>(1개)</span>
+            <p>{{d.price}}원</p>
+            <span>({{d.cartOptionCount}}개)</span>
           </div>
           <div class="orderTableCell">
-            <p>다리익선</p>
+            <p>{{d.sellerName}}</p>
           </div>
           <div class="orderTableCell">
             <p>배송중</p>
             <router-link to='/'><span>(배송조회)</span></router-link>
           </div>
           <div class="orderTableCell">
-            <p>리뷰쓰기</p>
+            <router-link :to="`/product/info?productCode=${d.productCode}`">
+              <p>리뷰쓰기</p>
+            </router-link>
           </div>
         </div>
         <!-- <div>

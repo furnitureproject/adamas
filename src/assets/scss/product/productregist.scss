@@ -190,7 +190,11 @@ label {
           width: 300px;
           height: 100px;
           margin-top: 10px;
-          border: 1px solid #eee; 
+          border: 1px solid #eee;
+          padding: 20px 20px;
+          &:hover {
+            background: #222;
+          }
         }
         input[type='button'] {
           display: none;

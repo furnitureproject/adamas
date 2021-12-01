@@ -3,22 +3,22 @@
     <table class="type09">
       <thead>
       <tr>
-        <th scope="cols"></th>
         <th scope="cols">상품코드</th>
         <th scope="cols">상품명</th>
-        <th scope="cols">옵션명</th>
-        <th scope="cols">가격</th>
-        <th scope="cols">등록일</th>
+        <th scope="cols">문의글 제목</th>
+        <th scope="cols">문의글 내용</th>
+        <th scope="cols">날짜</th>
+        <th scope="cols">답글</th>
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <th scope="row"></th>
-        <td>202108110001</td>
-        <td>desk</td>
-        <td>화려한 네발</td>
-        <td>444,444원</td>
-        <td>2021-08-11</td>
+      <tr v-for="(q, idx) in qnalist" :key="idx">
+        <th scope="row">{{q.productCode}}</th>
+        <td>{{q.productTitle}}</td>
+        <td>{{q.qnaTitle}}</td>
+        <td>{{q.qnaContent}}</td>
+        <td>{{q.qnaReplyRegdateString}}</td>
+        <td><button>답글달기</button></td>
       </tr>
       </tbody>
     </table>
@@ -26,8 +26,30 @@
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+  mounted() {
+    this.getQnAdata();
+  },
+  data() {
+    return {
+      token: sessionStorage.getItem('token'), // 토큰
+      qnapage: 1, // 현재 페이지
+      qnaAllpages: 1, // 전체 페이지 
+      qnalist: [], // 받은 데이터    
+    };
+  },
+  methods: {
+    async getQnAdata() {
+      const url = `/ROOT/seller/select_qnalist?page=${this.qnapage}`;
+      const headers = { 'Content-Type': 'application/json', token: this.token };
+      const res = await axios.get(url, { headers });
+      console.log(res);
+      this.qnalist = res.data.list;
+      this.qnaAllpages = res.data.cnt;
+    }
+  },
 };
 </script>
 

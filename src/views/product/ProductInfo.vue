@@ -113,47 +113,33 @@
                 <button class="fillBtn"><label for="multibox">리뷰 이미지 첨부(3장까지)</label></button>
                 <input multiple="multiple" @change='handlerFiles' ref="file" type="file" name="filename[]" id="multibox" accept=".jpg, .png" hidden>
               </div>
-              <button class="fillBtn">리뷰작성</button>
+              <button class="fillBtn" @click="setReview">리뷰작성</button>
             </div>
           </div>
           <!-- 리뷰 끝 -->
           <!-- QNA -->
           <div class="qnaWrap">
             <div class="accordion">
-              <input type="radio" name="accordion" checked id="answer01">
-              <label for="answer01">QNATitle<em></em></label>
-              <div>
-                <div><p>QNAContent</p></div>
-                <div><p>QNAanswer</p></div>
-              </div>
-              <input type="radio" name="accordion" id="answer02">
-              <label for="answer02">QNATitle<em></em></label>
-              <div>
-                <div><p>QNAContent</p></div>
-                <div><p>QNAanswer</p></div>
-              </div>
-              <input type="radio" name="accordion" id="answer03">
-              <label for="answer03">QNATitle<em></em></label>
-              <div>
-                <div><p>QNAContent</p></div>
-                <div><p>QNAanswer</p></div>
-              </div>
-              <input type="radio" name="accordion" id="answer04">
-              <label for="answer04">QNATitle<em></em></label>
-              <div>
-                <div><p>QNAContent</p></div>
-                <div><p>QNAanswer</p></div>
+              <div v-for="(q, qidx) in qnalist" :key="qidx">
+                <input type="radio" name="accordion" checked :id= "`answer${qidx}`">
+                <label :for= "`answer${qidx}`">{{q.qnaTitle}}<em></em></label>
+                <div>
+                  <div class="qnacontent"><p>{{q.qnaContent}}</p></div>
+                  <div><p>{{q.qnaReply}}<button @click="qnaAnswer(q.qnaNum)">답변 등록</button></p></div>
+                </div>
               </div>
             </div>
-            <div>
-              <div>PAGENATION</div>
+            <div class="qnapagination">
+              <ul>
+                <li v-for="(qq, qqidx) in qnaAllpages" :key="qqidx" @click="qnaPageChange(qqidx+1)">{{qqidx+1}}</li>
+              </ul>
             </div>
           </div>
           <!-- QnA 등록 화면 -->
             <div class="qnaboard">
               <input type="text" placeholder="제목" v-model="qnaTitle">
               <textarea cols="25" rows="10" placeholder="내용" v-model="qnaContent"></textarea>
-              <button class="fillBtn">문의글 작성</button>
+              <button class="fillBtn" @click="setQnA">문의글 작성</button>
             </div>
           <!-- QnA 끝 -->
         </div>
@@ -270,11 +256,15 @@ export default {
       // 서브 이미지 변수
       subimglist: [],
       fullprice: 0, // 선택한 옵션 가격
-      // QnA 변수 3개
+      // QnA 변수 5개
       qnaTitle: '', // qna 제목
       qnaContent: '', //qna 내용
+      qnapage: 1, // qna 페이지
+      qnaAllpages: 1, // qna 전체 페이지
+      qnalist: [], // 받은 qna 리스트
       // 리뷰용 변수 6개
       reviewlist : [], // 받아온 리뷰
+      reviewnum: 0, // 등록한 리뷰의 넘버
       reviewcount : 0, // 리뷰 개수
       reviewimgbox : [], // 리뷰 이미지
       reviewTitle: '', // 리뷰 제목
@@ -297,6 +287,8 @@ export default {
       const url4 = `/ROOT/productoption/select_list?productCode=${this.productCode}`;
       // 리뷰
       const url5 = `/ROOT/review/test?productcode=${this.productCode}&page=1`;
+      // QnA
+      const url6 = `/ROOT/select_qnalist?code=${this.productCode}&page=${this.qnapage}`
       const headers = { 'Content-Type': 'application/json' };
       try {
         const res = await axios.get(url, {headers});
@@ -314,21 +306,28 @@ export default {
         this.optionlist = res4.data.list;
         this.bossprice = res4.data.price;
         const res5 = await axios.get(url5, { headers });
-        console.log(res5);
         if(res5.data.status == 200){
           this.reviewlist = res5.data.list.content
           this.reviewcount = res5.data.list.content.length
         }
-        console.log(res);
+        const res6 = await axios.get(url6, { headers });
+        if(res6.status == 200) {
+          this.qnaAllpages = res6.data.cnt;
+          this.qnalist = res6.data.list;
+          console.log(this.qnalist);
+        }
+        // console.log(res);
         // console.log(res1);
         // console.log(res2);
         // console.log(res3);
         // console.log(res4);
+        // console.log(res5);
+        console.log(res6);
         // console.log(this.product);
         // console.log(this.deslist);
         // console.log(this.thumimage);
         // console.log(this.subimage);
-        console.log(this.optionlist);
+        // console.log(this.optionlist);
       }
       catch(err) {
         console.log(err);
@@ -416,9 +415,29 @@ export default {
     async setReview() {
       const url = `/ROOT/review/test`;
       const headers = { 'Content-Type': 'application/json', token: this.token };
-      const body = { reviewTitle: '테스트', reviewContent: '테스트테스트', reviewStar: 4, product: {productCode: this.productCode} };
+      const body = { reviewTitle: this.reviewTitle, reviewContent: this.reviewContent, reviewStar: this.reviewStar, product: {productCode: this.productCode} };
       const res = await axios.post(url, body, { headers });
       console.log(res);
+      this.reviewNum = res.data.reviewNum;
+      await this.setReviewImg();
+      // await getproductinfo()
+    },
+    // 리뷰 이미지 등록
+    async setReviewImg() {
+      const url = `/ROOT/reviewimage?reviewnum=${this.reviewNum}`;
+      const headers = { 'Content-Type': 'multipart/form-data', token: this.token };
+      const body = new FormData();
+      for(let i=0; i< this.reviewimgbox.length; i++){
+        body.append('file' ,this.reviewimgbox[i]);
+      }
+      // body.append('file', [this.descimg]);
+      console.log(body)
+      // body.append('file', this.descimg);
+      const res = await axios.post(url, body, {headers});
+      console.log(res);
+      if(res.status == 200) {
+        await this.getproductinfo()
+      }
     },
     // 서브 이미지 가져오기
     async getSubImg() {
@@ -432,9 +451,24 @@ export default {
     async setQnA() {
       const url = `/ROOT/qna/insert?pno=${this.productCode}`;
       const headers = { 'Content-Type': 'application/json', token: this.token };
-      const body = { qnaTitle: '문의', qnaContent: '내용' };
+      const body = { qnaTitle: this.qnaTitle, qnaContent: this.qnaContent };
       const res = await axios.post(url, body, { headers });
       console.log(res);
+      if(res.data.result == 200) {
+        await this.getproductinfo();
+      }
+    },
+    // QnA 답변 등록
+    async qnaAnswer(val) {
+      const url = `/ROOT/qna/update2?qnano=${val}`;
+      const headers = { 'Content-Type': 'application/json', token: this.token };
+      const body = { qnaReply: '대답해 PDD!' };
+      const res = await axios.put(url, body, { headers });
+      console.log(res);
+    },
+    qnaPageChange(val) {
+      this.qnapage = val;
+      this.getproductinfo();
     }
   },
 };
