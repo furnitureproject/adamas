@@ -46,7 +46,17 @@
 }
 .bestproduct {
   ul {
+    &::after {
+      display: block;
+      content: '';
+      clear: both;
+    }
     li {
+      float: left;
+      margin-right: 35px;
+      &:hover {
+        cursor: pointer;
+      }
       &::after {
         display: block;
         content: '';

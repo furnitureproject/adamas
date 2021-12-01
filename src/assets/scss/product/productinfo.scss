@@ -467,6 +467,7 @@ input[id*="answer"]:checked + label + div {
 input[id*="answer"]:checked + label em {
   background-position:0 -30px;
 }
+// QnA 등록창
 .qnaboard {
   padding: 20px;
   input[type='text'] {
@@ -485,6 +486,10 @@ input[id*="answer"]:checked + label em {
     width: 500px;
     margin-top: 10px;
   }
+}
+// QnA 등록 창 보여주기
+.appearQnA {
+  display: none;
 }
 .qnapagination {
   text-align:center;

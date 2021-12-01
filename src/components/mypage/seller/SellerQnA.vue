@@ -4,6 +4,7 @@
     <div :class="qnaboardclass">
       <textarea cols="25" rows="10" placeholder="내용" v-model="qnaReply"></textarea>
       <button class="fillBtn" @click="qnaAnswer">답글 작성</button>
+      <button class="fillBtn" @click="qnaCancel">취소</button>
     </div>
     <table class="type09">
       <thead>
@@ -73,6 +74,10 @@ export default {
       this.qnaboardclass[1].boardappear = false;
       this.getQnAdata();
     },
+    // 답글 창 닫기
+    qnaCancel() {
+      this.qnaboardclass[1].boardappear = false;
+    }
   },
 };
 </script>

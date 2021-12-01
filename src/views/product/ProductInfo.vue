@@ -125,18 +125,22 @@
                 <label :for= "`answer${qidx}`">{{q.qnaTitle}}<em></em></label>
                 <div>
                   <div class="qnacontent"><p>{{q.qnaContent}}</p></div>
-                  <div><p>{{q.qnaReply}}<button @click="qnaAnswer(q.qnaNum)">답변 등록</button></p></div>
+                  <div><p>{{q.qnaReply}}</p></div>
+                  <!-- <div><p>{{q.qnaReply}}<button @click="qnaAnswer(q.qnaNum)">답변 등록</button></p></div> -->
                 </div>
               </div>
             </div>
-            <div class="qnapagination">
-              <ul>
-                <li v-for="(qq, qqidx) in qnaAllpages" :key="qqidx" @click="qnaPageChange(qqidx+1)">{{qqidx+1}}</li>
-              </ul>
+            <div>
+              <div class="qnapagination">
+                <ul>
+                  <li v-for="(qq, qqidx) in qnaAllpages" :key="qqidx" @click="qnaPageChange(qqidx+1)">{{qqidx+1}}</li>
+                </ul>
+              </div>
+              <button class="fillBtn" style="margin-top:20px; margin-left:95%" @click="qnaboxappear">문의글 작성</button>
             </div>
           </div>
           <!-- QnA 등록 화면 -->
-            <div class="qnaboard">
+            <div :class="qnaappear">
               <input type="text" placeholder="제목" v-model="qnaTitle">
               <textarea cols="25" rows="10" placeholder="내용" v-model="qnaContent"></textarea>
               <button class="fillBtn" @click="setQnA">문의글 작성</button>
@@ -256,12 +260,13 @@ export default {
       // 서브 이미지 변수
       subimglist: [],
       fullprice: 0, // 선택한 옵션 가격
-      // QnA 변수 5개
+      // QnA 변수 6개
       qnaTitle: '', // qna 제목
       qnaContent: '', //qna 내용
       qnapage: 1, // qna 페이지
       qnaAllpages: 1, // qna 전체 페이지
       qnalist: [], // 받은 qna 리스트
+      qnaappear: [{qnaboard: true}, {appearQnA: true}], // qna 화면 보여주기
       // 리뷰용 변수 6개
       reviewlist : [], // 받아온 리뷰
       reviewnum: 0, // 등록한 리뷰의 넘버
@@ -455,17 +460,27 @@ export default {
       const res = await axios.post(url, body, { headers });
       console.log(res);
       if(res.data.result == 200) {
+        this.qnaappear[1].appearQnA = false;
         await this.getproductinfo();
       }
     },
-    // QnA 답변 등록
-    async qnaAnswer(val) {
-      const url = `/ROOT/qna/update2?qnano=${val}`;
-      const headers = { 'Content-Type': 'application/json', token: this.token };
-      const body = { qnaReply: '대답해 PDD!' };
-      const res = await axios.put(url, body, { headers });
-      console.log(res);
+    // QnA 등록 창 보여주기
+    qnaboxappear() {
+      if(this.qnaappear[1].appearQnA == false) {
+        this.qnaappear[1].appearQnA = true;
+      }
+      else if(this.qnaappear[1].appearQnA == true) {
+        this.qnaappear[1].appearQnA = false;
+      }
     },
+    // QnA 답변 등록
+    // async qnaAnswer(val) {
+    //   const url = `/ROOT/qna/update2?qnano=${val}`;
+    //   const headers = { 'Content-Type': 'application/json', token: this.token };
+    //   const body = { qnaReply: '대답해 PDD!' };
+    //   const res = await axios.put(url, body, { headers });
+    //   console.log(res);
+    // },
     qnaPageChange(val) {
       this.qnapage = val;
       this.getproductinfo();

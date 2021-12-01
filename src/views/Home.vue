@@ -7,7 +7,7 @@
         <span class="text2nd">Shop</span>
       </div> -->
       <div class="mainimgbox">
-        <img src="@/assets/img/bigbed.jpg">
+        <!-- <img src="@/assets/img/bigbed.jpg"> -->
       </div>
     </div>
     <div>
@@ -19,20 +19,20 @@
       <div class="listcon">
         <div class="bestproduct">
           <ul>
-            <li>
+            <li v-for="(b, bi) in bestItemlist" :key="bi" @click="goproduct(b.productCode)">
               <div class="productcard">
                 <div class="imgbox">
-                  <img src="@/assets/img/furniture1.jpg">
+                  <img :src=b.image>
                 </div>
                 <div class="cardcontent">
                   <div class="cardtitle">
-                    <p>상품제목</p>
+                    <p>{{b.productTitle}}</p>
                   </div>
                   <div class="carddesc">
-                    <p>잡다한 내용</p>
+                    <p style="font-size:10px;">{{b.productDesc}}</p>
                   </div>
                   <div class="cardprice">
-                    <strong>959,984</strong><span>원</span>
+                    <strong>{{b.optionPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}}</strong><span>원</span>
                   </div>
                 </div>
               </div>
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import Carousel from '@/components/home/Carousel.vue';
 import SixBox from '@/components/home/SixBox.vue';
 
@@ -56,15 +57,26 @@ export default {
     Carousel, SixBox,
   },
   mounted() {
-    
+    this.getbestitems();
   },
   data() {
     return {
-      
+      bestItemlist: [], // 베스트상품
     };
   },
   methods: {
-    
+    // BEST 상품 가져오기
+    async getbestitems() {
+      const url = '/ROOT/product/main?sort=1&page=1';
+      const headers = { 'Content-Type': 'application/json' };
+      const res = await axios.get(url, headers);
+      console.log(res);
+      this.bestItemlist = res.data.list;
+    },
+    // 베스트 클릭시 상품 상세화면으로 보내기
+    async goproduct(val) {
+      this.$router.push(`/product/info?productCode=${val}`);
+    }
   },
 };
 </script>
