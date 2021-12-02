@@ -23,7 +23,7 @@
       </div>
     </div> -->
 
-    <table class="type09">
+    <table class="type09" style="text-align:center">
       <thead>
       <tr>
         <th scope="cols"></th>
@@ -35,22 +35,56 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <th scope="row"></th>
-        <td>202108110001</td>
-        <td>desk</td>
-        <td>화려한 네발</td>
-        <td>444,444원</td>
-        <td>2021-08-11</td>
+      <tr v-for="(i, idx) in list" :key="idx">
+        <th scope="row">{{idx+1}}</th>
+        <td>{{i.productCode}}</td>
+        <td>{{i.productTitle}}</td>
+        <td>{{i.optionName}}</td>
+        <td>{{i.optionPrice}}원</td>
+        <td>{{i.productRegdateString}}</td>
       </tr>
       </tbody>
     </table>
+    <div class="pagecon">
+      <div class="pagebox">
+        <ul>
+          <li v-for="(p, pi) in pages" :key="pi" @click="changePage(pi+1)">{{pi+1}}</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+  mounted() {
+    this.getProduct();
+  },
+  data() {
+    return {
+      token: sessionStorage.getItem('token'),
+      list: [], // 받아온 데이터
+      page: 1, // 상품 정보 현재페이지
+      pages: 1, // 상품 정보 전체 페이지
+    };
+  },
+  methods: {
+    async getProduct() {
+      const url = `/ROOT/seller/select_prolist?page=${this.page}`;
+      const headers = { 'Content-Type': 'application/json', token: this.token };
+      const res = await axios.get(url, { headers });
+      console.log(res);
+      this.list = res.data.list;
+      this.pages = res.data.cnt;
+    },
+    // 페이지 변경 함수
+    changePage(val) {
+      this.page = val;
+      this.getProduct();
+    }
+  },
 };
 </script>
 

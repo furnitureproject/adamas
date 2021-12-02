@@ -72,19 +72,21 @@ table.type09 {
   
   @keyframes slidein {
     from {
-      margin-left: 100%;
+      // margin-left: 100%;
       // width: 100%
+      opacity: 0%;
     }
   
     to {
-      margin-left: 0%;
+      // margin-left: 0%;
       // width: 100%;
+      opacity: 100%;
     }
   }
   .boardappear {
     display: block;
     // transition: all 2s;
-    animation-duration: 3s;
+    animation-duration: 1s;
     animation-name: slidein;
   }
 
@@ -125,6 +127,6 @@ table.type09 {
   }
   .fillBtn:hover {
     color: #1d1b2e;
-    background: #eee;
+    background: white;
     cursor: pointer;
   }

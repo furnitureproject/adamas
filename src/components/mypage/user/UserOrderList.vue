@@ -1,4 +1,17 @@
 <template>
+  <!-- 리뷰 등록 화면 -->
+  <div :class="reviewboardclass">
+    <input type="text" placeholder="제목" v-model="reviewTitle">
+    <textarea cols="25" rows="10" placeholder="내용" v-model="reviewContent"></textarea>
+    <input type="text" placeholder="별점 1-5점까지" v-model="reviewStar">
+    <div class="reviewselimg">
+      <button class="fillBtn"><label for="multibox">리뷰 이미지 첨부(3장까지)</label></button>
+      <input multiple="multiple" @change='handlerFiles' ref="file" type="file" name="filename[]" id="multibox" accept=".jpg, .png" hidden>
+    </div>
+    <button class="fillBtn" @click="setReview">리뷰작성</button>
+    <button class="fillBtn" @click="reviewCancel">취소</button>
+  </div>
+
   <div class="mypageContainer">
     <div class='TitleCon orderTitleCon'>
       <div class="Title">
@@ -50,9 +63,7 @@
             <router-link to='/'><span>(배송조회)</span></router-link>
           </div>
           <div class="orderTableCell">
-            <router-link :to="`/product/info?productCode=${d.productCode}`">
-              <p>리뷰쓰기</p>
-            </router-link>
+            <button @click="makeReview(d.productCode)">리뷰쓰기</button>
           </div>
         </div>
         <!-- <div>
@@ -90,6 +101,13 @@ export default {
       page: 1, // 현재 페이지
       pages: 1, // 전체 페이지 네이션
       dellist: [], // 배송 정보 받은것
+      reviewimgbox : [], // 리뷰 이미지
+      reviewTitle: '', // 리뷰 제목
+      reviewContent: '', // 리뷰 내용
+      reviewStar: '', // 리뷰 별점
+      productCode: 0, // 상품코드
+      reviewboardclass: [{ reviewboard: true }, { boardappear: false }],
+      reviewNum: 0, //리뷰 넘버
     };
   },
   methods: {
@@ -106,6 +124,54 @@ export default {
       this.page = val;
       console.log(this.page);
       this.getdelivery();
+    },
+    // 리뷰 이미지 이벤트
+    handlerFiles(e) {
+      console.log(e.target);
+      const files = e.target.files;
+      for(let i=0; i< files.length; i++) {
+        console.log(i);
+        this.reviewimgbox.push(files[i]);
+        console.log(this.reviewimgbox);
+      }
+    },
+    // 리뷰 등록
+    async setReview() {
+      const url = `/ROOT/review/test`;
+      const headers = { 'Content-Type': 'application/json', token: this.token };
+      const body = { reviewTitle: this.reviewTitle, reviewContent: this.reviewContent, reviewStar: this.reviewStar, product: {productCode: this.productCode} };
+      const res = await axios.post(url, body, { headers });
+      console.log(res);
+      this.reviewNum = res.data.reviewNum;
+      await this.setReviewImg();
+      // await getproductinfo()
+    },
+    // 리뷰 이미지 등록
+    async setReviewImg() {
+      const url = `/ROOT/reviewimage?reviewnum=${this.reviewNum}`;
+      const headers = { 'Content-Type': 'multipart/form-data', token: this.token };
+      const body = new FormData();
+      for(let i=0; i< this.reviewimgbox.length; i++){
+        body.append('file' ,this.reviewimgbox[i]);
+      }
+      // body.append('file', [this.descimg]);
+      console.log(body)
+      // body.append('file', this.descimg);
+      const res = await axios.post(url, body, {headers});
+      console.log(res);
+      if(res.status == 200) {
+        await this.getdelivery()
+      }
+    },
+    // 리뷰 등록창 보여주기
+    makeReview(val) {
+      console.log(val);
+      this.productCode = val;
+      this.reviewboardclass[1].boardappear = true;
+    },
+    // 리뷰 창 닫기
+    reviewCancel() {
+      this.reviewboardclass[1].boardappear = false;
     }
   },
 };
@@ -210,4 +276,89 @@ div.blueTable {
     }
   }
 }
+// 버튼
+.fillBtn {
+
+  font-size: 20px;
+  padding: 10px 0;
+  border: 3px solid #333333;
+  background-color: transparent;
+  color: #b4b2b2;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-weight: bold;
+  position: relative;
+  transition: all 0.4s;
+  overflow: hidden;
+  margin-right: 10px;
+  width: 145px;
+}
+.fillBtn:focus {
+  outline: none;
+}
+.fillBtn::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  top: 100%;
+  left: 0;
+  transition: all 0.4s;
+  z-index: -1;
+}
+.fillBtn:hover::before {
+  transform: translateY(-100%);
+}
+.fillBtn:hover {
+  color: #1d1b2e;
+  // color: #fff;
+  cursor: pointer;
+  background: white;
+}
+// 리뷰 등록창
+.reviewboard {
+  background: rgba(34, 34, 34, 0.767);
+  position: absolute;
+  display: none;
+  left: 35%;
+  width: 540px;
+  top: 150px;
+  padding: 20px;
+  input[type='text'] {
+    display: block;
+    width: 500px;
+    border: 2px solid #2b2a29;
+    padding: 10px;
+  }
+  textarea {
+    width: 500px;
+    border: 2px solid #2b2a29;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  .fillBtn {
+    width: 500px;
+    margin-top: 10px;
+  }
+}
+@keyframes slidein {
+    from {
+      // margin-left: 100%;
+      // width: 100%
+      opacity: 0%;
+    }
+  
+    to {
+      // margin-left: 0%;
+      // width: 100%;
+      opacity: 100%;
+    }
+  }
+  .boardappear {
+    display: block;
+    // transition: all 2s;
+    animation-duration: 1s;
+    animation-name: slidein;
+  }
 </style>

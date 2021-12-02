@@ -109,6 +109,7 @@ table.type09 {
   margin-top: 82px;
 }
 table.type09 thead th {
+  width: 150px;
   padding: 10px;
   font-weight: bold;
   vertical-align: top;
@@ -130,4 +131,22 @@ table.type09 td {
   padding: 10px;
   vertical-align: top;
   border-bottom: 1px solid #ccc;
+}
+.pagecon {
+  margin-top: 30px;
+  .pagebox {
+    ul {
+      text-align: center;
+      li {
+        display: inline-block;
+        margin-right: 15px;
+        padding: 5px 10px;
+        &:hover {
+          background: #222;
+          color: #fff;
+          cursor: pointer;
+        }
+      }
+    }
+  }
 }
