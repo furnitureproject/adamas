@@ -114,6 +114,19 @@ export default {
     }
   }
 }
-
+.addreply {
+    padding: 5px 10px;
+    border: 3px solid #eee;
+    vertical-align: middle;
+    background: #2b2a29;
+    color: #eee;
+    &:hover {
+      border: 3px solid #222;
+      background: #eee;
+      color: #222;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+  }
 </style>
 
