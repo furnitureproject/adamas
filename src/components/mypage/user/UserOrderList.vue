@@ -163,7 +163,9 @@ export default {
       const res = await axios.post(url, body, {headers});
       console.log(res);
       if(res.status == 200) {
-        await this.getdelivery()
+        await this.getdelivery();
+        alert('작성완료');
+        this.reviewboardclass[1].boardappear = false;
       }
     },
     // 리뷰 등록창 보여주기
