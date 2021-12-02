@@ -1,36 +1,61 @@
 <template>
   <div>
     <div class="title">
-      타이틀 박스
+      <!-- 타이틀 박스 -->
     </div>
     <div class="content">
       <div>
         <div class="field">
           <label for="idbox">아이디</label>
-          <input type="text" id="idbox" placeholder="ID">
+          <input type="text" id="idbox" placeholder="ID" v-model="sellerId">
         </div>
         <div class="field">
           <label for="pwbox">비밀번호</label>
-          <input type="text" id="pwbox" placeholder="PASSWORD">
+          <input type="text" id="pwbox" placeholder="PASSWORD" v-model="sellerPw">
         </div>
       </div>
     </div>
     <div class="btnbox">
-      <button class="btn submitBtn">회원탈퇴</button>
+      <button class="btn submitBtn" @click="withdraw">회원탈퇴</button>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import axios from 'axios';
+import { mapActions } from 'vuex';
 
+export default {
+  data() {
+    return {
+      token: sessionStorage.getItem('token'),
+      sellerId: '',
+      sellerPw: '',
+    };
+  },
+  methods: {
+    ...mapActions(['changeisLoginAct']),
+    async withdraw() {
+      const url = '/ROOT/seller/delete';
+      const headers = { 'Content-Type': 'application/json', token: this.token };
+      const body = {sellerId: this.sellerId, sellerPw: this.sellerPw};
+      const res = await axios.delete(url, { headers: { 'Content-Type': 'application/json', token: this.token }, data: {sellerId: this.sellerId, sellerPw: this.sellerPw}});
+      console.log(res);
+      if(res.data.status == 200) {
+        alert('탈퇴완료하였습니다.');
+        this.changeisLoginAct(false);
+        sessionStorage.removeItem('token');
+        this.$router.push('/');
+      }
+    }
+  },
 };
 </script>
 
 <style lang='scss' scoped>
 .title {
     height: 75px;
-    background: #eee;
+    // background: #eee;
   }
   .content {
     margin-top: 15px;

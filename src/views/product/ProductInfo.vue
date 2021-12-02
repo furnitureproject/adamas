@@ -100,12 +100,12 @@
               <img :src= review.reviewImage3 style="width:100px; height:100px" onerror="this.style.display='none'" v-if="review.reviewImage3">
             </div>
             <!-- 테스트용 버튼임 지울것 -->
-            <div>
+            <!-- <div>
               <button class="fillBtn" @click="setReview">리뷰추가</button>
               <button class="fillBtn" @click="setQnA">QnA추가</button>
-            </div>
+            </div> -->
             <!-- 리뷰 등록 화면 -->
-            <div class="reviewboard">
+            <!-- <div class="reviewboard">
               <input type="text" placeholder="제목" v-model="reviewTitle">
               <textarea cols="25" rows="10" placeholder="내용" v-model="reviewContent"></textarea>
               <input type="text" placeholder="별점 1-5점까지" v-model="reviewStar">
@@ -114,7 +114,7 @@
                 <input multiple="multiple" @change='handlerFiles' ref="file" type="file" name="filename[]" id="multibox" accept=".jpg, .png" hidden>
               </div>
               <button class="fillBtn" @click="setReview">리뷰작성</button>
-            </div>
+            </div> -->
           </div>
           <!-- 리뷰 끝 -->
           <!-- QNA -->
@@ -136,15 +136,15 @@
                   <li v-for="(qq, qqidx) in qnaAllpages" :key="qqidx" @click="qnaPageChange(qqidx+1)">{{qqidx+1}}</li>
                 </ul>
               </div>
-              <button class="fillBtn" style="margin-top:20px; margin-left:95%" @click="qnaboxappear">문의글 작성</button>
+              <button class="fillBtn" style="margin-top:20px; margin-left:95%" @click="qnaboxappear" v-if="rolecheck()">문의글 작성</button>
             </div>
           </div>
           <!-- QnA 등록 화면 -->
-            <div :class="qnaappear">
+            <!-- <div :class="qnaappear">
               <input type="text" placeholder="제목" v-model="qnaTitle">
               <textarea cols="25" rows="10" placeholder="내용" v-model="qnaContent"></textarea>
               <button class="fillBtn" @click="setQnA">문의글 작성</button>
-            </div>
+            </div> -->
           <!-- QnA 끝 -->
         </div>
         <!-- 왼쪽박스 패딩용 박스 끝 -->
@@ -205,8 +205,8 @@
           <!-- 가격 표시 박스 끝 -->
           <!-- 버튼 박스 -->
           <div class="buttonwrap">
-            <button class="fillBtn" @click="commitCnt">장바구니</button>
-            <button class="fillBtn orderBtn" @click='GoOrder'>구매하기</button>
+            <button class="fillBtn" @click="commitCnt" v-if="rolecheck()">장바구니</button>
+            <button class="fillBtn orderBtn" @click='GoOrder' v-if="rolecheck()">구매하기</button>
           </div>
           <!-- 버튼 박스 끝 -->
         </div>
@@ -220,13 +220,16 @@
 
 <script>
 import axios from 'axios';
-import { mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   created() {
     this.getproductinfo();
     console.log(this.optionlist);
     this.getSubImg();
+  },
+  computed: {
+    ...mapState(['roleLogin',]),
   },
   data() {
     return {
@@ -484,6 +487,15 @@ export default {
     qnaPageChange(val) {
       this.qnapage = val;
       this.getproductinfo();
+    },
+    // 로그인한게 유저인지 확인
+    rolecheck() {
+      if(this.roleLogin == 'seller') {
+        return false;
+      }
+      if(this.roleLogin == 'user') {
+        return true;
+      }
     }
   },
 };

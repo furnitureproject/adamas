@@ -137,8 +137,14 @@ export default {
     goOrder() {
       console.log(this.cartlist);
       console.log(this.ischeck);
-      this.changesendcartAct(this.ischeckcartno);
-      this.$router.push('/order');
+      if(this.ischeckcartno.length == 0) {
+        alert('선택된 것이 없습니다.');
+        return;
+      }
+      else{
+        this.changesendcartAct(this.ischeckcartno);
+        this.$router.push('/order');
+      }
     },
     async deleteone(no) {
       console.log(no);
@@ -158,24 +164,30 @@ export default {
       }
     },
     async deleteSelected() {
-      const token = this.token;
-      const url = 'ROOT/cart';
-      const headers = { 'Content-Type': 'application/json', token };
-      // const data = this.ischeck;
-      const data = this.ischeckcartno;
-      // for(let i in this.ischeck) {
-      //   console.log(`${this.ischeck[i]}`)
-      //   this.forselectdelete.push({cartNo: `${this.ischeck[i]}`});
-      // }
-      // console.log(this.forselectdelete);
-      const confirmdata = confirm('삭제하시겠습니까?');
-      if(confirmdata) {
-      const res = await axios.delete(url, {headers:headers, data:data});
-      console.log(res);
+      if(this.ischeckcartno.length == 0) {
+        alert('선택된 것이 없습니다.');
+        return;
+      }
+      else {
+        const token = this.token;
+        const url = 'ROOT/cart';
+        const headers = { 'Content-Type': 'application/json', token };
+        // const data = this.ischeck;
+        const data = this.ischeckcartno;
+        // for(let i in this.ischeck) {
+        //   console.log(`${this.ischeck[i]}`)
+        //   this.forselectdelete.push({cartNo: `${this.ischeck[i]}`});
+        // }
+        // console.log(this.forselectdelete);
+        const confirmdata = confirm('삭제하시겠습니까?');
+        if(confirmdata) {
+        const res = await axios.delete(url, {headers:headers, data:data});
+        console.log(res);
         if(res.data.status === 200) {
           this.selectprice = 0;
           await this.getCart();
           console.log(this.cartlist);
+          }
         }
       }
     },

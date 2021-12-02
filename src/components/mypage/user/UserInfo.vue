@@ -86,7 +86,9 @@ export default {
       console.log(res);
       if(res.status == 200) {
         alert('회원정보 변경 완료');
-        this.$router.push('/user/mypage');
+        this.changeisLoginAct(false);
+        sessionStorage.removeItem('token');
+        this.$router.push('/login');
       }
     }
   },

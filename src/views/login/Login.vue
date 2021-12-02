@@ -63,6 +63,14 @@ export default {
     ...mapActions(['changeisLoginAct', 'changeroleLoginAct', 'changeLoginAct']),
     // 빨강색일때 유저 로그인
     async userlogin() {
+      if(this.userId == null) {
+        alert('아이디를 입력해 주세요');
+        return;
+      }
+      if(this.userPw == null) {
+        alert('비밀번호를 입력해 주세요');
+        return;
+      }
       // 테스트 할거면 url 바꿔서 하면됨
       if (this.logincheck.userlog) {
         const url = '/ROOT/userlogin';

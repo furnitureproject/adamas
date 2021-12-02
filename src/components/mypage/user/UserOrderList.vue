@@ -63,7 +63,7 @@
             <router-link to='/'><span>(배송조회)</span></router-link>
           </div>
           <div class="orderTableCell">
-            <button @click="makeReview(d.productCode)">리뷰쓰기</button>
+            <button class="reviebtn" @click="makeReview(d.productCode)">리뷰쓰기</button>
           </div>
         </div>
         <!-- <div>
@@ -105,7 +105,7 @@ export default {
       reviewTitle: '', // 리뷰 제목
       reviewContent: '', // 리뷰 내용
       reviewStar: '', // 리뷰 별점
-      productCode: 0, // 상품코드
+      productCode: '', // 상품코드
       reviewboardclass: [{ reviewboard: true }, { boardappear: false }],
       reviewNum: 0, //리뷰 넘버
     };
@@ -130,19 +130,22 @@ export default {
       console.log(e.target);
       const files = e.target.files;
       for(let i=0; i< files.length; i++) {
-        console.log(i);
+        // console.log(i);
         this.reviewimgbox.push(files[i]);
         console.log(this.reviewimgbox);
       }
     },
     // 리뷰 등록
     async setReview() {
+      console.log(this.productCode)
       const url = `/ROOT/review/test`;
       const headers = { 'Content-Type': 'application/json', token: this.token };
       const body = { reviewTitle: this.reviewTitle, reviewContent: this.reviewContent, reviewStar: this.reviewStar, product: {productCode: this.productCode} };
+      console.log(body);
       const res = await axios.post(url, body, { headers });
       console.log(res);
       this.reviewNum = res.data.reviewNum;
+      console.log(this.reviewNum);
       await this.setReviewImg();
       // await getproductinfo()
     },
@@ -360,5 +363,19 @@ div.blueTable {
     // transition: all 2s;
     animation-duration: 1s;
     animation-name: slidein;
+  }
+  .reviebtn {
+    padding: 5px 10px;
+    border: 3px solid #eee;
+    vertical-align: middle;
+    background: #2b2a29;
+    color: #eee;
+    &:hover {
+      border: 3px solid #222;
+      background: #eee;
+      color: #222;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
   }
 </style>

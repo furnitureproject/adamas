@@ -41,6 +41,8 @@ export default {
         console.log(res);
         if(res.status === 200) {
           alert('회원탈퇴 완료');
+          this.changeisLoginAct(false);
+          sessionStorage.removeItem('token');
           this.$router.push('/');
         }
       }

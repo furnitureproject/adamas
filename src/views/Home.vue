@@ -42,7 +42,7 @@
       </div>
     </div>
     <div>
-    <SixBox/>
+    <!-- <SixBox/> -->
     </div>
   </div>
 </template>

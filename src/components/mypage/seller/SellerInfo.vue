@@ -1,64 +1,118 @@
 <template>
   <div>
     <div class="title">
-      타이틀 박스
+      <!-- 타이틀 박스 -->
     </div>
     <div class="content">
       <div>
         <div class="field">
           <label for="idbox">아이디</label>
-          <input type="text" id="idbox" placeholder="ID">
+          <input type="text" id="idbox" placeholder="ID" disabled v-model="sellerId">
         </div>
         <div class="field">
           <label for="pwbox">비밀번호</label>
-          <input type="text" id="pwbox" placeholder="PASSWORD">
+          <input type="password" id="pwbox" placeholder="PASSWORD" v-model="sellerPw">
         </div>
         <div class="field">
           <label for="newpwbox">새 비밀번호</label>
-          <input type="text" id="newpwbox" placeholder="NEW PASSWORD">
+          <input type="password" id="newpwbox" placeholder="NEW PASSWORD" v-model="sellerNewPw">
         </div>
         <div class="field">
           <label for="namebox">이름</label>
-          <input type="text" id="namebox" placeholder="NAME">
+          <input type="text" id="namebox" placeholder="NAME" disabled v-model="sellerName">
         </div>
         <div class="field">
           <label for="birthbox">생년월일</label>
-          <input type="text" id="birthbox" placeholder="BIRTH">
+          <input type="text" id="birthbox" placeholder="BIRTH" disabled v-model="sellerBirth">
         </div>
         <div class="field">
           <label for="phonebox">전화번호</label>
-          <input type="text" id="phonebox" placeholder="PHONE">
+          <input type="text" id="phonebox" placeholder="PHONE" v-model="sellerPhone">
         </div>
         <div class="field">
           <label for="emailbox">E-MAIL</label>
-          <input type="text" id="emailbox" placeholder="E-MAIL">
+          <input type="text" id="emailbox" placeholder="E-MAIL" v-model="sellerEmail">
         </div>
         <div class="field">
           <label for="storenamebox">STORE</label>
-          <input type="text" id="storenamebox" placeholder="STORE NAME">
+          <input type="text" id="storenamebox" placeholder="STORE NAME" disabled v-model="storeName">
         </div>
         <div class="field">
           <label for="storephonebox">PHONE</label>
-          <input type="text" id="storephonebox" placeholder="STORE PHONE">
+          <input type="text" id="storephonebox" placeholder="STORE PHONE" v-model="storePhone">
         </div>
       </div>
     </div>
     <div class="btnbox">
-      <button class="btn submitBtn">변경하기</button>
+      <button class="btn submitBtn" @click="updateinfo">변경하기</button>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import axios from 'axios';
+import { mapActions } from 'vuex';
 
+export default {
+  mounted() {
+    this.getinfo();
+  },
+  data() {
+    return {
+      token: sessionStorage.getItem('token'),
+      sellerId: '',
+      sellerPw: '',
+      sellerNewPw: '',
+      sellerName: '',
+      sellerBirth: '',
+      sellerPhone: '',
+      sellerEmail: '',
+      storeName: '',
+      storePhone: '',
+    }
+  },
+  methods: {
+    ...mapActions(['changeisLoginAct']),
+    async getinfo() {
+      const url = '/ROOT/seller/update';
+      const headers = { 'Content-Type': 'application/json', token: this.token };
+      const res = await axios.get(url, { headers });
+      console.log(res);
+      this.sellerId = res.data.seller.sellerId;
+      this.sellerName = res.data.seller.sellerName;
+      this.sellerBirth = res.data.seller.sellerBirth;
+      this.sellerPhone = res.data.seller.sellerPhone;
+      this.sellerEmail = res.data.seller.sellerEmail;
+      this.storeName = res.data.seller.storeName;
+      this.storePhone = res.data.seller.storePhone;
+    },
+    async updateinfo() {
+      const url = '/ROOT/seller/update';
+      const headers = { 'Content-Type': 'application/json', token: this.token };
+      const body = {
+        sellerPw: this.sellerPw,
+        sellerNewPw: this.sellerNewPw,
+        sellerPhone: this.sellerPhone,
+        sellerEmail: this.sellerEmail,
+        storePhone: this.storePhone
+      }
+      const res = await axios.put(url, body, { headers });
+      console.log(res);
+      if(res.data.status == 200) {
+        alert('변경 완료');
+        this.changeisLoginAct(false);
+        sessionStorage.removeItem('token');
+        this.$router.push('/login');
+      }
+    }
+  },
 };
 </script>
 
 <style lang='scss' scoped>
   .title {
     height: 75px;
-    background: #eee;
+    // background: #eee;
   }
   .content {
     margin-top: 15px;
@@ -77,7 +131,7 @@ export default {
       background: #E2E2E2;
     }
     margin-bottom: 10px;
-    input[type='text'] {
+    input {
       display: block;
       float: left;
       width: 608px;

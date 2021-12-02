@@ -28,6 +28,13 @@
       </tr>
       </tbody>
     </table>
+    <div class="pagecon">
+      <div class="pagebox">
+        <ul>
+          <li v-for="(p, pi) in qnaAllpages" :key="pi" @click="changePage(pi+1)">{{pi+1}}</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -77,6 +84,10 @@ export default {
     // 답글 창 닫기
     qnaCancel() {
       this.qnaboardclass[1].boardappear = false;
+    },
+    changePage(val) {
+      this.qnapage = val;
+      this.getQnAdata();
     }
   },
 };
@@ -84,6 +95,25 @@ export default {
 
 <style lang='scss' scoped>
 @import '@/assets/scss/mypage/seller/sellerqna.scss';
+
+.pagecon {
+  margin-top: 30px;
+  .pagebox {
+    ul {
+      text-align: center;
+      li {
+        display: inline-block;
+        margin-right: 15px;
+        padding: 5px 10px;
+        &:hover {
+          background: #222;
+          color: #fff;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
 
 </style>
 

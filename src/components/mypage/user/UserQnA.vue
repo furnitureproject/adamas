@@ -13,6 +13,8 @@
           <div class="divTableHead">문의제목</div>
           <div class="divTableHead">문의내용</div>
           <div class="divTableHead">작성일</div>
+          <div class="divTableHead">답글내용</div>
+          <div class="divTableHead">답글작성일</div>
         </div>
       </div>
       <div class="divTableBody">
@@ -21,8 +23,7 @@
             <p>{{i+1}}</p>
           </div>
             <div class='orderTableCell'>
-              <p>다리가 무려 4개!!!!! 총알배송 다리4개 책상</p>
-              <p>옵션: 다리4개 분홍색</p>
+              <p>{{q.productTitle}}</p>
             </div>
           <div class="orderTableCell">
             <p>{{q.qnaTitle}}</p>
@@ -32,6 +33,12 @@
           </div>
           <div class="orderTableCell">
             <p>{{q.qnaRegdateString}}</p>
+          </div>
+          <div class="orderTableCell">
+            <p>{{q.qnaReply}}</p>
+          </div>
+          <div class="orderTableCell">
+            <p>{{q.qnaReplyRegdateString}}</p>
           </div>
         </div>
       </div>
