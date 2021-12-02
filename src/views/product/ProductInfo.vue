@@ -140,11 +140,11 @@
             </div>
           </div>
           <!-- QnA 등록 화면 -->
-            <!-- <div :class="qnaappear">
+            <div :class="qnaappear">
               <input type="text" placeholder="제목" v-model="qnaTitle">
               <textarea cols="25" rows="10" placeholder="내용" v-model="qnaContent"></textarea>
               <button class="fillBtn" @click="setQnA">문의글 작성</button>
-            </div> -->
+            </div>
           <!-- QnA 끝 -->
         </div>
         <!-- 왼쪽박스 패딩용 박스 끝 -->
