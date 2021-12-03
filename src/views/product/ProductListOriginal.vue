@@ -68,7 +68,6 @@
 <script>
 import axios from 'axios';
 import { mapState } from 'vuex';
-
 export default {
   name: 'ProductList',
   created() {
@@ -112,19 +111,17 @@ export default {
       // navcategoryParent: this.$route.query.categoryParent,
       // 티어에따른 페이지네이션 변경
       ispage: true, //true일때 2티어 false일때 3티어
-      ghyyy: 0,
     }
   },
   methods: {
     // vuex 연동 시킬것. header에서 클릭시 리셋이 안됨
     // 메인 리스트
     async getListByCate() {
-      this.ghyyy = 1;
       // this.sort = 1;
       // const url = `/ROOT/product/select_list2?sort=${this.sort}&categoryParent=${this.categoryParent}&page=1`;
       // console.log(this.$route.query.categoryParent);
       // const url = `/ROOT/product/select_list2?sort=${this.sort}&categoryParent=${this.navcategoryParent}&page=1`;
-      const url = `/ROOT/product/select_list3?sort=${this.sort}&categoryParent=${this.categoryParent}&page=1`;
+      const url = `/ROOT/product/select_list2?sort=${this.sort}&categoryParent=${this.categoryParent}&page=1`;
       const headers = {'Content-Type': 'application/json'};
       const res = await axios.get(url, {headers});
       console.log(res);
@@ -138,32 +135,23 @@ export default {
       const res1 = await axios.get(url1, { headers: headers1 });
       console.log(res1);
       this.tier3list = res1.data.list;
-      this.sort =1;
     },
     // 정렬 시키기
     changesort(val) {
-      if( this.ghyyy == 1){
-        this.sort = val;
-        this.getListByCate();
-      } else if (this.ghyyy == 2){
-        this.sort = val;
-        this.getTier3List(this.tier3categorycode);
-      }
-      
+      this.sort = val;
+      this.getListByCate();
     },
     // 서브메뉴 클릭시 화면표시
     async getTier3List(val) {
-      this.ghyyy = 2;
       console.log(val);
       this.tier3categorycode = val;
-      const url = `/ROOT/product/select_list3?sort=${this.sort}&categoryCode=${val}`;
+      const url = `/ROOT/product/select_list1?sort=1&categoryCode=${val}`;
       const headers = { 'Content-Type': 'application/json' };
       const res = await axios.get(url, { headers });
       console.log(res);
       this.list = res.data.list ;
       this.allpage = res.data.cnt;
       this.ispage = false;
-      this.sort=1;
     },
     async goProductinfo(val) {
       console.log(val);
@@ -194,5 +182,4 @@ export default {
 </script>
 
 <style lang='scss' src='@/assets/scss/product/productlist.scss' scoped>
-
 </style>
